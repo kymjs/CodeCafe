@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:background="@color/actionbar_background"
+        android:layout_height="@dimen/titlebar_height">
+
+        <TextView
+            android:id="@+id/titlebar_text_exittip"
+            style="@style/titlebar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/double_click_exit"
+            android:visibility="gone"/>
+
+
+        <ImageView
+            android:id="@+id/titlebar_img_back"
+            style="@style/titlebar_img"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="4dp"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="false"/>
+
+        <TextView
+            android:id="@+id/titlebar_text_title"
+            style="@style/titlebar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/titlebar_img_back"
+            android:maxEms="8"
+            android:singleLine="true"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/titlebar_img_line"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/titlebar"
+        android:scaleType="fitXY"
+        android:src="@drawable/accelerator_bar_overlay"/>
+</RelativeLayout>

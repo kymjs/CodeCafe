@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/menu_rootview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <top.codecafe.app.ui.widget.RoundImageView
+        android:id="@+id/menu_img_head"
+        android:layout_width="@dimen/splash_head_width"
+        android:layout_height="@dimen/splash_head_height"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/menu_img_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/menu_img_head"
+        android:layout_alignTop="@id/menu_img_head"/>
+
+    <TextView
+        android:id="@+id/menu_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/menu_img_head"
+        android:layout_alignTop="@id/menu_img_head"
+        android:layout_toRightOf="@id/menu_img_head"
+        android:gravity="center_vertical"
+        android:textColor="#333"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/menu_tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_img_head"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textSize="13sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_tv_desc"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/menu_item_tag1"
+            style="@style/MenuItemLayoutStyle">
+
+            <ImageView
+                style="@style/MenuItemImageViewStyle"
+                android:background="@drawable/icon_explore_topic"
+                android:contentDescription="@null"/>
+
+            <TextView
+                style="@style/MenuItemTextViewStyle"
+                android:text="话题圈子"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_item_tag2"
+            style="@style/MenuItemLayoutStyle">
+
+            <ImageView
+                style="@style/MenuItemImageViewStyle"
+                android:background="@drawable/icon_explore_topic"
+                android:contentDescription="@null"/>
+
+            <TextView
+                style="@style/MenuItemTextViewStyle"
+                android:text="好友动态"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_item_tag3"
+            style="@style/MenuItemLayoutStyle">
+
+            <ImageView
+                style="@style/MenuItemImageViewStyle"
+                android:background="@drawable/icon_explore_topic"
+                android:contentDescription="@null"/>
+
+            <TextView
+                style="@style/MenuItemTextViewStyle"
+                android:text="Android控件库"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_item_tag4"
+            style="@style/MenuItemLayoutStyle">
+
+            <ImageView
+                style="@style/MenuItemImageViewStyle"
+                android:background="@drawable/icon_explore_topic"
+                android:contentDescription="@null"/>
+
+            <TextView
+                style="@style/MenuItemTextViewStyle"
+                android:text="技术博客"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_item_tag5"
+            style="@style/MenuItemLayoutStyle">
+
+            <ImageView
+                style="@style/MenuItemImageViewStyle"
+                android:background="@drawable/icon_explore_topic"
+                android:contentDescription="@null"/>
+
+            <TextView
+                style="@style/MenuItemTextViewStyle"
+                android:text="新闻资讯"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

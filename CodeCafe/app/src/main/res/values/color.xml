@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 常用颜色值 -->
+    <color name="window_background">#EBEBEB</color>
+    <color name="main_gray">#9A9A9A</color>
+    <color name="frag_more_name_text">#ff7b7b7b</color>
+
+    <color name="list_item_background_normal">#ffffff</color>
+    <color name="list_item_background_pressed">#efefef</color>
+
+    <color name="colorPrimaryDark">#323232</color>
+
+    <color name="main_green">#40AA53</color>
+    <color name="main_purple">#576B95</color>
+    <color name="actionbar_background">@color/main_green</color>
+
+    <color name="drawer_menu_item_background_normal">#e2e2e2</color>
+    <color name="drawer_menu_item_background_pressed">#ebeceb</color>
+
+</resources>
