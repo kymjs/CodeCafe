@@ -173,7 +173,6 @@ public class MainActivity : KJActivity() {
             if (isOnKeyBacking) {
                 mMainLoopHandler.removeCallbacks(onBackTimeRunnable)
                 isOnKeyBacking = false
-                // UIHelper.toHome(aty);
                 System.exit(0)
             } else {
                 isOnKeyBacking = true
