@@ -18,9 +18,9 @@ import top.codecafe.app.ui.widget.CircleRefreshLayout
  */
 public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout.OnCircleRefreshListener {
 
-    var recyclerView: RecyclerView? = null
+    public var recyclerView: RecyclerView? = null
 
-    var refreshLayout: CircleRefreshLayout? = null
+    public var refreshLayout: CircleRefreshLayout? = null
 
     override fun inflaterView(layoutInflater: LayoutInflater, viewGroup: ViewGroup, bundle: Bundle?): View? {
         val rootView: View = layoutInflater.inflate(R.layout.base_frag_pull, null)
@@ -34,17 +34,16 @@ public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout
 
         refreshLayout?.setOnRefreshListener(this)
 
-        recyclerView?.setLayoutManager(LinearLayoutManager(outsideAty))
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DividerItemDecoration());
         recyclerView?.setAdapter(getRecyclerAdapter())
 
-        setContentData()
+        requestData()
     }
 
-    fun setContentData() {
+    fun requestData() {
     }
-    
+
     abstract fun getRecyclerAdapter(): Adapter<*>;
 
     /**
@@ -56,5 +55,4 @@ public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout
             outRect.set(0, 0, 0, 20);//每个item的底部偏移
         }
     }
-
 }
