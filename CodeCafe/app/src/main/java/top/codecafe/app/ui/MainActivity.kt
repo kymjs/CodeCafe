@@ -12,8 +12,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import rx.functions.Action1
 import top.codecafe.app.R
-import top.codecafe.app.ui.fragment.Topic
 import top.codecafe.app.ui.fragment.MainSlidMenu
+import top.codecafe.app.ui.fragment.PostsPagerFragment
+import top.codecafe.app.ui.fragment.TopicPagerFragment
 import top.codecafe.app.ui.widget.menu.MaterialMenuDrawable
 import top.codecafe.app.ui.widget.menu.MaterialMenuIcon
 import top.codecafe.app.utils.KJAnimations
@@ -29,11 +30,11 @@ public class MainActivity : KJActivity() {
 
     private var materialMenuIcon: MaterialMenuIcon? = null
 
-    private var content1: SupportFragment = Topic()
-    private var content2: SupportFragment = Topic()
-    private var content3: SupportFragment = Topic()
-    private var content4: SupportFragment = Topic()
-    private var content5: SupportFragment = Topic()
+    private var content1: SupportFragment = TopicPagerFragment()
+    private var content2: SupportFragment = TopicPagerFragment()
+    private var content3: SupportFragment = TopicPagerFragment()
+    private var content4: SupportFragment = PostsPagerFragment()
+    private var content5: SupportFragment = TopicPagerFragment()
     private var menuFragment: MainSlidMenu? = null
 
     private var titleBarHeight: Float = 0f

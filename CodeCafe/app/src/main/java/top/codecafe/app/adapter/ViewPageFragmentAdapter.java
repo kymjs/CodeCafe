@@ -29,8 +29,8 @@ public class ViewPageFragmentAdapter extends FragmentStatePagerAdapter {
     private final ViewPager mViewPager;
     private final ArrayList<ViewPageInfo> mTabs = new ArrayList<ViewPageInfo>();
 
-    public ViewPageFragmentAdapter(FragmentManager fm,
-                                   PagerSlidingTabStrip pageStrip, ViewPager pager) {
+    public ViewPageFragmentAdapter(FragmentManager fm, PagerSlidingTabStrip pageStrip, ViewPager
+            pager) {
         super(fm);
         mContext = pager.getContext();
         mPagerStrip = pageStrip;
@@ -39,8 +39,8 @@ public class ViewPageFragmentAdapter extends FragmentStatePagerAdapter {
         mPagerStrip.setViewPager(mViewPager);
     }
 
-    public void addTab(String title, String tag, Class<?> clss, Bundle args) {
-        ViewPageInfo viewPageInfo = new ViewPageInfo(title, tag, clss, args);
+    public void addTab(String title, Class<?> clss, Bundle args) {
+        ViewPageInfo viewPageInfo = new ViewPageInfo(title, clss, args);
         addFragment(viewPageInfo);
     }
 
@@ -57,7 +57,7 @@ public class ViewPageFragmentAdapter extends FragmentStatePagerAdapter {
 
         // 加入tab title
         View v = LayoutInflater.from(mContext).inflate(
-                R.layout.base_viewpage_fragment_tab_item, null, false);
+                R.layout.base_pager_frag_tab_item, null, false);
         TextView title = (TextView) v.findViewById(R.id.tab_title);
         title.setText(info.title);
         mPagerStrip.addTab(v);

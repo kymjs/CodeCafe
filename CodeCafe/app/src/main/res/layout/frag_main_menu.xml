@@ -105,7 +105,7 @@
 
             <TextView
                 style="@style/MenuItemTextViewStyle"
-                android:text="技术博客"/>
+                android:text="技术热点"/>
         </LinearLayout>
 
         <LinearLayout

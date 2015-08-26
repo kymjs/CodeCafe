@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import top.codecafe.app.R
-import top.codecafe.app.ui.fragment.BaseMainFragment
+import top.codecafe.app.ui.base.BaseMainFragment
 
 /**
  * 今日话题，(话题列表)

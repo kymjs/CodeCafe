@@ -1,4 +1,4 @@
-package top.codecafe.app.ui.fragment
+package top.codecafe.app.ui.fragment;
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,23 +8,13 @@ import top.codecafe.app.R
 import top.codecafe.app.ui.base.BaseMainFragment
 
 /**
- * 心情广场
-
- * @author kymjs (http://www.kymjs.com/) on 8/13/15.
+ * 博客界面
+ *
+ * @author kymjs (http://www.kymjs.com/) on 8/26/15.
  */
-public class MoodPlaza : BaseMainFragment() {
-    val api:String = "http://www.oschina.net/action/api/tweet_list?pageSize=20&pageIndex="
-
+public class BlogFragment : BaseMainFragment() {
     override fun inflaterView(layoutInflater: LayoutInflater, viewGroup: ViewGroup, bundle: Bundle?): View? {
         val rootView: View = layoutInflater.inflate(R.layout.frag_main_mood, null)
         return rootView
-    }
-
-    override fun initData(){
-        
-    }
-    
-    override fun initWidget(parentView: View?) {
-        super.initWidget(parentView)
     }
 }
