@@ -1,9 +1,7 @@
 package top.codecafe.app.ui.base;
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
@@ -11,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import top.codecafe.app.R
 import top.codecafe.app.ui.widget.CircleRefreshLayout
+import top.codecafe.app.utils.DefaultItemDivider
 
 /**
  * 包含下拉界面的基类
@@ -35,7 +34,7 @@ public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout
         refreshLayout?.setOnRefreshListener(this)
 
         recyclerView?.setItemAnimator(DefaultItemAnimator())
-        recyclerView?.addItemDecoration(DividerItemDecoration());
+        recyclerView?.addItemDecoration(DefaultItemDivider());
         recyclerView?.setAdapter(getRecyclerAdapter())
 
         requestData()
@@ -45,14 +44,4 @@ public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout
     }
 
     abstract fun getRecyclerAdapter(): Adapter<*>;
-
-    /**
-     * set RecyclerView divider height 20px
-     */
-    inner class DividerItemDecoration : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.set(0, 0, 0, 20);//每个item的底部偏移
-        }
-    }
 }

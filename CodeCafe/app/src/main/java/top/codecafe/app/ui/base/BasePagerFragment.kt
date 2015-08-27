@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import top.codecafe.app.R
 import top.codecafe.app.adapter.ViewPageFragmentAdapter
-import top.codecafe.app.ui.fragment.MoodPlaza
-import top.codecafe.app.ui.fragment.TopicList
 import top.codecafe.app.ui.widget.PagerSlidingTabStrip
-import java.util.*
+import java.util.ArrayList
 
 /**
  * 左右滑动Fragment的基类

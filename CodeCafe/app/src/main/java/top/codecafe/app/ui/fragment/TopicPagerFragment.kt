@@ -8,13 +8,12 @@ import java.util.ArrayList
 
 /**
  * 话题圈
-
  * @author kymjs (http://www.kymjs.com/) on 8/13/15.
  */
 public class TopicPagerFragment : BasePagerFragment() {
     override fun initContentData(pagerDataArray: ArrayList<PagerData>) {
-        pagerDataArray.add(PagerData("技术博客", javaClass<BlogFragment>()))
-        pagerDataArray.add(PagerData("新闻资讯", javaClass<MoodPlaza>()))
+        pagerDataArray.add(PagerData("今日话题", javaClass<TopicList>()))
+        pagerDataArray.add(PagerData("心情广场", javaClass<MoodPlaza>()))
     }
 
     override fun onResume() {
