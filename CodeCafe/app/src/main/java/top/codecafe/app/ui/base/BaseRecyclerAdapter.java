@@ -2,6 +2,7 @@ package top.codecafe.app.ui.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 /**
  * RecyclerView的万能适配器，适配任何一个RecyclerView
+ *
  * @author kymjs (http://www.kymjs.com/) on 8/27/15.
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerHolder> {
@@ -22,6 +24,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     protected SoftReference<RecyclerView> view;
     protected boolean isScrolling;
     protected Context cxt;
+    private OnItemClickListener listener;
 
     public BaseRecyclerAdapter(RecyclerView v, Collection<T> datas, int itemLayoutId) {
         if (datas == null) {
@@ -58,16 +61,30 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerHolder(View.inflate(cxt, mItemLayoutId, null));
+        LayoutInflater inflater = LayoutInflater.from(cxt);
+        View root = inflater.inflate(mItemLayoutId, parent, false);
+        return new RecyclerHolder(root);
     }
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
         convert(holder, realDatas.get(position), isScrolling);
+        if (listener != null) {
+            listener.onItemClick(holder.itemView, realDatas.get(position), position);
+        }
     }
 
     @Override
     public int getItemCount() {
         return realDatas.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener l) {
+        listener = l;
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, Object item, int position);
     }
 }
