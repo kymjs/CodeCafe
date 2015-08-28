@@ -14,6 +14,7 @@ import top.codecafe.app.ui.WidgetListActivity
 import top.codecafe.app.ui.base.BaseMainFragment
 import top.codecafe.app.utils.DefaultItemDivider
 import top.codecafe.app.utils.showActivity
+import top.codecafe.app.utils.toast
 import java.util.ArrayList
 
 /**
@@ -30,7 +31,7 @@ public class WidgetCategoryFragment : BaseMainFragment() {
     }
 
     override fun initData() {
-        for (i in 0..10) {
+        for (i in 0..50) {
             var data: WidgetCategory = WidgetCategory()
             data.name = "hello$i"
             data.type = "type类型$i"
