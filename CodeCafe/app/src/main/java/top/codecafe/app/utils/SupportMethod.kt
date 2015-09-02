@@ -17,6 +17,10 @@ fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
 
+fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(getActivity(), message, duration).show()
+}
+
 fun Context.screenHeight(): Int = getResources().getDisplayMetrics().heightPixels
 
 fun Context.screenWidth(): Int = getResources().getDisplayMetrics().widthPixels

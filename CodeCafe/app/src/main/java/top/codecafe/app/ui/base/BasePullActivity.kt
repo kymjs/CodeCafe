@@ -1,5 +1,6 @@
 package top.codecafe.app.ui.base
 
+import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import top.codecafe.app.R
@@ -8,6 +9,7 @@ import top.codecafe.app.utils.DefaultItemDivider
 import top.codecafe.kjframe.KJActivity
 
 /**
+ * 能下拉刷新的Recycler
  * @author kymjs (http://www.kymjs.com/) on 8/27/15.
  */
 public abstract class BasePullActivity : KJActivity(), CircleRefreshLayout.OnCircleRefreshListener {
@@ -25,16 +27,9 @@ public abstract class BasePullActivity : KJActivity(), CircleRefreshLayout.OnCir
         recyclerView = bindView(R.id.recyclerView)
         refreshLayout = bindView(R.id.swiperefreshlayout)
 
-        refreshLayout?.setOnRefreshListener(this)
-
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DefaultItemDivider());
-        recyclerView?.setAdapter(getRecyclerAdapter())
-
-        requestData()
-    }
-
-    fun requestData() {
+        refreshLayout?.setOnRefreshListener(this)
     }
 
     public abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;

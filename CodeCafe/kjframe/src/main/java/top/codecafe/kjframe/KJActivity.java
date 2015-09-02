@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
 
 import top.codecafe.kjframe.http.KJAsyncTask;
 import top.codecafe.kjframe.ui.I_KJActivity;
@@ -39,11 +39,11 @@ public abstract class KJActivity extends AppCompatActivity implements View.OnCli
     }
 
     // 当线程中初始化的数据初始化完成后，调用回调方法
-    private static class ThreadDataHandler extends Handler {
-        private final WeakReference<KJActivity> mOuterInstance;
+    private class ThreadDataHandler extends Handler {
+        private final SoftReference<KJActivity> mOuterInstance;
 
         public ThreadDataHandler(KJActivity outer) {
-            mOuterInstance = new WeakReference<KJActivity>(outer);
+            mOuterInstance = new SoftReference<KJActivity>(outer);
         }
 
         @Override
