@@ -39,7 +39,7 @@ public class WidgetListActivity : BasePullActivity() {
         requestData()
     }
 
-    fun requestData() {
+    override fun requestData() {
         API.getWidgetList("", object : HttpCallBack() {
             override fun onSuccess(s: String?) {
                 datas = Parser.parserWidgetList(s);

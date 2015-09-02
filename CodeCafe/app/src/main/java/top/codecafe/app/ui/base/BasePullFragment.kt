@@ -40,7 +40,7 @@ public abstract class BasePullFragment : BaseMainFragment(), CircleRefreshLayout
         requestData()
     }
 
-    fun requestData() {
+    open fun requestData() {
     }
 
     abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;

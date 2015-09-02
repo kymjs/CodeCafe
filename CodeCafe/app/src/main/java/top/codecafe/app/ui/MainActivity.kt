@@ -87,7 +87,7 @@ public class MainActivity : KJActivity() {
         }
     }
 
-    fun changeMenuState() {
+    inline fun changeMenuState() {
         if (isOpen) {
             drawerLayout?.closeDrawers()
         } else {
@@ -95,7 +95,7 @@ public class MainActivity : KJActivity() {
         }
     }
 
-    fun changeFragment(targetFragment: SupportFragment) {
+    inline fun changeFragment(targetFragment: SupportFragment) {
         drawerLayout?.closeDrawers()
         changeFragment(R.id.main_content, targetFragment)
         targetFragment.onResume();
@@ -134,7 +134,7 @@ public class MainActivity : KJActivity() {
     /**
      * 取消退出
      */
-    private fun cancleExit() {
+    inline private fun cancleExit() {
         val anim = KJAnimations.getTranslateAnimation(0f, 0f, -titleBarHeight, 0f, 300)
         tvTitle?.startAnimation(anim)
         val anim2 = KJAnimations.getTranslateAnimation(0f, 0f, 0f, -titleBarHeight, 300)
@@ -155,7 +155,7 @@ public class MainActivity : KJActivity() {
     /**
      * 显示退出提示
      */
-    private fun showExitTip() {
+    inline private fun showExitTip() {
         tvDoubleClickTip?.setVisibility(View.VISIBLE)
         val anim = KJAnimations.getTranslateAnimation(0f, 0f, 0f, -titleBarHeight, 300)
         tvTitle?.startAnimation(anim)

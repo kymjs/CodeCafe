@@ -30,7 +30,13 @@ public abstract class BasePullActivity : KJActivity(), CircleRefreshLayout.OnCir
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DefaultItemDivider());
         refreshLayout?.setOnRefreshListener(this)
+    
+        requestData()
     }
+
+    open fun requestData() {
+    }
+
 
     public abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;
 }
