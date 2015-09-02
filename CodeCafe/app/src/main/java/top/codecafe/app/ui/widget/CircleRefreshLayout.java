@@ -67,8 +67,10 @@ public class CircleRefreshLayout extends FrameLayout {
             throw new RuntimeException("you can only attach one child");
         }
         setAttrs(attrs);
-        mPullHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, context.getResources().getDisplayMetrics());
-        mHeaderHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources().getDisplayMetrics());
+        mPullHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, context
+                .getResources().getDisplayMetrics());
+        mHeaderHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context
+                .getResources().getDisplayMetrics());
 
         this.post(new Runnable() {
             @Override
@@ -83,9 +85,12 @@ public class CircleRefreshLayout extends FrameLayout {
     private void setAttrs(AttributeSet attrs) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CirCleRefreshLayout);
 
-        mHeaderBackColor = a.getColor(R.styleable.CirCleRefreshLayout_AniBackColor, mHeaderBackColor);
-        mHeaderForeColor = a.getColor(R.styleable.CirCleRefreshLayout_AniForeColor, mHeaderForeColor);
-        mHeaderCircleSmaller = a.getInt(R.styleable.CirCleRefreshLayout_CircleSmaller, mHeaderCircleSmaller);
+        mHeaderBackColor = a.getColor(R.styleable.CirCleRefreshLayout_AniBackColor,
+                mHeaderBackColor);
+        mHeaderForeColor = a.getColor(R.styleable.CirCleRefreshLayout_AniForeColor,
+                mHeaderForeColor);
+        mHeaderCircleSmaller = a.getInt(R.styleable.CirCleRefreshLayout_CircleSmaller,
+                mHeaderCircleSmaller);
 
         a.recycle();
     }
@@ -204,7 +209,8 @@ public class CircleRefreshLayout extends FrameLayout {
 
 
                 if (mChildView != null) {
-                    float offsetY = decelerateInterpolator.getInterpolation(dy / 2 / mPullHeight) * dy / 2;
+                    float offsetY = decelerateInterpolator.getInterpolation(dy / 2 / mPullHeight)
+                            * dy / 2;
                     mChildView.setTranslationY(offsetY);
 
                     mHeader.getLayoutParams().height = (int) offsetY;
@@ -221,7 +227,7 @@ public class CircleRefreshLayout extends FrameLayout {
                         mUpBackAnimator.start();
                         mHeader.releaseDrag();
                         mIsRefreshing = true;
-                        if (onCircleRefreshListener!=null) {
+                        if (onCircleRefreshListener != null) {
                             onCircleRefreshListener.refreshing();
                         }
 
@@ -232,7 +238,8 @@ public class CircleRefreshLayout extends FrameLayout {
                             @Override
                             public void onAnimationUpdate(ValueAnimator animation) {
                                 float val = (float) animation.getAnimatedValue();
-                                val = decelerateInterpolator.getInterpolation(val / mHeaderHeight) * val;
+                                val = decelerateInterpolator.getInterpolation(val /
+                                        mHeaderHeight) * val;
                                 if (mChildView != null) {
                                     mChildView.setTranslationY(val);
                                 }
@@ -255,7 +262,9 @@ public class CircleRefreshLayout extends FrameLayout {
             onCircleRefreshListener.completeRefresh();
         }
         mIsRefreshing = false;
-        mHeader.setRefreshing(false);
+        if (mHeader != null) {
+            mHeader.setRefreshing(false);
+        }
     }
 
     private OnCircleRefreshListener onCircleRefreshListener;

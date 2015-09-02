@@ -95,7 +95,7 @@ public class MainActivity : KJActivity() {
         }
     }
 
-    inline fun changeFragment(targetFragment: SupportFragment) {
+    fun changeFragment(targetFragment: SupportFragment) {
         drawerLayout?.closeDrawers()
         changeFragment(R.id.main_content, targetFragment)
         targetFragment.onResume();
@@ -134,7 +134,7 @@ public class MainActivity : KJActivity() {
     /**
      * 取消退出
      */
-    inline private fun cancleExit() {
+    private fun cancleExit() {
         val anim = KJAnimations.getTranslateAnimation(0f, 0f, -titleBarHeight, 0f, 300)
         tvTitle?.startAnimation(anim)
         val anim2 = KJAnimations.getTranslateAnimation(0f, 0f, 0f, -titleBarHeight, 300)
@@ -172,7 +172,9 @@ public class MainActivity : KJActivity() {
 
     override fun onKeyDown(keyCode: Int, event: android.view.KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (isOnKeyBacking) {
+            if (isOpen) {
+                drawerLayout?.closeDrawers()
+            } else if (isOnKeyBacking) {
                 mMainLoopHandler.removeCallbacks(onBackTimeRunnable)
                 isOnKeyBacking = false
                 System.exit(0)

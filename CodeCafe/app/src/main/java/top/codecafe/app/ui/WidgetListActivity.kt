@@ -36,7 +36,6 @@ public class WidgetListActivity : BasePullActivity() {
     override fun initWidget() {
         super.initWidget()
         recyclerView?.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-        requestData()
     }
 
     override fun requestData() {
