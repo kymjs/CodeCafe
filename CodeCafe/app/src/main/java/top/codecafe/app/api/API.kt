@@ -2,7 +2,9 @@ package top.codecafe.app.api
 
 import top.codecafe.kjframe.KJHttp
 import top.codecafe.kjframe.http.HttpCallBack
+import top.codecafe.kjframe.http.HttpConfig
 import top.codecafe.kjframe.http.HttpParams
+import java.net.URLEncoder
 
 /**
  * 应用API
@@ -13,11 +15,17 @@ public object API {
 
     public val HOST: String = ""
 
-    public var kjh: KJHttp = KJHttp()
+    public var kjh: KJHttp
+
+    init {
+        val config: HttpConfig = HttpConfig()
+        //做配置
+        kjh = KJHttp(config)
+    }
 
     public fun getHttpParams(): HttpParams {
         val params = HttpParams()
-        // add header
+        // 添加header
         return params
     }
 
@@ -27,7 +35,7 @@ public object API {
 
     public fun getTopicList(topic: String, callBack: HttpCallBack, pageIndex: Int = 0) {
         val params = getHttpParams()
-        params.put("title", topic)
+        params.put("title", URLEncoder.encode(topic, "UTF-8"))
         params.put("pageIndex", pageIndex)
         kjh.get("http://www.oschina.net/action/api/tweet_topic_list", params, callBack)
     }

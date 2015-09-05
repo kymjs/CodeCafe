@@ -87,7 +87,7 @@ public class MainActivity : KJActivity() {
         }
     }
 
-    inline fun changeMenuState() {
+    fun changeMenuState() {
         if (isOpen) {
             drawerLayout?.closeDrawers()
         } else {
@@ -155,7 +155,7 @@ public class MainActivity : KJActivity() {
     /**
      * 显示退出提示
      */
-    inline private fun showExitTip() {
+    private fun showExitTip() {
         tvDoubleClickTip?.setVisibility(View.VISIBLE)
         val anim = KJAnimations.getTranslateAnimation(0f, 0f, 0f, -titleBarHeight, 300)
         tvTitle?.startAnimation(anim)

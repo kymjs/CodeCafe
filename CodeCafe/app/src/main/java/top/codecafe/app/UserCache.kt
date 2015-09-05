@@ -66,7 +66,7 @@ public object UserCache {
     public fun read(saveFile: File): Any? {
         var fis: FileInputStream? = null
         var ois: ObjectInputStream? = null
-        var obj: Any? = null
+        var obj: Any?
         try {
             fis = FileInputStream(saveFile)
             ois = ObjectInputStream(fis)

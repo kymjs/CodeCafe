@@ -4,15 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.util.TypedValue
 import android.widget.Toast
-import top.codecafe.app.ui.WidgetListActivity
 
 /**
  * 工具方法
  *
  * @author kymjs (http://www.kymjs.com/) on 15/8/21.
  */
+
+
 fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
@@ -51,4 +53,14 @@ fun Fragment.showActivity(clazz: Class<*>) {
 fun Fragment.skipActivity(clazz: Class<*>) {
     startActivity(Intent(getActivity(), clazz))
     getActivity().finish();
+}
+
+fun Any.kjlog(msg: String? = "") {
+    val element: StackTraceElement = Thread.currentThread().getStackTrace()[3]
+    Log.i("kymjs", StringBuilder().append("[")
+            .append(element.getFileName())
+            .append(":")
+            .append(element.getLineNumber())
+            .append("]-->")
+            .append(msg ?: "").toString())
 }

@@ -37,21 +37,18 @@ public class WidgetListActivity : BasePullActivity() {
         super.initWidget()
         recyclerView?.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
     }
+    override fun onRefresh() {
+        requestData()
+    }
 
     override fun requestData() {
+        setSwipeRefreshLoadingState()
         API.getWidgetList("", object : HttpCallBack() {
             override fun onSuccess(s: String?) {
                 datas = Parser.parserWidgetList(s);
                 recyclerView?.setAdapter(getRecyclerAdapter())
-                refreshLayout?.finishRefreshing()
+                setSwipeRefreshLoadedState()
             }
         })
-    }
-
-    override fun refreshing() {
-        requestData()
-    }
-
-    override fun completeRefresh() {
     }
 }
