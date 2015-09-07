@@ -3,18 +3,17 @@ package top.codecafe.app.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
-
 import rx.Observable
 import rx.functions.Action1
+import rx.functions.Func1
 import top.codecafe.app.R
+import top.codecafe.app.bean.ItemViewData
 import top.codecafe.app.bean.Tweet
-import top.codecafe.app.bean.User
 import top.codecafe.app.ui.base.BaseRecyclerAdapter
 import top.codecafe.app.ui.base.RecyclerHolder
-import top.codecafe.app.utils.kjlog
 import top.codecafe.kjframe.KJBitmap
 import top.codecafe.kjframe.utils.StringUtils
-import java.util.*
+import java.util.ArrayList
 
 /**
  * 动态列表适配器
@@ -25,8 +24,8 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
         BaseRecyclerAdapter<Tweet>(v, datas, R.layout.item_recycler_topic) {
 
     private val kjb = KJBitmap()
-    private var observable: Observable<Int> = Observable.just(1);
-    private val subscriberArray: MutableList<Action1<Int>> = ArrayList()
+    private var observable: Observable<ItemViewData> = Observable.just(ItemViewData());
+    private val subscriberArray: MutableList<Action1<ItemViewData>> = ArrayList()
 
     override fun convert(holder: RecyclerHolder, item: Tweet, isScrolling: Boolean) {
         holder.setText(R.id.item_topic_tv_name, item.getAuthor())
@@ -47,19 +46,25 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
     /**
      * 给一个View或一个id所对应的View设置点击事件监听器，这个监听器将会向外层发送这一事件{@link sendClickEven(v:View)}
      */
-    private fun setClickObservable(holder: RecyclerHolder,view: View? = null, id: Int = 0) {
+    private fun setClickObservable(holder: RecyclerHolder, view: View? = null, id: Int = 0) {
         if (view == null) {
-            holder.getView<View>(id).setOnClickListener { v -> sendClickEven(v) }
+            holder.getView<View>(id).setOnClickListener { v -> sendClickEven(v, holder.getLayoutPosition()) }
         } else {
-            view.setOnClickListener { v -> sendClickEven(v) }
+            view.setOnClickListener { v -> sendClickEven(v, holder.getLayoutPosition()) }
         }
     }
 
     /**
      * 向这个适配器的外部传递适配器中item的点击事件
      */
-    private fun sendClickEven(v: View) {
-        observable = observable.map { id -> v.getId() }
+    private fun sendClickEven(v: View, position: Int) {
+        observable = observable.map<ItemViewData> { data ->
+            data.id = v.getId()
+            data.data = realDatas.get(position) as Object
+            data.position = position
+            data.view = v
+            data
+        }
 
         for (action in subscriberArray) {
             observable.subscribe(action)
@@ -69,7 +74,7 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
     /**
      * 添加一个点击事件接收器（已知调用类：TopicList）
      */
-    public fun addSubscription(onNext: Action1<Int>) {
+    public fun addSubscription(onNext: Action1<ItemViewData>) {
         subscriberArray.add(onNext)
     }
 }

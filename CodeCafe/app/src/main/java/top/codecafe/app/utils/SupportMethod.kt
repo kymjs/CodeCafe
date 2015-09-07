@@ -41,6 +41,10 @@ fun Context.showActivity(clazz: Class<*>) {
     startActivity(Intent(this, clazz))
 }
 
+fun Context.showActivity(intent: Intent) {
+    startActivity(intent)
+}
+
 fun Activity.skipActivity(clazz: Class<*>) {
     startActivity(Intent(this, clazz))
     finish();
@@ -48,6 +52,10 @@ fun Activity.skipActivity(clazz: Class<*>) {
 
 fun Fragment.showActivity(clazz: Class<*>) {
     startActivity(Intent(getActivity(), clazz))
+}
+
+fun Fragment.showActivity(intent: Intent) {
+    startActivity(intent)
 }
 
 fun Fragment.skipActivity(clazz: Class<*>) {

@@ -28,6 +28,7 @@
         </activity>
 
         <activity android:name=".ui.WidgetListActivity"/>
+        <activity android:name=".ui.ImageActivity"/>
     </application>
 
 </manifest>
