@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+									android:layout_width="match_parent"
+									android:layout_height="match_parent">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:paddingBottom="5dp">
+
+		<top.codecafe.app.ui.widget.RoundImageView
+			android:id="@+id/item_topic_img_head"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_margin="6dp"/>
+
+		<TextView
+			android:id="@+id/item_topic_tv_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@id/item_topic_img_head"
+			android:layout_toRightOf="@id/item_topic_img_head"
+			android:padding="2dp"
+			android:singleLine="true"
+			android:textColor="#333"
+			android:textSize="15sp"/>
+
+		<TextView
+			android:id="@+id/item_topic_tv_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@id/item_topic_img_head"
+			android:layout_toRightOf="@id/item_topic_img_head"
+			android:padding="2dp"
+			android:singleLine="true"
+			android:textColor="#999"
+			android:textSize="12sp"/>
+
+		<TextView
+			android:id="@+id/item_topic_tv_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@id/item_topic_img_head"
+			android:layout_below="@id/item_topic_img_head"
+			android:layout_margin="5dp"
+			android:textColor="#333"
+			android:textSize="15sp"/>
+
+		<ImageView
+			android:id="@+id/item_topic_image"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/item_topic_tv_content"
+			android:layout_margin="6dp"
+			android:maxHeight="150dp"
+			android:scaleType="fitStart"/>
+
+		<ImageView
+			android:id="@+id/item_topic_forwarding"
+			android:layout_width="wrap_content"
+			android:layout_height="25dp"
+			android:layout_alignLeft="@id/item_topic_img_head"
+			android:layout_below="@id/item_topic_image"
+			android:layout_marginBottom="2dp"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="2dp"
+			android:src="@drawable/selector_forwarding"/>
+
+		<ImageView
+			android:id="@+id/item_topic_comment"
+			android:layout_width="wrap_content"
+			android:layout_height="25dp"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@id/item_topic_forwarding"
+			android:layout_marginBottom="2dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="5dp"
+			android:layout_marginTop="2dp"
+			android:src="@drawable/icon_commit"/>
+
+		<ImageView
+			android:id="@+id/item_topic_like"
+			android:layout_width="wrap_content"
+			android:layout_height="25dp"
+			android:layout_alignTop="@id/item_topic_forwarding"
+			android:layout_margin="2dp"
+			android:layout_toLeftOf="@id/item_topic_comment"
+			android:src="@drawable/icon_unlike"/>
+
+		<TextView
+			android:id="@+id/item_topic_tv_likepeople"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/item_topic_forwarding"
+			android:layout_marginBottom="4dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="4dp"
+			android:drawableLeft="@drawable/icon_like_s"
+			android:text="likes"/>
+	</RelativeLayout>
+</android.support.v7.widget.CardView>

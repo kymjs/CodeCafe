@@ -65,12 +65,7 @@ public class MainSlidMenu : SupportFragment() {
      * 侧滑菜单中的item被点击，发送消息，让MainActivity响应这个事件
      */
     fun sendChangeFragmentEven(tag: Int) {
-        var changeFragmentEven = Observable.create(object : Observable.OnSubscribe<Int> {
-            override fun call(sub: Subscriber<in Int>) {
-                sub.onNext(tag)
-                sub.onCompleted()
-            }
-        })
+        var changeFragmentEven = Observable.just(tag)
 
         val aty: Activity = getActivity()
 

@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:22.+'
     compile 'com.android.support:appcompat-v7:22.+'
     compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.github.chrisbanes.photoview:library:1.+'
     compile 'com.nineoldandroids:library:2.4.0'
 }
 
