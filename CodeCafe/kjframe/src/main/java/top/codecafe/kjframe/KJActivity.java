@@ -18,7 +18,7 @@ import top.codecafe.kjframe.ui.SupportFragment;
  *
  * @author kymjs (http://www.kymjs.com/) on 15/8/21.
  */
-public abstract class KJActivity extends AppCompatActivity implements View.OnClickListener, 
+public abstract class KJActivity extends AppCompatActivity implements View.OnClickListener,
         I_KJActivity {
 
     public static int DESTROY = 0, STOP = 1, PAUSE = 2, RESUME = 3;
@@ -166,6 +166,7 @@ public abstract class KJActivity extends AppCompatActivity implements View.OnCli
         }
         if (targetFragment.isHidden()) {
             transaction.show(targetFragment);
+            targetFragment.onResume();
         }
         if (currentSupportFragment != null
                 && currentSupportFragment.isVisible()) {

@@ -98,7 +98,6 @@ public class MainActivity : KJActivity() {
     fun changeFragment(targetFragment: SupportFragment) {
         drawerLayout?.closeDrawers()
         changeFragment(R.id.main_content, targetFragment)
-        targetFragment.onResume();
     }
 
     inner class DrawerLayoutStateListener : DrawerLayout.SimpleDrawerListener() {
