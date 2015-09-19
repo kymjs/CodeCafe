@@ -47,13 +47,14 @@ public class DeliveryExecutor implements Delivery {
 
     /**
      * 当有中介响应的时候，会被调用，首先返回中介响应，并执行runnable(实际就是再去请求网络)<br>
-     * Note:所谓中介响应：当本地有一个未过期缓存的时候会优先返回一个缓存，但如果这个缓存又是需要刷新的时候，会再次去请求网络，
-     * 那么之前返回的那个有效但需要刷新的就是中介响应
      */
     @Override
     public void postResponse(Request<?> request, Response<?> response,
-            Runnable runnable) {
+                             Runnable runnable) {
         request.markDelivered();
+        if (response.isSuccess()) {
+            request.onAsyncSuccess(response.result);
+        }
         mResponsePoster.execute(new ResponseDeliveryRunnable(request, response,
                 runnable));
     }
@@ -75,7 +76,7 @@ public class DeliveryExecutor implements Delivery {
         private final Runnable mRunnable;
 
         public ResponseDeliveryRunnable(Request request, Response response,
-                Runnable runnable) {
+                                        Runnable runnable) {
             mRequest = request;
             mResponse = response;
             mRunnable = runnable;
@@ -104,10 +105,11 @@ public class DeliveryExecutor implements Delivery {
 
     @Override
     public void postDownloadProgress(Request<?> request, long fileSize,
-            long downloadedSize) {
+                                     long downloadedSize) {
         request.mCallback.onLoading(fileSize, downloadedSize);
     }
 
     @Override
-    public void postCancel(Request<?> request) {}
+    public void postCancel(Request<?> request) {
+    }
 }

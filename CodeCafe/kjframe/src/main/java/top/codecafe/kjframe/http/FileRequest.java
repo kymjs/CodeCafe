@@ -16,6 +16,7 @@
 package top.codecafe.kjframe.http;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,15 +29,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import top.codecafe.kjframe.utils.KJLoger;
-
 public class FileRequest extends Request<byte[]> {
     private final File mStoreFile;
     private final File mTemporaryFile; // 临时文件
 
+    private Map<String, String> mHeaders = new HashMap<String, String>();
+
     public FileRequest(String storeFilePath, String url, HttpCallBack callback) {
         super(HttpMethod.GET, url, callback);
         mStoreFile = new File(storeFilePath);
+        mHeaders.put("cookie", HttpConfig.sCookie);
         File folder = mStoreFile.getParentFile();
         if (folder != null) {
             folder.mkdirs();
@@ -93,10 +95,13 @@ public class FileRequest extends Request<byte[]> {
 
     @Override
     public Map<String, String> getHeaders() {
-        Map<String, String> header = new HashMap<String, String>();
-        header.put("Range", "bytes=" + mTemporaryFile.length() + "-");
-        header.put("Accept-Encoding", "identity");
-        return header;
+        mHeaders.put("Range", "bytes=" + mTemporaryFile.length() + "-");
+        mHeaders.put("Accept-Encoding", "identity");
+        return mHeaders;
+    }
+
+    public void setHeaders(Map<String, String> mHeaders) {
+        this.mHeaders = mHeaders;
     }
 
     public byte[] handleResponse(HttpResponse response) throws IOException,
@@ -104,7 +109,7 @@ public class FileRequest extends Request<byte[]> {
         HttpEntity entity = response.getEntity();
         long fileSize = entity.getContentLength();
         if (fileSize <= 0) {
-            KJLoger.debug("Response doesn't present Content-Length!");
+            Log.e("kjframe", "Response doesn't present Content-Length!");
         }
 
         long downloadedSize = mTemporaryFile.length();
@@ -165,10 +170,9 @@ public class FileRequest extends Request<byte[]> {
             }
         } finally {
             try {
-                if (entity != null)
-                    entity.consumeContent();
+                entity.consumeContent();
             } catch (Exception e) {
-                KJLoger.debug("Error occured when calling consumingContent");
+                Log.e("kjframe", "Error occured when calling consumingContent");
             }
             tmpFileRaf.close();
         }

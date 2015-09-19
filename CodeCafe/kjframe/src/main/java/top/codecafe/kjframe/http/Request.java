@@ -30,9 +30,8 @@ import top.codecafe.kjframe.utils.KJLoger;
 
 /**
  * 一个请求基类
- * 
- * @param <T>
- *            Http返回类型
+ *
+ * @param <T> Http返回类型
  */
 public abstract class Request<T> implements Comparable<Request<T>> {
 
@@ -223,7 +222,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * 对中文参数做URL转码
      */
     private byte[] encodeParameters(Map<String, String> params,
-            String paramsEncoding) {
+                                    String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -281,9 +280,8 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
     /**
      * 将网络请求执行器(NetWork)返回的NetWork响应转换为Http响应
-     * 
-     * @param response
-     *            网络请求执行器(NetWork)返回的NetWork响应
+     *
+     * @param response 网络请求执行器(NetWork)返回的NetWork响应
      * @return 转换后的HttpRespond, or null in the case of an error
      */
     abstract public Response<T> parseNetworkResponse(NetworkResponse response);
@@ -291,24 +289,28 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     /**
      * 如果需要根据不同错误做不同的处理策略，可以在子类重写本方法
      */
-    protected KJHttpException parseNetworkError(KJHttpException volleyError) {
-        return volleyError;
+    protected KJHttpException parseNetworkError(KJHttpException kjhttpError) {
+        return kjhttpError;
     }
 
     /**
      * 将Http请求结果分发到主线程
-     * 
-     * @param response
-     *            {@link #parseNetworkResponse(NetworkResponse)}
+     *
+     * @param response {@link #parseNetworkResponse(NetworkResponse)}
      */
     abstract protected void deliverResponse(Map<String, String> headers,
-            T response);
+                                            T response);
+
+    protected void onAsyncSuccess(Object t) {
+        if (mCallback != null) {
+            mCallback.onSuccessInAsync(t);
+        }
+    }
 
     /**
      * 响应Http请求异常的回调
-     * 
-     * @param error
-     *            原因
+     *
+     * @param error 原因
      */
     public void deliverError(KJHttpException error) {
         if (mCallback != null) {

@@ -43,12 +43,12 @@ public abstract class KJActivity extends AppCompatActivity implements View.OnCli
         private final SoftReference<KJActivity> mOuterInstance;
 
         public ThreadDataHandler(KJActivity outer) {
-            mOuterInstance = new SoftReference<KJActivity>(outer);
+            mOuterInstance = new SoftReference<>(outer);
         }
 
         @Override
         public void handleMessage(@NonNull Message msg) {
-            if (msg.what == WHICH_MSG) {
+            if (msg.what == WHICH_MSG && mOuterInstance.get() != null) {
                 mOuterInstance.get().callback.onSuccess();
             }
         }
@@ -166,7 +166,7 @@ public abstract class KJActivity extends AppCompatActivity implements View.OnCli
         }
         if (targetFragment.isHidden()) {
             transaction.show(targetFragment);
-            targetFragment.onResume();
+            targetFragment.onChangeVisible();
         }
         if (currentSupportFragment != null
                 && currentSupportFragment.isVisible()) {

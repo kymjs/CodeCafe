@@ -21,9 +21,9 @@ import java.util.Map;
 
 /**
  * Http请求回调类<br>
- * 
+ * <p/>
  * <b>创建时间</b> 2014-8-7
- * 
+ *
  * @author kymjs (https://github.com/kymjs)
  * @version 1.4
  */
@@ -33,28 +33,29 @@ public abstract class HttpCallBack {
      * 请求开始之前回调
      */
     public void onPreStart() {
-        onPreStar();
     }
 
     /**
-     * 拼写错误，请使用onPreStart()
+     * 注意：本方法将在异步调用。
+     * Http异步请求成功时在异步回调
+     *
+     * @param t 返回的信息
      */
-    @Deprecated
-    public void onPreStar() {}
+    public void onSuccessInAsync(Object t) {
+    }
 
     /**
      * Http请求成功时回调
-     * 
-     * @param t
-     *            HttpRequest返回信息
+     *
+     * @param t HttpRequest返回信息
      */
-    public void onSuccess(String t) {}
+    public void onSuccess(String t) {
+    }
 
     /**
      * Http请求成功时回调
-     * 
-     * @param t
-     *            HttpRequest返回信息
+     *
+     * @param t HttpRequest返回信息
      */
     public void onSuccess(byte[] t) {
         if (t != null) {
@@ -64,11 +65,9 @@ public abstract class HttpCallBack {
 
     /**
      * Http请求成功时回调
-     * 
-     * @param headers
-     *            HttpRespond头
-     * @param t
-     *            HttpRequest返回信息
+     *
+     * @param headers HttpRespond头
+     * @param t       HttpRequest返回信息
      */
     public void onSuccess(Map<String, String> headers, byte[] t) {
         onSuccess(t);
@@ -76,33 +75,33 @@ public abstract class HttpCallBack {
 
     /**
      * 仅在KJBitmap中可用，图片加载完成时回调
-     * 
+     *
      * @param t
      */
-    public void onSuccess(Bitmap t) {}
+    public void onSuccess(Bitmap t) {
+    }
 
     /**
      * Http请求失败时回调
-     * 
-     * @param errorNo
-     *            错误码
-     * @param strMsg
-     *            错误原因
+     *
+     * @param errorNo 错误码
+     * @param strMsg  错误原因
      */
-    public void onFailure(int errorNo, String strMsg) {}
+    public void onFailure(int errorNo, String strMsg) {
+    }
 
     /**
      * Http请求结束后回调
      */
-    public void onFinish() {}
+    public void onFinish() {
+    }
 
     /**
      * 进度回调，仅支持Download时使用
-     * 
-     * @param count
-     *            总数
-     * @param current
-     *            当前进度
+     *
+     * @param count   总数
+     * @param current 当前进度
      */
-    public void onLoading(long count, long current) {}
+    public void onLoading(long count, long current) {
+    }
 }

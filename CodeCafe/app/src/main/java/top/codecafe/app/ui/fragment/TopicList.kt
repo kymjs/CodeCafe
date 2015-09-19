@@ -18,6 +18,8 @@ import top.codecafe.app.utils.kjlog
 import top.codecafe.app.utils.showActivity
 import top.codecafe.app.utils.toast
 import top.codecafe.kjframe.http.HttpCallBack
+import top.codecafe.kjframe.http.KJAsyncTask
+import top.codecafe.kjframe.utils.KJLoger
 import java.util.TreeSet
 
 /**
@@ -37,7 +39,7 @@ public class TopicList : BasePullFragment() {
             R.id.item_topic_forwarding -> toast("点击了按钮")
             R.id.item_topic_image -> {
                 val intent: Intent = Intent(outsideAty, javaClass<ImageActivity>())
-                var item: Object? = evenData.data
+                var item: Any? = evenData.data
                 if (item is Tweet)
                     intent.putExtra(ImageActivity.URL_KEY, item.getImgBig())
                 showActivity(intent)
@@ -62,11 +64,16 @@ public class TopicList : BasePullFragment() {
     override fun requestData() {
         setSwipeRefreshLoadingState()
         API.getTopicList("完善简历 送键盘", object : HttpCallBack() {
+            override fun onSuccessInAsync(t: Any) {
+                if (t is ByteArray) {
+                    val datas: List<Tweet> = Parser.xmlToBean(javaClass<TweetsList>(), String(t))
+                            .getList();
+                    tweets.addAll(datas)
+                }
+            }
+
             override fun onSuccess(s: String?) {
                 kjlog("网络请求：$s")
-                val datas: List<Tweet> = Parser.xmlToBean(javaClass<TweetsList>(), s)
-                        .getList();
-                tweets.addAll(datas)
                 recyclerView?.setAdapter(getRecyclerAdapter())
                 adapter?.addSubscription(itemClickSubscribers)
                 setSwipeRefreshLoadedState()

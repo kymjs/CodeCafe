@@ -21,7 +21,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.cookie.DateUtils;
 
 import java.io.IOException;
@@ -95,9 +94,6 @@ public class Network {
             } catch (SocketTimeoutException e) {
                 throw new KJHttpException(new SocketTimeoutException(
                         "socket timeout"));
-            } catch (ConnectTimeoutException e) {
-                throw new KJHttpException(new SocketTimeoutException(
-                        "socket timeout"));
             } catch (MalformedURLException e) {
                 throw new RuntimeException("Bad URL " + request.getUrl(), e);
             } catch (IOException e) {
@@ -122,7 +118,7 @@ public class Network {
                                 networkResponse);
                     }
                 } else {
-                    throw new KJHttpException(networkResponse);
+                    throw new KJHttpException();
                 }
             }
         }

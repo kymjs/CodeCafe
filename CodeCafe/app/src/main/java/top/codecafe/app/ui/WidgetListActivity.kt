@@ -9,6 +9,7 @@ import top.codecafe.app.ui.base.BasePullActivity
 import top.codecafe.app.ui.base.BaseRecyclerAdapter
 import top.codecafe.kjframe.KJHttp
 import top.codecafe.kjframe.http.HttpCallBack
+import top.codecafe.kjframe.http.KJAsyncTask
 import java.util.ArrayList
 
 /**

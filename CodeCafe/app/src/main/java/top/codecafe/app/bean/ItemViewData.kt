@@ -10,6 +10,6 @@ import android.view.View
 public final class ItemViewData {
     var view: View? = null
     var position: Int = 0
-    var data: Object? = null
+    var data: Any? = null
     var id: Int = 0
 }

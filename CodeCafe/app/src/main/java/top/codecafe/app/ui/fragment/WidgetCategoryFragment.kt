@@ -43,6 +43,7 @@ public class WidgetCategoryFragment : BaseMainFragment() {
     override fun initWidget(parentView: View?) {
         super.initWidget(parentView)
         recyclerView = bindView(R.id.recyclerView)
+
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DefaultItemDivider())
         recyclerView?.setLayoutManager(StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL))

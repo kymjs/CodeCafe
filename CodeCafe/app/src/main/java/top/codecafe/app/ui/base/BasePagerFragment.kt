@@ -15,7 +15,7 @@ import java.util.ArrayList
  *
  * @author kymjs (http://www.kymjs.com/) on 8/26/15.
  */
-public abstract class BasePagerFragment : BaseMainFragment(){
+public abstract class BasePagerFragment : BaseMainFragment() {
     private var mGroup: PagerSlidingTabStrip? = null
     private var mPager: ViewPager? = null
 
@@ -40,10 +40,7 @@ public abstract class BasePagerFragment : BaseMainFragment(){
         super.initWidget(parentView)
         mGroup = bindView(R.id.myworks_group)
         mPager = bindView(R.id.myworks_pager)
-
         adapter = ViewPageFragmentAdapter(getChildFragmentManager(), mGroup, mPager)
-        mPager?.setAdapter(adapter)
-        mGroup?.setViewPager(mPager)
 
         initContentData(pagerDataArray)
 
@@ -53,7 +50,6 @@ public abstract class BasePagerFragment : BaseMainFragment(){
 
         mPager?.setOffscreenPageLimit(pagerDataArray.size())
     }
-
 
     open class PagerData {
         var title: String = ""
