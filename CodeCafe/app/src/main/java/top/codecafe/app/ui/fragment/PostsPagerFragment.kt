@@ -16,6 +16,7 @@ public class PostsPagerFragment : BasePagerFragment() {
 
     override fun onResume() {
         super.onResume()
+        5/0
         setTitle("技术热点")
     }
 }

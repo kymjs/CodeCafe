@@ -1,0 +1,37 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="糟糕，出错了~"
+		android:textSize="19sp"/>
+
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="30dp"
+		android:contentDescription="@null"
+		android:src="@drawable/img_crash"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="15dp"
+		android:layout_marginRight="15dp"
+		android:layout_marginTop="40dp"
+		android:text="亲爱的用户：\n     抱歉，由于您设备兼容性问题，APP发生了异常。如您上报了错误，稍后我们将对您的BUG做针对性改进，感谢您的支持。"
+		android:textSize="14sp"/>
+
+	<Button
+		android:id="@+id/upload_and_restart"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="60dp"
+		android:text="上报异常并重启APP"/>
+
+</LinearLayout>

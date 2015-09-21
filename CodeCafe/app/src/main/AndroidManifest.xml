@@ -29,6 +29,7 @@
 
         <activity android:name=".ui.WidgetListActivity"/>
         <activity android:name=".ui.ImageActivity"/>
+        <activity android:name=".ui.CrashDefaultActivity"/>
     </application>
 
 </manifest>

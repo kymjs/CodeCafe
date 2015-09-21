@@ -60,7 +60,7 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
     private fun sendClickEven(v: View, position: Int) {
         observable = observable.map<ItemViewData> { data ->
             data.id = v.getId()
-            data.data = realDatas.get(position) as Object
+            data.data = realDatas.get(position)
             data.position = position
             data.view = v
             data

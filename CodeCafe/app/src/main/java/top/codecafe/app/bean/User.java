@@ -23,7 +23,6 @@ import java.io.Serializable;
 public class User implements Serializable{
 
     private String account;//登陆账号
-    private String pwd; //登陆密码
     private String cookie; //用户cookie
     private boolean isLogin; //是否已经登录
 
@@ -62,14 +61,6 @@ public class User implements Serializable{
 
     public void setAccount(String account) {
         this.account = account;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 
     public String getCookie() {

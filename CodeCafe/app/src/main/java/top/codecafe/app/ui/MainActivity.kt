@@ -31,11 +31,11 @@ public class MainActivity : KJActivity() {
 
     private var materialMenuIcon: MaterialMenuIcon? = null
 
-    private var content1: SupportFragment = TopicPagerFragment()
-    private var content2: SupportFragment = TopicPagerFragment()
-    private var content3: SupportFragment = WidgetCategoryFragment()
-    private var content4: SupportFragment = PostsPagerFragment()
-    private var content5: SupportFragment = TopicPagerFragment()
+    private val content1: SupportFragment = TopicPagerFragment()
+    private val content2: SupportFragment = TopicPagerFragment()
+    private val content3: SupportFragment = WidgetCategoryFragment()
+    private val content4: SupportFragment = PostsPagerFragment()
+    private val content5: SupportFragment = TopicPagerFragment()
     private var menuFragment: MainSlidMenu? = null
 
     private var titleBarHeight: Float = 0f
