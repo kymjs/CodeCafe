@@ -26,14 +26,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile project(':kjframe')
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" 
     compile 'com.android.support:recyclerview-v7:22.+'
     compile 'com.android.support:cardview-v7:22.+'
     compile 'com.android.support:appcompat-v7:22.+'
     compile 'com.github.chrisbanes.photoview:library:1.+'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile project(':kjframe')
 }
 
 buildscript {

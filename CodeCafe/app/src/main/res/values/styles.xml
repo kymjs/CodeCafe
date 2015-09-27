@@ -1,80 +1,90 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-    </style>
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+	</style>
 
-    <style name="text_style_uid">
-        <item name="android:textColor">#ff666666</item>
-        <item name="android:textSize">14sp</item>
-    </style>
+	<style name="KJAppTheme" parent="AppTheme">
+		<item name="android:windowIsTranslucent">true</item>
+	</style>
 
-    <style name="titlebar">
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:padding">2dp</item>
-    </style>
+	<style name="text_style_uid">
+		<item name="android:textColor">#ff666666</item>
+		<item name="android:textSize">14sp</item>
+	</style>
 
-    <style name="titlebar_text" parent="titlebar">
-        <item name="android:textSize">19sp</item>
-        <item name="android:textColor">#ffffffff</item>
-        <item name="android:gravity">center</item>
-    </style>
+	<style name="titlebar">
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:padding">2dp</item>
+	</style>
 
-    <style name="titlebar_img" parent="titlebar">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:padding">10dp</item>
-    </style>
+	<style name="titlebar_text" parent="titlebar">
+		<item name="android:textSize">19sp</item>
+		<item name="android:textColor">#ffffffff</item>
+		<item name="android:gravity">center</item>
+	</style>
 
-    <style name="bottombar">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:gravity">bottom|center_horizontal</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:button">@null</item>
-        <item name="android:drawablePadding">2dp</item>
-    </style>
+	<style name="titlebar_img" parent="titlebar">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:scaleType">fitCenter</item>
+		<item name="android:padding">10dp</item>
+	</style>
 
-    <!-- 菜单layout的样式 -->
-    <style name="MenuItemLayoutStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">55dip</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:paddingLeft">15dip</item>
-        <item name="android:paddingRight">15dip</item>
-        <item name="android:background">@drawable/selector_text_bg</item>
-    </style>
+	<style name="bottombar">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_marginTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:gravity">bottom|center_horizontal</item>
+		<item name="android:background">@android:color/transparent</item>
+		<item name="android:button">@null</item>
+		<item name="android:drawablePadding">2dp</item>
+	</style>
 
-    <!-- 菜单ImageView的样式 -->
-    <style name="MenuItemImageViewStyle">
-        <item name="android:layout_width">24dip</item>
-        <item name="android:layout_height">24dip</item>
-        <item name="android:layout_marginRight">15dip</item>
-    </style>
+	<!-- 菜单layout的样式 -->
+	<style name="MenuItemLayoutStyle">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:minHeight">55dip</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:orientation">horizontal</item>
+		<item name="android:paddingLeft">15dip</item>
+		<item name="android:paddingRight">15dip</item>
+		<item name="android:background">@drawable/selector_text_bg</item>
+	</style>
 
-    <!-- 菜单TextView的样式 -->
-    <style name="MenuItemTextViewStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@drawable/drawer_menu_text</item>
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:textSize">16sp</item>
-    </style>
+	<!-- 菜单ImageView的样式 -->
+	<style name="MenuItemImageViewStyle">
+		<item name="android:layout_width">24dip</item>
+		<item name="android:layout_height">24dip</item>
+		<item name="android:layout_marginRight">15dip</item>
+	</style>
 
-    <!-- 加载滚动条样式 -->
-    <style name="loading">
-        <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateDrawable">@drawable/progressloading</item>
-        <item name="android:indeterminateDuration">1000</item>
-        <item name="android:indeterminateOnly">true</item>
-    </style>
+	<!-- 菜单TextView的样式 -->
+	<style name="MenuItemTextViewStyle">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@drawable/drawer_menu_text</item>
+		<item name="android:drawablePadding">10dp</item>
+		<item name="android:textSize">16sp</item>
+	</style>
 
+	<!-- 加载滚动条样式 -->
+	<style name="loading">
+		<item name="android:indeterminate">true</item>
+		<item name="android:indeterminateDrawable">@drawable/progressloading</item>
+		<item name="android:indeterminateDuration">1000</item>
+		<item name="android:indeterminateOnly">true</item>
+	</style>
+
+	<style name="SwipeBackLayout">
+		<item name="edge_size">50dip</item>
+		<item name="shadow_left">@drawable/shadow_left</item>
+		<item name="shadow_right">@drawable/shadow_right</item>
+		<item name="shadow_bottom">@drawable/shadow_bottom</item>
+	</style>
 </resources>
