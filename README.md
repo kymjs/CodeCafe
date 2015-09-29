@@ -2,6 +2,11 @@
 #[![OSL](http://www.kymjs.com/image/logo_s.png)](http://www.kymjs.com/works/)   
 *CodeCafe* 未来的[http://codecafe.top](http://codecafe.top)客户端，也是我的第二个练手项目。相关技术包括：Kotlin、RxJava、RecyclerView、DataBinding、Guava，这些对我来说都是些新东西，也就算是通过这个项目，好好练习一下算是了解。为什么说是第二个，因为还有一个被我不了了之的项目在[这里](https://github.com/kymjs/oschina-gam)。<br>
 
+## 一大堆无聊的东西
+万能RecyclerView适配器  
+APP崩溃后显示一个友善的Activity   
+仿微信侧滑finish()当前Activity    
+
 
 ## 关于
 自我介绍：[张涛就是我](http://blog.kymjs.com/about)    
