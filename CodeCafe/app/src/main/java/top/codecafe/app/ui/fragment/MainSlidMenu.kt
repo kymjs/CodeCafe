@@ -68,6 +68,7 @@ public class MainSlidMenu : SupportFragment() {
         Observable.just(tag)
                 .map { activity }
                 .filter { aty -> aty is MainActivity }
-                .subscribe { aty -> (aty as MainActivity).changeContentSubscribers }
+                .map { aty -> aty as MainActivity }
+                .subscribe { aty -> aty.changeContentSubscribers }
     }
 }
