@@ -27,7 +27,7 @@ public class ViewPageFragmentAdapter extends FragmentStatePagerAdapter {
     private final Context mContext;
     protected PagerSlidingTabStrip mPagerStrip;
     private final ViewPager mViewPager;
-    private final ArrayList<ViewPageInfo> mTabs = new ArrayList<ViewPageInfo>();
+    private final ArrayList<ViewPageInfo> mTabs = new ArrayList<>();
 
     public ViewPageFragmentAdapter(FragmentManager fm, PagerSlidingTabStrip pageStrip, ViewPager
             pager) {

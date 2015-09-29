@@ -37,7 +37,7 @@ dependencies {
 }
 
 buildscript {
-    ext.kotlin_version = '0.12.1218'
+    ext.kotlin_version = '0.13.1514'
     repositories {
         mavenCentral()
     }

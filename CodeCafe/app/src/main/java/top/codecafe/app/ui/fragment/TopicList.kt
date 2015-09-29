@@ -12,6 +12,7 @@ import top.codecafe.app.bean.ItemViewData
 import top.codecafe.app.bean.Tweet
 import top.codecafe.app.bean.TweetsList
 import top.codecafe.app.ui.ImageActivity
+import top.codecafe.app.ui.MainActivity
 import top.codecafe.app.ui.base.BasePullFragment
 import top.codecafe.app.ui.base.BaseRecyclerAdapter
 import top.codecafe.app.utils.kjlog
@@ -38,7 +39,7 @@ public class TopicList : BasePullFragment() {
         when (evenData.id) {
             R.id.item_topic_forwarding -> toast("点击了按钮")
             R.id.item_topic_image -> {
-                val intent: Intent = Intent(outsideAty, javaClass<ImageActivity>())
+                val intent: Intent = Intent(outsideAty, ImageActivity::class.java)
                 var item: Any? = evenData.data
                 if (item is Tweet)
                     intent.putExtra(ImageActivity.URL_KEY, item.getImgBig())
@@ -66,7 +67,7 @@ public class TopicList : BasePullFragment() {
         API.getTopicList("完善简历 送键盘", object : HttpCallBack() {
             override fun onSuccessInAsync(t: Any) {
                 if (t is ByteArray) {
-                    val datas: List<Tweet> = Parser.xmlToBean(javaClass<TweetsList>(), String(t))
+                    val datas: List<Tweet> = Parser.xmlToBean(TweetsList::class.java, String(t))
                             .getList();
                     tweets.addAll(datas)
                 }

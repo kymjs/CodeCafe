@@ -25,7 +25,7 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
 
     private val kjb = KJBitmap()
     private var observable: Observable<ItemViewData> = Observable.just(ItemViewData());
-    private val subscriberArray: MutableList<Action1<ItemViewData>> = ArrayList()
+    private val subscriberArray: MutableList<Action1<ItemViewData>> = ArrayList(5)
 
     override fun convert(holder: RecyclerHolder, item: Tweet, isScrolling: Boolean) {
         holder.setText(R.id.item_topic_tv_name, item.getAuthor())
@@ -58,17 +58,13 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
      * 向这个适配器的外部传递适配器中item的点击事件
      */
     private fun sendClickEven(v: View, position: Int) {
-        observable = observable.map<ItemViewData> { data ->
+        observable.map { data ->
             data.id = v.getId()
             data.data = realDatas.get(position)
             data.position = position
             data.view = v
             data
-        }
-
-        for (action in subscriberArray) {
-            observable.subscribe(action)
-        }
+        }.subscribe { Observable.from(subscriberArray) }
     }
 
     /**
