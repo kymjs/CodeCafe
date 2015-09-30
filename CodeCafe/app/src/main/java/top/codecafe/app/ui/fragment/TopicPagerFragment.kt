@@ -12,8 +12,8 @@ import java.util.ArrayList
  */
 public class TopicPagerFragment : BasePagerFragment() {
     override fun initContentData(pagerDataArray: ArrayList<PagerData>) {
-        pagerDataArray.add(PagerData("今日话题", javaClass<TopicList>()))
-        pagerDataArray.add(PagerData("心情广场", javaClass<MoodPlaza>()))
+        pagerDataArray.add(PagerData("今日话题", TopicList::class.java))
+        pagerDataArray.add(PagerData("心情广场", MoodPlaza::class.java))
     }
 
     override fun onResume() {

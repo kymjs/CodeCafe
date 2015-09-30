@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import top.codecafe.app.R
+import top.codecafe.app.ui.widget.EmptyLayout
 import top.codecafe.app.utils.DefaultItemDivider
 
 /**
@@ -17,8 +18,8 @@ import top.codecafe.app.utils.DefaultItemDivider
 public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     public var recyclerView: RecyclerView? = null
-
     public var refreshLayout: SwipeRefreshLayout? = null
+    public var emptyLayout: EmptyLayout? = null
 
     override fun inflaterView(layoutInflater: LayoutInflater, viewGroup: ViewGroup, bundle: Bundle?): View? {
         val rootView: View = layoutInflater.inflate(R.layout.base_frag_pull, null)
@@ -29,6 +30,7 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
         super<BaseMainFragment>.initWidget(parentView)
         recyclerView = bindView(R.id.recyclerView)
         refreshLayout = bindView(R.id.swiperefreshlayout)
+        emptyLayout = bindView(R.id.emptylayout)
 
         refreshLayout?.setOnRefreshListener(this)
         refreshLayout?.setColorSchemeResources(R.color.swiperefresh_color1,
@@ -53,6 +55,7 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
     open fun setSwipeRefreshLoadedState() {
         refreshLayout?.setRefreshing(false)
         refreshLayout?.setEnabled(true)
+        emptyLayout?.dismiss()
     }
 
     open fun requestData() {

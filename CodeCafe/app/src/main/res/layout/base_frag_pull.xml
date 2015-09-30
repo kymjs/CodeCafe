@@ -1,7 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
 
 	<android.support.v4.widget.SwipeRefreshLayout
 		android:id="@+id/swiperefreshlayout"
@@ -16,4 +15,10 @@
 			android:scrollbars="none"
 			android:scrollingCache="true"/>
 	</android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+	<top.codecafe.app.ui.widget.EmptyLayout
+		android:id="@+id/emptylayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+</RelativeLayout>
