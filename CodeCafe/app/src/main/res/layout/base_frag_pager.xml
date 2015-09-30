@@ -6,7 +6,7 @@
                 android:orientation="vertical">
 
     <top.codecafe.app.ui.widget.PagerSlidingTabStrip
-        android:id="@+id/myworks_group"
+        android:id="@+id/base_page_fragment_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_text_bg"
@@ -14,10 +14,10 @@
         app:slidingBlock="@drawable/image_sliding_block"/>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/myworks_pager"
+        android:id="@+id/base_page_fragment_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/myworks_group">
+        android:layout_below="@id/base_page_fragment_group">
     </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

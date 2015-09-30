@@ -15,12 +15,12 @@ import android.widget.Toast
  */
 
 
-fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, message, duration).show()
+fun Context.toast(message: CharSequence, cxt: Context = this, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(cxt, message, duration).show()
 }
 
-fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(getActivity(), message, duration).show()
+fun Fragment.toast(message: CharSequence, cxt: Context = activity, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(cxt, message, duration).show()
 }
 
 fun Context.screenHeight(): Int = getResources().getDisplayMetrics().heightPixels

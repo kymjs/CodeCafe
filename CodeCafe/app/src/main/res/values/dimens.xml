@@ -1,15 +1,16 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+	<!-- Default screen margins, per the Android Design guidelines. -->
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+	<dimen name="activity_vertical_margin">16dp</dimen>
+	<dimen name="fab_margin">16dp</dimen>
 
-    <!-- Main -->
-    <dimen name="title_topmargin">54dp</dimen>
-    <dimen name="titlebar_height">55dp</dimen>
-    <dimen name="bottombar_height">56dp</dimen>
+	<!-- Main -->
+	<dimen name="title_topmargin">54dp</dimen>
+	<dimen name="titlebar_height">55dp</dimen>
+	<dimen name="bottombar_height">56dp</dimen>
 
-    <!-- Splash -->
-    <dimen name="splash_head_width">65.0dp</dimen>
-    <dimen name="splash_head_height">65.0dp</dimen>
-    <dimen name="splash_btn_go_height">40dp</dimen>
+	<!-- Splash -->
+	<dimen name="splash_head_width">65.0dp</dimen>
+	<dimen name="splash_head_height">65.0dp</dimen>
+	<dimen name="splash_btn_go_height">40dp</dimen>
 </resources>

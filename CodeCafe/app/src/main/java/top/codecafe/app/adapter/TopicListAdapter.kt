@@ -66,13 +66,13 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
             data
         }
                 .flatMap { Observable.from(subscriberArray) }
-                .subscribe{ action -> observable.subscribe (action) }
+                .subscribe { action -> observable.subscribe (action) }
     }
 
     /**
      * 添加一个点击事件接收器（已知调用类：TopicList）
      */
-    public fun addSubscription(onNext: Action1<ItemViewData>) {
+    fun addSubscription(onNext: Action1<ItemViewData>) {
         subscriberArray.add(onNext)
     }
 }

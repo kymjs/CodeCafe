@@ -41,6 +41,8 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DefaultItemDivider());
 
+        recyclerView?.addOnScrollListener(TabStripListener());
+
         requestData()
     }
 
@@ -62,4 +64,15 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
     }
 
     abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;
+
+
+    open class TabStripListener : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+        }
+    }
 }

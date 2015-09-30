@@ -38,8 +38,8 @@ public abstract class BasePagerFragment : BaseMainFragment() {
 
     override fun initWidget(parentView: View?) {
         super.initWidget(parentView)
-        mGroup = bindView(R.id.myworks_group)
-        mPager = bindView(R.id.myworks_pager)
+        mGroup = bindView(R.id.base_page_fragment_group)
+        mPager = bindView(R.id.base_page_fragment_pager)
         adapter = ViewPageFragmentAdapter(getChildFragmentManager(), mGroup, mPager)
 
         initContentData(pagerDataArray)

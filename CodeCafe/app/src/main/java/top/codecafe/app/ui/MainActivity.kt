@@ -34,9 +34,9 @@ public class MainActivity : KJActivity() {
 
     private val content1: SupportFragment = TopicPagerFragment()
     private val content2: SupportFragment = TopicPagerFragment()
-    private val content3: SupportFragment = WidgetCategoryFragment()
-    private val content4: SupportFragment = PostsPagerFragment()
-    private val content5: SupportFragment = TopicPagerFragment()
+    private val content3: SupportFragment = PostsPagerFragment()
+    private val content4: SupportFragment = WidgetCategoryFragment()
+    private val content5: SupportFragment = PostsPagerFragment()
     private var menuFragment: MainSlidMenu? = null
 
     private var titleBarHeight: Float = 0f

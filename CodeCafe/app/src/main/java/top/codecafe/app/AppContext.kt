@@ -22,54 +22,54 @@ public class AppContext : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Thread.setDefaultUncaughtExceptionHandler {(thread, throwable) ->
-            Log.d(TAG, "App has crashed, executing UncaughtExceptionHandler", throwable)
-
-            Thread() {
-                val intent = Intent(this@AppContext, javaClass<CrashDefaultActivity>())
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                val sw = StringWriter()
-                val pw = PrintWriter(sw)
-                throwable.printStackTrace(pw)
-                intent.putExtra(AppConfig.EXTRA_EXCEPTION, sw.toString())
-
-                startActivity(intent)
-                val lastActivity = lastActivityCreated.get()
-                if (lastActivity != null) {
-                    lastActivity.finish()
-                    lastActivityCreated.clear()
-                }
-                android.os.Process.killProcess(android.os.Process.myPid())
-                System.exit(10)
-            }.start()
-
-        }
-
-        registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-                if (activity !is CrashDefaultActivity && activity != null) {
-                    lastActivityCreated = WeakReference(activity)
-                }
-            }
-
-            override fun onActivityStarted(activity: Activity) {
-            }
-
-            override fun onActivityResumed(activity: Activity) {
-            }
-
-            override fun onActivityPaused(activity: Activity) {
-            }
-
-            override fun onActivityStopped(activity: Activity) {
-            }
-
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-            }
-
-            override fun onActivityDestroyed(activity: Activity) {
-            }
-        })
+//        Thread.setDefaultUncaughtExceptionHandler {(thread, throwable) ->
+//            Log.d(TAG, "App has crashed, executing UncaughtExceptionHandler", throwable)
+//
+//            Thread() {
+//                val intent = Intent(this@AppContext, javaClass<CrashDefaultActivity>())
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//
+//                val sw = StringWriter()
+//                val pw = PrintWriter(sw)
+//                throwable.printStackTrace(pw)
+//                intent.putExtra(AppConfig.EXTRA_EXCEPTION, sw.toString())
+//
+//                startActivity(intent)
+//                val lastActivity = lastActivityCreated.get()
+//                if (lastActivity != null) {
+//                    lastActivity.finish()
+//                    lastActivityCreated.clear()
+//                }
+//                android.os.Process.killProcess(android.os.Process.myPid())
+//                System.exit(10)
+//            }.start()
+//
+//        }
+//
+//        registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+//            override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+//                if (activity !is CrashDefaultActivity && activity != null) {
+//                    lastActivityCreated = WeakReference(activity)
+//                }
+//            }
+//
+//            override fun onActivityStarted(activity: Activity) {
+//            }
+//
+//            override fun onActivityResumed(activity: Activity) {
+//            }
+//
+//            override fun onActivityPaused(activity: Activity) {
+//            }
+//
+//            override fun onActivityStopped(activity: Activity) {
+//            }
+//
+//            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+//            }
+//
+//            override fun onActivityDestroyed(activity: Activity) {
+//            }
+//        })
     }
 }

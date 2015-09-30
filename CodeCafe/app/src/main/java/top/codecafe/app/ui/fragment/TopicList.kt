@@ -15,6 +15,7 @@ import top.codecafe.app.ui.ImageActivity
 import top.codecafe.app.ui.MainActivity
 import top.codecafe.app.ui.base.BasePullFragment
 import top.codecafe.app.ui.base.BaseRecyclerAdapter
+import top.codecafe.app.ui.base.OnFloatButtonClickListener
 import top.codecafe.app.utils.kjlog
 import top.codecafe.app.utils.showActivity
 import top.codecafe.app.utils.toast
@@ -27,7 +28,10 @@ import java.util.TreeSet
  * 今日话题，(话题列表)
  * @author kymjs (http://www.kymjs.com/) on 8/13/15.
  */
-public class TopicList : BasePullFragment() {
+public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
+    override fun onFloatButtonClick(v: View) {
+        toast("点击了btn", v.context)
+    }
 
     private val tweets: TreeSet<Tweet> = TreeSet<Tweet>()
     private var adapter: TopicListAdapter? = null
