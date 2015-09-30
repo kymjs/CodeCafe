@@ -12,6 +12,7 @@ import rx.Subscriber
 import top.codecafe.app.R
 import top.codecafe.app.ui.MainActivity
 import top.codecafe.app.ui.widget.RoundImageView
+import top.codecafe.app.utils.kjlog
 import top.codecafe.kjframe.KJBitmap
 import top.codecafe.kjframe.ui.SupportFragment
 
@@ -65,10 +66,11 @@ public class MainSlidMenu : SupportFragment() {
      * 侧滑菜单中的item被点击，发送消息，让MainActivity响应这个事件
      */
     fun sendChangeFragmentEven(tag: Int) {
+        //感觉不应该这么用，但除了这样不知道怎么用了
         Observable.just(tag)
                 .map { activity }
                 .filter { aty -> aty is MainActivity }
                 .map { aty -> aty as MainActivity }
-                .subscribe { aty -> aty.changeContentSubscribers }
+                .subscribe { aty -> aty.changeContentSubscribers.call(tag) }
     }
 }

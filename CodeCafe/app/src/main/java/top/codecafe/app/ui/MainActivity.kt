@@ -19,6 +19,7 @@ import top.codecafe.app.ui.fragment.WidgetCategoryFragment
 import top.codecafe.app.ui.widget.menu.MaterialMenuDrawable
 import top.codecafe.app.ui.widget.menu.MaterialMenuIcon
 import top.codecafe.app.utils.KJAnimations
+import top.codecafe.app.utils.kjlog
 import top.codecafe.kjframe.KJActivity
 import top.codecafe.kjframe.ui.SupportFragment
 

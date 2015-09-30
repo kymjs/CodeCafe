@@ -64,7 +64,9 @@ public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
             data.position = position
             data.view = v
             data
-        }.subscribe { Observable.from(subscriberArray) }
+        }
+                .flatMap { Observable.from(subscriberArray) }
+                .subscribe{ action -> observable.subscribe (action) }
     }
 
     /**
