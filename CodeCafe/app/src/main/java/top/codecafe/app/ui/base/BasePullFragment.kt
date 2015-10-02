@@ -41,7 +41,11 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.addItemDecoration(DefaultItemDivider());
 
-        recyclerView?.addOnScrollListener(TabStripListener());
+        val scrollListener: TabStripListener = TabStripListener()
+        if (parentFragment is BasePagerFragment) {
+            scrollListener.initListener(parentFragment as BasePagerFragment);
+        }
+        recyclerView?.addOnScrollListener(scrollListener);
 
         requestData()
     }
@@ -65,14 +69,18 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
 
     abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;
 
-
     open class TabStripListener : RecyclerView.OnScrollListener() {
+        var pageFragment: BasePagerFragment? = null
+
+        open fun initListener(pageFragment: BasePagerFragment) {
+            this.pageFragment = pageFragment
+        }
+
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-
+            
         }
     }
 }

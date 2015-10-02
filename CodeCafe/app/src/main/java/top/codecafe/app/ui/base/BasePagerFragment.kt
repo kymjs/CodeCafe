@@ -16,7 +16,7 @@ import java.util.ArrayList
  * @author kymjs (http://www.kymjs.com/) on 8/26/15.
  */
 public abstract class BasePagerFragment : BaseMainFragment() {
-    private var mGroup: PagerSlidingTabStrip? = null
+    private var tabStrip: PagerSlidingTabStrip? = null
     private var mPager: ViewPager? = null
 
     private var adapter: ViewPageFragmentAdapter? = null
@@ -28,7 +28,7 @@ public abstract class BasePagerFragment : BaseMainFragment() {
         return rootView
     }
 
-    public fun getTabView(): PagerSlidingTabStrip? = mGroup
+    public fun getTabStrip(): PagerSlidingTabStrip? = tabStrip
 
     public fun getPagerView(): ViewPager? = mPager
 
@@ -38,9 +38,9 @@ public abstract class BasePagerFragment : BaseMainFragment() {
 
     override fun initWidget(parentView: View?) {
         super.initWidget(parentView)
-        mGroup = bindView(R.id.base_page_fragment_group)
+        tabStrip = bindView(R.id.base_page_fragment_group)
         mPager = bindView(R.id.base_page_fragment_pager)
-        adapter = ViewPageFragmentAdapter(getChildFragmentManager(), mGroup, mPager)
+        adapter = ViewPageFragmentAdapter(getChildFragmentManager(), tabStrip, mPager)
 
         initContentData(pagerDataArray)
 
