@@ -4,6 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import top.codecafe.app.R
+import top.codecafe.app.ui.widget.swipeback.SwipeBackActivity
 import top.codecafe.app.utils.DefaultItemDivider
 import top.codecafe.kjframe.KJActivity
 
@@ -11,7 +12,7 @@ import top.codecafe.kjframe.KJActivity
  * 能下拉刷新的Recycler
  * @author kymjs (http://www.kymjs.com/) on 8/27/15.
  */
-public abstract class BasePullActivity : KJActivity(), SwipeRefreshLayout.OnRefreshListener {
+public abstract class BasePullActivity : SwipeBackActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     public var recyclerView: RecyclerView? = null
 
@@ -22,7 +23,7 @@ public abstract class BasePullActivity : KJActivity(), SwipeRefreshLayout.OnRefr
     }
 
     override fun initWidget() {
-        super<KJActivity>.initWidget()
+        super<SwipeBackActivity>.initWidget()
         recyclerView = bindView(R.id.recyclerView)
         refreshLayout = bindView(R.id.swiperefreshlayout)
 
