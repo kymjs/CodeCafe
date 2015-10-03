@@ -28,6 +28,8 @@ public class TopicPagerFragment : BasePagerFragment() {
         return rootView
     }
 
+    public fun getFloatingButton(): FloatingActionButton? = floatButton
+
     override fun initWidget(parentView: View?) {
         super.initWidget(parentView)
         floatButton = bindView(R.id.base_page_float_button)

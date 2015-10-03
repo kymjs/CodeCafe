@@ -51,6 +51,7 @@ public class ImageActivity extends KJActivity {
         super.initData();
         url = getIntent().getStringExtra(URL_KEY);
         kjb = new KJBitmap();
+
     }
 
     @Override
