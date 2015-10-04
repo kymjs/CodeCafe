@@ -26,15 +26,13 @@ import java.util.TreeSet
 
 /**
  * 今日话题，(话题列表)
+ * 
  * @author kymjs (http://www.kymjs.com/) on 8/13/15.
  */
 public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
-    override fun onFloatButtonClick(v: View) {
-        toast("点击了btn", v.context)
-    }
-
+    
     private val tweets: TreeSet<Tweet> = TreeSet<Tweet>()
-    private var adapter: TopicListAdapter? = null
+    private var adapter: BaseRecyclerAdapter<Tweet>? = null
 
     /**
      * TopicListAdapter中item点击事件的接收者
@@ -53,7 +51,7 @@ public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
     }
 
     override fun getRecyclerAdapter(): BaseRecyclerAdapter<Tweet> {
-        adapter = TopicListAdapter(recyclerView!!, tweets)
+        adapter = adapter?.refresh(tweets) ?: TopicListAdapter(recyclerView!!, tweets)
         return adapter!!
     }
 
@@ -80,9 +78,14 @@ public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
             override fun onSuccess(s: String?) {
                 kjlog("网络请求：$s")
                 recyclerView?.setAdapter(getRecyclerAdapter())
-                adapter?.addSubscription(itemClickSubscribers)
+                (adapter as TopicListAdapter?)?.addSubscription(itemClickSubscribers)
                 setSwipeRefreshLoadedState()
             }
         })
     }
+
+    override fun onFloatButtonClick(v: View) {
+        toast("点击了btn", v.context)
+    }
+
 }

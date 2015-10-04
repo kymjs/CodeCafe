@@ -39,4 +39,11 @@ public object API {
         params.put("pageIndex", pageIndex)
         kjh.get("http://www.oschina.net/action/api/tweet_topic_list", params, callBack)
     }
+    
+    public fun getMoodList(callBack: HttpCallBack, pageIndex: Int = 0){
+        val params = getHttpParams()
+        params.put("pageIndex", pageIndex)
+        params.put("pageSize", 20)
+        kjh.get("http://www.oschina.net/action/api/tweet_list", params, callBack)
+    }
 }

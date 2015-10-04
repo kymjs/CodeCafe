@@ -92,4 +92,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     public interface OnItemClickListener {
         void onItemClick(View view, Object data, int position);
     }
+
+    public BaseRecyclerAdapter<T> refresh(Collection<T> datas) {
+        if (datas == null) {
+            realDatas = new ArrayList<>();
+        } else if (datas instanceof List) {
+            realDatas = (List<T>) datas;
+        } else {
+            realDatas = new ArrayList<>(datas);
+        }
+        return this;
+    }
 }
