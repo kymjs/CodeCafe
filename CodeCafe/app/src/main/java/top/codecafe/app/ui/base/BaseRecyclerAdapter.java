@@ -24,6 +24,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     protected Context cxt;
     private OnItemClickListener listener;
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, Object data, int position);
+    }
+
     public BaseRecyclerAdapter(RecyclerView v, Collection<T> datas, int itemLayoutId) {
         if (datas == null) {
             realDatas = new ArrayList<>();
@@ -54,7 +58,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
      * @param item        javabean
      * @param isScrolling RecyclerView是否正在滚动
      */
-    public abstract void convert(RecyclerHolder holder, T item, boolean isScrolling);
+    public abstract void convert(RecyclerHolder holder, T item, int position, boolean isScrolling);
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +69,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
-        convert(holder, realDatas.get(position), isScrolling);
+        convert(holder, realDatas.get(position), position, isScrolling);
         holder.itemView.setOnClickListener(getOnClickListener(position));
     }
 
@@ -87,10 +91,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
                 }
             }
         };
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, Object data, int position);
     }
 
     public BaseRecyclerAdapter<T> refresh(Collection<T> datas) {

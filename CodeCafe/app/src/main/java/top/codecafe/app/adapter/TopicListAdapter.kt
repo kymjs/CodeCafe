@@ -9,6 +9,7 @@ import rx.functions.Func1
 import top.codecafe.app.R
 import top.codecafe.app.bean.ItemViewData
 import top.codecafe.app.bean.Tweet
+import top.codecafe.app.ui.base.BasePullUpRecyclerAdapter
 import top.codecafe.app.ui.base.BaseRecyclerAdapter
 import top.codecafe.app.ui.base.RecyclerHolder
 import top.codecafe.kjframe.KJBitmap
@@ -21,13 +22,13 @@ import java.util.ArrayList
  * @author kymjs (http://www.kymjs.com/) on 8/27/15.
  */
 public class TopicListAdapter(v: RecyclerView, datas: Collection<Tweet>) :
-        BaseRecyclerAdapter<Tweet>(v, datas, R.layout.item_recycler_topic) {
+        BasePullUpRecyclerAdapter<Tweet>(v, datas, R.layout.item_recycler_topic) {
 
     private val kjb = KJBitmap()
     private var observable: Observable<ItemViewData> = Observable.just(ItemViewData());
     private val subscriberArray: MutableList<Action1<ItemViewData>> = ArrayList(5)
 
-    override fun convert(holder: RecyclerHolder, item: Tweet, isScrolling: Boolean) {
+    override fun convert(holder: RecyclerHolder, item: Tweet, position: Int, isScrolling: Boolean) {
         holder.setText(R.id.item_topic_tv_name, item.getAuthor())
         holder.setText(R.id.item_topic_tv_content, item.getBody())
         kjb.displayLoadAndErrorBitmap(holder.getView<View>(R.id.item_topic_img_head), item.getPortrait(), R.drawable.default_head, R.drawable.default_head)

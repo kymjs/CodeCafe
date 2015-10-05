@@ -21,7 +21,7 @@ public class WidgetListAdapter extends BaseRecyclerAdapter<Widget> {
     }
 
     @Override
-    public void convert(RecyclerHolder holder, Widget item, boolean isScrolling) {
+    public void convert(RecyclerHolder holder, Widget item, int position, boolean isScrolling) {
         holder.setText(R.id.name, item.getName());
         holder.setText(R.id.type, item.getDesc());
     }

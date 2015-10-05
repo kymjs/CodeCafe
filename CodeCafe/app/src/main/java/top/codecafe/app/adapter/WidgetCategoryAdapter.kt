@@ -16,7 +16,7 @@ import top.codecafe.app.utils.dip2px
 public class WidgetCategoryAdapter(view: RecyclerView?, datas: Collection<WidgetCategory>?)
 : BaseRecyclerAdapter<WidgetCategory>(view, datas, R.layout.item_recycler_widget_category) {
 
-    override fun convert(holder: RecyclerHolder?, item: WidgetCategory?, isScrolling: Boolean) {
+    override fun convert(holder: RecyclerHolder?, item: WidgetCategory?, position: Int, isScrolling: Boolean) {
         if (item?.size == 1) {
             holder?.itemView?.setMinimumHeight(cxt.dip2px(240f))
         } else {

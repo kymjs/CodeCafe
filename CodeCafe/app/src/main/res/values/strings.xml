@@ -6,10 +6,10 @@
 
 	<string name="double_click_exit">再次点击返回键切换到桌面</string>
 
-
 	<string name="menu_item_text1">热门推荐</string>
 	<string name="menu_item_text2">话题圈子</string>
 	<string name="menu_item_text3">技术热点</string>
 	<string name="menu_item_text4">Android控件库</string>
 	<string name="menu_item_text5">还没想好</string>
+
 </resources>

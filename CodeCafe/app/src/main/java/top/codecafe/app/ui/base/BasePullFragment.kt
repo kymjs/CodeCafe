@@ -24,7 +24,8 @@ import top.codecafe.app.utils.screenHeight
  * 包含下拉界面的基类
  * @author kymjs (http://www.kymjs.com/) on 8/26/15.
  */
-public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener {
+public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.OnRefreshListener,
+        BasePullUpRecyclerAdapter.OnPullUpListener {
 
     public var recyclerView: RecyclerView? = null
     public var refreshLayout: SwipeRefreshLayout? = null
@@ -74,6 +75,10 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
     }
 
     open fun requestData() {
+    }
+
+    override fun onBottom(state: Int) {
+
     }
 
     abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;

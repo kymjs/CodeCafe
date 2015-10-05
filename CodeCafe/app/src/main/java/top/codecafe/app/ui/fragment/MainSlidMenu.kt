@@ -41,13 +41,13 @@ public class MainSlidMenu : SupportFragment() {
         tvName = bindView(R.id.menu_tv_name)
         tvDesc = bindView(R.id.menu_tv_desc)
 
-        //        kjb.displayWithErrorBitmap(headImage, user?.getPortrait() ?: "http://kymjs.com/image/logo_s.png", R.drawable.default_head)
-        //        tvName?.setText(user?.getName() ?: "未知用户")
-        //        if (user?.getGender() == 1) {
-        //            imgGender?.setImageResource(R.drawable.userinfo_icon_male)
-        //        } else if (user?.getGender() == 2) {
-        //            imgGender?.setImageResource(R.drawable.userinfo_icon_female)
-        //        }
+//        kjb.displayWithErrorBitmap(headImage, user?.getPortrait() ?: "http://kymjs.com/image/logo_s.png", R.drawable.default_head)
+//        tvName?.setText(user?.getName() ?: "未知用户")
+//        if (user?.getGender() == 1) {
+//            imgGender?.setImageResource(R.drawable.userinfo_icon_male)
+//        } else if (user?.getGender() == 2) {
+//            imgGender?.setImageResource(R.drawable.userinfo_icon_female)
+//        }
         tvDesc?.setText("helloworld，一句话代表一个世界")
     }
 

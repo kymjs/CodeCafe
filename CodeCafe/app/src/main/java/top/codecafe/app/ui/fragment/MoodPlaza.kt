@@ -15,10 +15,7 @@ import top.codecafe.app.bean.ItemViewData
 import top.codecafe.app.bean.Tweet
 import top.codecafe.app.bean.TweetsList
 import top.codecafe.app.ui.ImageActivity
-import top.codecafe.app.ui.base.BaseMainFragment
-import top.codecafe.app.ui.base.BasePullFragment
-import top.codecafe.app.ui.base.BaseRecyclerAdapter
-import top.codecafe.app.ui.base.OnFloatButtonClickListener
+import top.codecafe.app.ui.base.*
 import top.codecafe.app.utils.kjlog
 import top.codecafe.app.utils.showActivity
 import top.codecafe.app.utils.toast
@@ -33,7 +30,7 @@ import java.util.*
 public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
 
     private val tweets: TreeSet<Tweet> = TreeSet<Tweet>()
-    private var adapter: BaseRecyclerAdapter<Tweet>? = null
+    private var adapter: BasePullUpRecyclerAdapter<Tweet>? = null
 
     /**
      * TopicListAdapter中item点击事件的接收者
@@ -51,11 +48,11 @@ public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
         }
     }
 
-    override fun getRecyclerAdapter(): BaseRecyclerAdapter<Tweet> {
+    override fun getRecyclerAdapter(): BasePullUpRecyclerAdapter<Tweet> {
         adapter = adapter?.refresh(tweets) ?: TopicListAdapter(recyclerView!!, tweets)
         return adapter!!
     }
-    
+
     override fun initWidget(parentView: View?) {
         super.initWidget(parentView)
         recyclerView?.setLayoutManager(LinearLayoutManager(outsideAty, LinearLayoutManager.VERTICAL, false))
@@ -65,8 +62,13 @@ public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
         requestData()
     }
 
+    override fun onBottom(state: Int) {
+        requestData()
+    }
+
     override fun requestData() {
         setSwipeRefreshLoadingState()
+        adapter?.state = BasePullUpRecyclerAdapter.STATE_LOADING;
         API.getMoodList(object : HttpCallBack() {
             override fun onSuccessInAsync(t: Any) {
                 if (t is ByteArray) {
@@ -81,8 +83,9 @@ public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
                 recyclerView?.setAdapter(getRecyclerAdapter())
                 (adapter as TopicListAdapter?)?.addSubscription(itemClickSubscribers)
                 setSwipeRefreshLoadedState()
+                adapter?.state = BasePullUpRecyclerAdapter.STATE_LOADING;
             }
-        }, tweets.size() / 20)
+        })
     }
 
     override fun onFloatButtonClick(v: View) {
