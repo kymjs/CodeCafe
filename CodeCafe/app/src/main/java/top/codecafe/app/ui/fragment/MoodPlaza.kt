@@ -63,12 +63,11 @@ public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
     }
 
     override fun onBottom(state: Int) {
-        requestData()
+        requestData(tweets.size() / 20)
     }
 
-    override fun requestData() {
+    override fun requestData(index: Int) {
         setSwipeRefreshLoadingState()
-        adapter?.state = BasePullUpRecyclerAdapter.STATE_LOADING;
         API.getMoodList(object : HttpCallBack() {
             override fun onSuccessInAsync(t: Any) {
                 if (t is ByteArray) {
@@ -80,12 +79,17 @@ public class MoodPlaza : BasePullFragment(), OnFloatButtonClickListener {
 
             override fun onSuccess(s: String?) {
                 kjlog("网络请求：$s")
-                recyclerView?.setAdapter(getRecyclerAdapter())
+                if (adapter == null){
+                    adapter = getRecyclerAdapter()
+                    recyclerView?.setAdapter(adapter)
+                }else{
+                    adapter?.refresh(tweets)
+                }
+                
                 (adapter as TopicListAdapter?)?.addSubscription(itemClickSubscribers)
                 setSwipeRefreshLoadedState()
-                adapter?.state = BasePullUpRecyclerAdapter.STATE_LOADING;
             }
-        })
+        }, index)
     }
 
     override fun onFloatButtonClick(v: View) {

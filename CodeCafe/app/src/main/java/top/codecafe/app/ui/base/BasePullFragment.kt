@@ -74,11 +74,10 @@ public abstract class BasePullFragment : BaseMainFragment(), SwipeRefreshLayout.
         emptyLayout?.dismiss()
     }
 
-    open fun requestData() {
+    open fun requestData(index: Int = 0) {
     }
 
     override fun onBottom(state: Int) {
-
     }
 
     abstract fun getRecyclerAdapter(): BaseRecyclerAdapter<*>;

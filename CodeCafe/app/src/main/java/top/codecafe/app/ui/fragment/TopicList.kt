@@ -26,11 +26,11 @@ import java.util.TreeSet
 
 /**
  * 今日话题，(话题列表)
- * 
+ *
  * @author kymjs (http://www.kymjs.com/) on 8/13/15.
  */
 public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
-    
+
     private val tweets: TreeSet<Tweet> = TreeSet<Tweet>()
     private var adapter: BaseRecyclerAdapter<Tweet>? = null
 
@@ -64,7 +64,7 @@ public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
         requestData()
     }
 
-    override fun requestData() {
+    override fun requestData(index: Int) {
         setSwipeRefreshLoadingState()
         API.getTopicList("完善简历 送键盘", object : HttpCallBack() {
             override fun onSuccessInAsync(t: Any) {
@@ -81,7 +81,11 @@ public class TopicList : BasePullFragment(), OnFloatButtonClickListener {
                 (adapter as TopicListAdapter?)?.addSubscription(itemClickSubscribers)
                 setSwipeRefreshLoadedState()
             }
-        })
+        }, index)
+    }
+
+    override fun onBottom(state: Int) {
+        requestData(tweets.size() / 20)
     }
 
     override fun onFloatButtonClick(v: View) {
