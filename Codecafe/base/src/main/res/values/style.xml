@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="base_SwipeBackLayout">
+        <item name="base_edge_size">50dip</item>
+        <item name="base_shadow_left">@drawable/base_shadow_left</item>
+        <item name="base_shadow_right">@drawable/base_shadow_right</item>
+        <item name="base_shadow_bottom">@drawable/base_shadow_bottom</item>
+    </style>
+
+    <style name="base_KJAppTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" tools:ignore="ResourceName">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/base_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>
+        <item name="colorAccent">@color/base_colorAccent</item>
+    </style>
+
+</resources>

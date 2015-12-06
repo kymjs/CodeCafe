@@ -1,0 +1,8 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="base_toolbar_padding_top">0dp</dimen>
+
+    <dimen name="base_pager_title_height">37dp</dimen>
+
+    <dimen name="base_titlebar_height">55dp</dimen>
+</resources>

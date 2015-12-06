@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_colorPrimary">#3F51B5</color>
+    <color name="base_colorPrimaryDark">#303F9F</color>
+    <color name="base_colorAccent">#FF4081</color>
+
+    <color name="base_black_alpha_48">#30000000</color>
+
+    <!-- 下拉刷新时，颜色值 -->
+    <color name="base_swiperefresh_color1">#ff00ddff</color>
+    <color name="base_swiperefresh_color2">#ffffbb33</color>
+    <color name="base_swiperefresh_color3">#ffff4444</color>
+    <color name="base_swiperefresh_color4">#ffaa66cc</color>
+</resources>

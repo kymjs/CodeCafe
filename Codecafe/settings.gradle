@@ -1,0 +1,1 @@
+include ':app',':kjcore', ':adapter', ':nuwa', ':crash', ':base', ':framework', ':api', ':model', ':gallery'

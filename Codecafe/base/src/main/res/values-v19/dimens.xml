@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="base_toolbar_padding_top">25dp</dimen>
+    
+    <dimen name="base_titlebar_height">80dp</dimen>
+</resources>

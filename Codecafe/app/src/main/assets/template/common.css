@@ -1,0 +1,31 @@
+body{
+    letter-spacing:1px;
+    //text-align:center;
+    margin: 0 0 0 0;
+    font-size: 0.92rem;
+    line-height: 22px;
+    color: #333;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-width: -webkit-fit-content;
+}
+
+span {
+    font-size: 0.875rem;
+    color: #333;
+    line-height:
+}
+
+table {
+    width: 100%;
+    margin: 15px 0;
+    border-collapse: collapse;
+}
+
+table, td, th  {
+    border:1px solid #ddd;
+    padding: 5 10 5 10;
+}
