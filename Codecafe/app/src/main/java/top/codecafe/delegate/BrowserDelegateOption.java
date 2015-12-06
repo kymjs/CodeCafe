@@ -70,6 +70,10 @@ public class BrowserDelegateOption {
             super.onPageFinished(view, url);
             EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
             emptyLayout.dismiss();
+            WebView webView = viewDelegate.get(R.id.webview);
+            if(!webView.getSettings().getLoadsImagesAutomatically()) {
+                webView.getSettings().setLoadsImagesAutomatically(true);
+            }
         }
 
         @Override
@@ -99,6 +103,13 @@ public class BrowserDelegateOption {
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
+        
+        if(Build.VERSION.SDK_INT >= 19) {
+            webView.getSettings().setLoadsImagesAutomatically(true);
+        } else {
+            webView.getSettings().setLoadsImagesAutomatically(false);
+        }
+        
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         int sysVersion = Build.VERSION.SDK_INT;
         if (sysVersion >= 11) {

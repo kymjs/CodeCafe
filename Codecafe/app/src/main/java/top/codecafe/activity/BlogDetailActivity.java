@@ -2,12 +2,14 @@ package top.codecafe.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.kjcore.Core;
@@ -32,6 +34,8 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     private String url;
 
     private EmptyLayout emptyLayout;
+    private WebView webView;
+    private String contentHtml = null;
 
     @Override
     protected Class<BlogDetailDelegate> getDelegateClass() {
@@ -41,6 +45,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     @Override
     protected void bindEvenListener() {
         super.bindEvenListener();
+        webView = viewDelegate.get(R.id.webview);
         emptyLayout = viewDelegate.get(R.id.emptylayout);
         emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +53,11 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                 doRequest();
             }
         });
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         url = intent.getStringExtra(KEY_BLOG_URL);
         String title = intent.getStringExtra(KEY_BLOG_TITLE);
@@ -59,6 +68,19 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
             collapsingToolbar.setTitle(getString(R.string.kymjs_blog_name));
         }
         doRequest();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+        viewDelegate.setContent(contentHtml);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
     }
 
     @Override
@@ -83,8 +105,6 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     public void doRequest() {
         if (StringUtils.isEmpty(url)) return;
         Core.get(url, new HttpCallBack() {
-            String contentHtml = null;
-
             @Override
             public void onSuccessInAsync(byte[] t) {
                 super.onSuccessInAsync(t);
@@ -125,9 +145,12 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         cxt.startActivity(intent);
     }
 
-    public static final String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>";
-    public static final String regEx_header = "<[\\s]*?header[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?header[\\s]*?>";
-    public static final String regEx_footer = "<[\\s]*?footer[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?footer[\\s]*?>";
+    public static final String regEx_script =
+            "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>";
+    public static final String regEx_header =
+            "<[\\s]*?header[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?header[\\s]*?>";
+    public static final String regEx_footer =
+            "<[\\s]*?footer[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?footer[\\s]*?>";
 
     /**
      * 对博客数据加工,适应手机浏览
@@ -137,6 +160,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         html = html.replaceAll(regEx_header, "");
         html = html.replaceAll(regEx_footer, "");
         html = html.replaceAll("<img src=\"/", "<img src=\"http://kymjs.com/");
+        html = html.replaceAll("<a href=\"/donate\">","<a href=\"http://kymjs.com/donate\">");
         html = BrowserDelegateOption.setImagePreview(html);
         String commonStyle = "<link rel=\"stylesheet\" type=\"text/css\" " +
                 "href=\"file:///android_asset/template/common.css\">";
