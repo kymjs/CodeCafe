@@ -29,8 +29,7 @@ public class MainSlidMenu extends FragmentPresenter<MainSlidMenuDelegate> implem
                 R.id.menu_item_tag1,
                 R.id.menu_item_tag2,
                 R.id.menu_item_tag3,
-                R.id.menu_item_tag4,
-                R.id.menu_item_tag5);
+                R.id.menu_item_tag4);
     }
 
     @Override

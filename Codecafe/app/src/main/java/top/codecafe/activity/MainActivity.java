@@ -107,9 +107,6 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
             case R.id.menu_item_tag4:
                 viewDelegate.toast("切换第四个界面");
                 break;
-            case R.id.menu_item_tag5:
-                viewDelegate.toast("切换第五个界面");
-                break;
             default:
                 break;
         }

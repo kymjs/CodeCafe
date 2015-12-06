@@ -1,14 +1,13 @@
 <resources>
-    <string name="app_name">CodecafeTop</string>
+    <string name="app_name">CodeCafe</string>
     <string name="kymjs_blog_name">开源实验室</string>
 
     <string name="double_click_exit">再次点击返回键切换到桌面</string>
 
-    <string name="menu_item_text1">热门推荐</string>
-    <string name="menu_item_text2">话题圈子</string>
-    <string name="menu_item_text3">技术热点</string>
+    <string name="menu_item_text1">技术帖子</string>
+    <string name="menu_item_text2">冒泡广场</string>
+    <string name="menu_item_text3">热门推荐</string>
     <string name="menu_item_text4">Android控件库</string>
-    <string name="menu_item_text5">还没想好</string>
 
     <string name="load_again">点击屏幕  重新加载</string>
     <string name="loading">加载中...</string>
