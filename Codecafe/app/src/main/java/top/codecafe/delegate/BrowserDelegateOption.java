@@ -82,11 +82,12 @@ public class BrowserDelegateOption {
         public void onReceivedError(final WebView view, WebResourceRequest request,
                                     WebResourceError error) {
             super.onReceivedError(view, request, error);
-            EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
+            final EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
             emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     view.loadUrl(view.getUrl());
+                    emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
                 }
             });
             emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);

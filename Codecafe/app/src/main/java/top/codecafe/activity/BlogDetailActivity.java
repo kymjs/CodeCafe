@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.kjcore.Core;
 import com.kymjs.kjcore.http.HttpCallBack;
+import com.kymjs.kjcore.http.KJHttp;
 import com.kymjs.kjcore.utils.StringUtils;
 
 import top.codecafe.R;
@@ -51,6 +52,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
             @Override
             public void onClick(View v) {
                 doRequest();
+                emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
             }
         });
     }
@@ -67,15 +69,26 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         } else {
             collapsingToolbar.setTitle(getString(R.string.kymjs_blog_name));
         }
+
+        contentHtml = new String(KJHttp.getCache(url));
+        if (!StringUtils.isEmpty(contentHtml)) {
+            viewDelegate.setContent(contentHtml);
+        }
         doRequest();
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        viewDelegate.setContent(contentHtml);
+    }
+    
+    @Override
     protected void onResume() {
         super.onResume();
         webView.onResume();
-        viewDelegate.setContent(contentHtml);
     }
+
 
     @Override
     protected void onPause() {
@@ -160,7 +173,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         html = html.replaceAll(regEx_header, "");
         html = html.replaceAll(regEx_footer, "");
         html = html.replaceAll("<img src=\"/", "<img src=\"http://kymjs.com/");
-        html = html.replaceAll("<a href=\"/donate\">","<a href=\"http://kymjs.com/donate\">");
+        html = html.replaceAll("<a href=\"/donate\">", "<a href=\"http://kymjs.com/donate\">");
         html = BrowserDelegateOption.setImagePreview(html);
         String commonStyle = "<link rel=\"stylesheet\" type=\"text/css\" " +
                 "href=\"file:///android_asset/template/common.css\">";

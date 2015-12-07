@@ -17,7 +17,6 @@ package com.kymjs.kjcore.utils;
 
 /**
  * 系统信息工具包<br>
- * <p/>
  * <b>创建时间</b> 2014-8-14
  *
  * @author kymjs (https://github.com/kymjs)

@@ -21,7 +21,6 @@ import java.util.Map;
 
 /**
  * Http请求回调类<br>
- * <p/>
  * <b>创建时间</b> 2014-8-7
  *
  * @author kymjs (http://www.kymjs.com/) .

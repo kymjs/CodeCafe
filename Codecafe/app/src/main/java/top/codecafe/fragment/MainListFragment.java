@@ -97,6 +97,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
             @Override
             public void onClick(View v) {
                 doRequest();
+                viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -140,7 +141,6 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
 
         recyclerView.setAdapter(adapter);
     }
-
 
     public void onBottom() {
         adapter.setState(BasePullUpRecyclerAdapter.STATE_NO_MORE);

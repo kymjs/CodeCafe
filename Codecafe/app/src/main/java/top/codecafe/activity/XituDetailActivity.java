@@ -10,6 +10,8 @@ import android.view.View;
 import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.kjcore.Core;
 import com.kymjs.kjcore.http.HttpCallBack;
+import com.kymjs.kjcore.http.KJHttp;
+import com.kymjs.kjcore.utils.StringUtils;
 import com.kymjs.model.XituBlog;
 
 import top.codecafe.R;
@@ -28,6 +30,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
     private XituBlog data;
 
     private EmptyLayout emptyLayout;
+    private String contentUrl;
 
     @Override
     protected Class<BrowserDelegate> getDelegateClass() {
@@ -42,6 +45,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
             @Override
             public void onClick(View v) {
                 doRequest();
+                emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
             }
         });
 
@@ -49,6 +53,10 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
         data = intent.getParcelableExtra(KEY_XITU_DATA);
         if (data != null) {
             doRequest();
+            contentUrl = new String(KJHttp.getCache(data.getLink()));
+            if (!StringUtils.isEmpty(contentUrl)) {
+                viewDelegate.setContentUrl(contentUrl);
+            }
         }
     }
 
@@ -73,7 +81,6 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
     @Override
     public void doRequest() {
         Core.get(data.getLink(), new HttpCallBack() {
-            String contentUrl;
 
             @Override
             public void onSuccessInAsync(byte[] t) {

@@ -1,5 +1,7 @@
 package top.codecafe.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,6 +10,7 @@ import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.gallery.KJGalleryActivity;
 import com.kymjs.kjcore.Core;
+import com.kymjs.kjcore.http.KJHttp;
 import com.kymjs.kjcore.http.Request;
 import com.kymjs.kjcore.utils.StringUtils;
 import com.kymjs.model.Blog;
@@ -27,6 +30,17 @@ import top.codecafe.utils.XmlUtils;
 public class BlogFragment extends MainListFragment<Blog> {
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        byte[] cache = KJHttp.getCache(Api.BLOG_LIST);
+        if (cache != null) {
+            datas = parserInAsync(cache);
+            adapter.refresh(datas);
+            viewDelegate.mEmptyLayout.dismiss();
+        }
+    }
+
+    @Override
     protected ArrayList<Blog> parserInAsync(byte[] t) {
         return XmlUtils.toBean(BlogList.class, t).getChannel().getItemArray();
     }
@@ -35,7 +49,8 @@ public class BlogFragment extends MainListFragment<Blog> {
     protected BasePullUpRecyclerAdapter<Blog> getAdapter() {
         return new BasePullUpRecyclerAdapter<Blog>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, final Blog item, int position, boolean isScrolling) {
+            public void convert(RecyclerHolder holder, final Blog item, int position, boolean
+                    isScrolling) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, item.getDescription());
                 holder.setText(R.id.item_blog_tv_author, item.getAuthor());
@@ -56,7 +71,8 @@ public class BlogFragment extends MainListFragment<Blog> {
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            KJGalleryActivity.toGallery(viewDelegate.getRootView().getContext(), item.getImage());
+                            KJGalleryActivity.toGallery(viewDelegate.getRootView().getContext(),
+                                    item.getImage());
                         }
                     });
                 }

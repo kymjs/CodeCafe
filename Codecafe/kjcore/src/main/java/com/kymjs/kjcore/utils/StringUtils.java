@@ -17,7 +17,6 @@ package com.kymjs.kjcore.utils;
 
 /**
  * 字符串操作工具包<br>
- * <p/>
  * <b>创建时间</b> 2014-8-14
  *
  * @author kymjs (https://github.com/kymjs)
