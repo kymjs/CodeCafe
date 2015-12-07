@@ -42,7 +42,8 @@ public class BrowserDelegateOption {
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeeClient());
         EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) emptyLayout.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) emptyLayout
+                .getLayoutParams();
         params.height = DensityUtils.getScreenH(viewDelegate.getActivity());
         emptyLayout.setLayoutParams(params);
     }
@@ -60,7 +61,8 @@ public class BrowserDelegateOption {
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            viewDelegate.getActivity().setTitle(LinkDispatcher.getActionTitle(view.getUrl(), title));
+            viewDelegate.getActivity().setTitle(LinkDispatcher.getActionTitle(view.getUrl(),
+                    title));
         }
     }
 
@@ -71,13 +73,14 @@ public class BrowserDelegateOption {
             EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
             emptyLayout.dismiss();
             WebView webView = viewDelegate.get(R.id.webview);
-            if(!webView.getSettings().getLoadsImagesAutomatically()) {
+            if (!webView.getSettings().getLoadsImagesAutomatically()) {
                 webView.getSettings().setLoadsImagesAutomatically(true);
             }
         }
 
         @Override
-        public void onReceivedError(final WebView view, WebResourceRequest request, WebResourceError error) {
+        public void onReceivedError(final WebView view, WebResourceRequest request,
+                                    WebResourceError error) {
             super.onReceivedError(view, request, error);
             EmptyLayout emptyLayout = viewDelegate.get(R.id.emptylayout);
             emptyLayout.setOnLayoutClickListener(new View.OnClickListener() {
@@ -91,7 +94,7 @@ public class BrowserDelegateOption {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            LinkDispatcher.dispatch(view.getContext(), url);
+            LinkDispatcher.dispatch(view, url);
             return true;
         }
     }
@@ -103,13 +106,13 @@ public class BrowserDelegateOption {
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
-        
-        if(Build.VERSION.SDK_INT >= 19) {
+
+        if (Build.VERSION.SDK_INT >= 19) {
             webView.getSettings().setLoadsImagesAutomatically(true);
         } else {
             webView.getSettings().setLoadsImagesAutomatically(false);
         }
-        
+
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         int sysVersion = Build.VERSION.SDK_INT;
         if (sysVersion >= 11) {
@@ -161,7 +164,7 @@ public class BrowserDelegateOption {
         return new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LinkDispatcher.dispatch(view.getContext(), url);
+                LinkDispatcher.dispatch(view, url);
                 return true;
             }
         };
