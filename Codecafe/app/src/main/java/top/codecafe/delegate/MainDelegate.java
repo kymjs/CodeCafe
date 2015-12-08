@@ -2,6 +2,7 @@ package top.codecafe.delegate;
 
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -44,7 +45,10 @@ public class MainDelegate extends AppDelegate {
         super.initWidget();
         AppCompatActivity activity = getActivity();
         //设置显示home图标
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         //初始化 MaterialMenuDrawable
         final MaterialMenuDrawable materialMenu =
                 new MaterialMenuDrawable(activity, Color.WHITE, Stroke.THIN);

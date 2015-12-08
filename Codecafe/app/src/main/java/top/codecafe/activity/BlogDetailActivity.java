@@ -97,6 +97,13 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
+    }
+
+
+    @Override
     protected void initToolbar() {
         super.initToolbar();
         ActionBar actionBar = getSupportActionBar();

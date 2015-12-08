@@ -4,14 +4,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+	<WebView
+		android:id="@+id/webview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
 
-    <top.codecafe.widget.EmptyLayout
-        android:id="@+id/emptylayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+	<top.codecafe.widget.EmptyLayout
+		android:id="@+id/emptylayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
 
 </RelativeLayout>

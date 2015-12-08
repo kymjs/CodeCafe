@@ -27,7 +27,8 @@ public abstract class BaseDetailDelegate extends AppDelegate {
     public void initWidget() {
         super.initWidget();
         NestedScrollView nestedScrollView = get(R.id.nested_scrollview);
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams
+                .MATCH_PARENT);
         nestedScrollView.addView(View.inflate(getActivity(), getContentLayoutId(), null), params);
         nestedScrollView.invalidate();
     }
