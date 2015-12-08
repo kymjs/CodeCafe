@@ -40,6 +40,11 @@ public final class Core {
         return SingletonHolder.kjBitmap;
     }
 
+    public static void initialize(){
+        //加载一次内部类
+        getKJHttp();
+    }
+    
     /**
      * 发起get请求
      *
@@ -121,7 +126,7 @@ public final class Core {
      * @param callback 请求中的回调方法
      * @param useCache 是否缓存本条请求
      */
-    public Request<byte[]> jsonPost(String url, HttpParams params,
+    public static Request<byte[]> jsonPost(String url, HttpParams params,
                                     boolean useCache, HttpCallBack callback) {
         Request<byte[]> request = new JsonRequest(HttpMethod.POST, url, params,
                 callback);
@@ -138,7 +143,7 @@ public final class Core {
      * @param callback 请求中的回调方法
      * @param useCache 是否缓存本条请求
      */
-    public Request<byte[]> jsonGet(String url, HttpParams params,
+    public static Request<byte[]> jsonGet(String url, HttpParams params,
                                    boolean useCache, HttpCallBack callback) {
         Request<byte[]> request = new JsonRequest(HttpMethod.GET, url, params,
                 callback);
@@ -163,7 +168,7 @@ public final class Core {
         return config.mController;
     }
 
-    public void destroy() {
+    public static void destroy() {
         getKJBitmap().destroy();
         getKJHttp().destroy();
     }

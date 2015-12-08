@@ -41,10 +41,12 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
     protected abstract ArrayList<T> parserInAsync(byte[] t);
 
     protected HttpCallBack callBack = new HttpCallBack() {
+        private ArrayList<T> netDatas;
+
         @Override
         public void onSuccessInAsync(byte[] t) {
             super.onSuccessInAsync(t);
-            datas = parserInAsync(t);
+            netDatas = parserInAsync(t);
         }
 
         @Override
@@ -52,9 +54,10 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
             super.onSuccess(t);
             KJLoger.debug("===列表网络请求:" + t);
             if (viewDelegate.mEmptyLayout != null) {
-                if (datas != null) {
-                    adapter.refresh(datas);
+                if (netDatas != null) {
+                    adapter.refresh(netDatas);
                     viewDelegate.mEmptyLayout.dismiss();
+                    datas = netDatas;
                 } else {
                     viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NODATA);
                 }
@@ -65,7 +68,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         public void onFailure(int errorNo, String strMsg) {
             super.onFailure(errorNo, strMsg);
             //有可能界面已经关闭网络请求仍然返回
-            if (viewDelegate.mEmptyLayout != null) {
+            if (viewDelegate.mEmptyLayout != null && (datas == null || datas.isEmpty())) {
                 viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             }
         }

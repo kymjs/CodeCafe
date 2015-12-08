@@ -22,7 +22,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:palette-v7:23.1.1'
     compile project(':adapter')
     compile project(':nuwa')
@@ -30,7 +29,9 @@ dependencies {
     compile project(':base')
     compile project(':api')
     compile project(':model')
+    compile project(':gallery')
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile project(':gallery')
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
 }

@@ -155,9 +155,7 @@ public class KJBitmap {
     }
 
     public void destroy() {
-        for (String url : currentUrls) {
-            BitmapConfig.mMemoryCache.remove(url);
-        }
+        BitmapConfig.mMemoryCache.clean();
         currentUrls = null;
         displayer = null;
         diskImageRequest = null;

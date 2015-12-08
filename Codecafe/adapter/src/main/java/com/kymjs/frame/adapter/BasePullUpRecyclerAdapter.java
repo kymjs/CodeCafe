@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.kymjs.frame.adapter.widget.FooterView;
@@ -66,6 +67,10 @@ public abstract class BasePullUpRecyclerAdapter<T> extends BaseRecyclerAdapter<T
     public void onBindViewHolder(RecyclerHolder holder, int position) {
         if (position == getItemCount() - 1) {
             //因为已经在footerview写死了，所以这里就不用再去设置
+            //没有数据的时候也不显示footer
+            if (position == 0) {
+                getFooterView().setVisibility(View.GONE);
+            }
         } else {
             super.onBindViewHolder(holder, position);
         }

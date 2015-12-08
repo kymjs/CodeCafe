@@ -18,6 +18,11 @@ import com.kymjs.model.BlogList;
 
 import java.util.ArrayList;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.BlogDetailActivity;
 import top.codecafe.utils.XmlUtils;
@@ -32,12 +37,29 @@ public class BlogFragment extends MainListFragment<Blog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        byte[] cache = KJHttp.getCache(Api.BLOG_LIST);
-        if (cache != null) {
-            datas = parserInAsync(cache);
-            adapter.refresh(datas);
-            viewDelegate.mEmptyLayout.dismiss();
-        }
+        Observable.just(KJHttp.getCache(Api.BLOG_LIST))
+                .filter(new Func1<byte[], Boolean>() {
+                    @Override
+                    public Boolean call(byte[] cache) {
+                        return cache != null && cache.length != 0;
+                    }
+                })
+                .map(new Func1<byte[], ArrayList<Blog>>() {
+                    @Override
+                    public ArrayList<Blog> call(byte[] bytes) {
+                        return parserInAsync(bytes);
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<Blog>>() {
+                    @Override
+                    public void call(ArrayList<Blog> blogs) {
+                        datas = blogs;
+                        adapter.refresh(datas);
+                        viewDelegate.mEmptyLayout.dismiss();
+                    }
+                });
     }
 
     @Override
@@ -67,6 +89,7 @@ public class BlogFragment extends MainListFragment<Blog> {
                 } else {
                     imageView.setVisibility(View.VISIBLE);
                     new Core.Builder().url(item.getImage().trim())
+                            .errorBitmapRes(R.mipmap.logo)
                             .view(imageView).doTask();
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override

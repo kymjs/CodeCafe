@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.kymjs.base.BaseFrameActivity;
 import com.kymjs.base.MainFragment;
+import com.kymjs.kjcore.Core;
 
 import de.greenrobot.event.EventBus;
 import top.codecafe.R;
@@ -50,6 +51,8 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
             } else if (isOnKeyBacking) {
                 mMainLoopHandler.removeCallbacks(onBackTimeRunnable);
                 isOnKeyBacking = false;
+                Core.destroy();
+                System.exit(0);
                 finish();
             } else {
                 isOnKeyBacking = true;
