@@ -73,6 +73,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         contentHtml = new String(KJHttp.getCache(url));
         if (!StringUtils.isEmpty(contentHtml)) {
             viewDelegate.setContent(contentHtml);
+            viewDelegate.setCurrentUrl(url);
         }
         doRequest();
     }
@@ -82,7 +83,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
         super.onRestart();
         viewDelegate.setContent(contentHtml);
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();

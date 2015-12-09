@@ -17,7 +17,7 @@ package com.kymjs.kjcore.bitmap;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
+import android.util.LruCache;
 
 import com.kymjs.kjcore.bitmap.ImageDisplayer.ImageCache;
 import com.kymjs.kjcore.utils.SystemTool;

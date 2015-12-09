@@ -50,6 +50,26 @@ public class BrowserActivity extends BaseBackActivity<BrowserDelegate> {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewDelegate.webView.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewDelegate.webView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewDelegate.webView.destroy();
+    }
+    
     /**
      * 跳转到博客详情界面
      *

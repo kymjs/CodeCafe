@@ -57,6 +57,10 @@ public abstract class AppDelegate implements IDelegate {
         return rootView;
     }
 
+    public void setRootView(View rootView) {
+        this.rootView = rootView;
+    }
+
     @Override
     public void initWidget() {
     }

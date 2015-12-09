@@ -10,15 +10,17 @@
 	android:orientation="horizontal">
 
 	<Button
+		android:id="@+id/browser_bottombar_collect"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		android:text="hello"/>
+		android:text="收藏"/>
 
 	<Button
+		android:id="@+id/browser_bottombar_shared"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		android:text="hello"/>
+		android:text="分享"/>
 
 </LinearLayout>

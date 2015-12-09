@@ -3,16 +3,9 @@ package top.codecafe.delegate;
 import android.graphics.Bitmap;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v7.graphics.Palette;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.kymjs.api.Api;
 import com.kymjs.kjcore.Core;
@@ -28,50 +21,31 @@ import top.codecafe.R;
  */
 public class BlogDetailDelegate extends BaseDetailDelegate {
 
-    private Animation animBottomIn, animBottomOut;
-    private GestureDetector mGestureDetector;
-    private int flag = 0; // 双击事件需要
-    public LinearLayout mLayoutBottom;
+    /**
+     * 伪多继承(dai)
+     */
+    private BrowserDelegate browserDelegate = new BrowserDelegate();
 
     @Override
     public int getContentLayoutId() {
-        return R.layout.layout_blog_detail;
-    }
-
-    public void setContent(String text) {
-        WebView webView = get(R.id.webview);
-        webView.loadDataWithBaseURL(null, text, "text/html", "UTF-8", null);
-    }
-
-    public void setContentUrl(String url) {
-        WebView webView = get(R.id.webview);
-        webView.loadUrl(url);
+        return browserDelegate.getRootLayoutId();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
         initActionbarImage();
-        mLayoutBottom = (LinearLayout) View.inflate(getActivity(),
-                R.layout.layout_browser_bottombar, null);
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams
-                .WRAP_CONTENT);
+        browserDelegate.setRootView(rootView);
+        browserDelegate.initWidget();
+
+        ((RelativeLayout) get(R.id.browser_root)).removeView(browserDelegate.mLayoutBottom);
+        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(CoordinatorLayout
+                .LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin = 60;
         params.rightMargin = 60;
-        params.bottomMargin = 20;
+        params.bottomMargin = 30;
         params.gravity = Gravity.BOTTOM;
-        ((CoordinatorLayout) getRootView()).addView(mLayoutBottom, params);
-        mLayoutBottom.setVisibility(View.GONE);
-        new BrowserDelegateOption(this).initWebView();
-        mGestureDetector = new GestureDetector(getActivity(), new MyGestureListener());
-        WebView webView = get(R.id.webview);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return mGestureDetector.onTouchEvent(event);
-            }
-        });
-        initBarAnim();
+        ((CoordinatorLayout) getRootView()).addView(browserDelegate.mLayoutBottom, params);
     }
 
     /**
@@ -109,55 +83,15 @@ public class BlogDetailDelegate extends BaseDetailDelegate {
         });
     }
 
-    /**
-     * 初始化上下栏的动画并设置结束监听事件
-     */
-    private void initBarAnim() {
-        animBottomIn = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_bottom_in);
-        animBottomOut = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_bottom_out);
-        animBottomIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mLayoutBottom.setVisibility(View.VISIBLE);
-            }
-        });
-        animBottomOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mLayoutBottom.setVisibility(View.GONE);
-            }
-        });
+    public void setContent(String text) {
+        browserDelegate.webView.loadDataWithBaseURL(null, text, "text/html", "UTF-8", null);
     }
 
-    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    public void setContentUrl(String url) {
+        browserDelegate.setContentUrl(url);
+    }
 
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {// webview的双击事件
-            if (flag % 2 == 0) {
-                flag++;
-                mLayoutBottom.setVisibility(View.VISIBLE);
-                mLayoutBottom.startAnimation(animBottomIn);
-            } else {
-                flag++;
-                mLayoutBottom.startAnimation(animBottomOut);
-            }
-            return super.onDoubleTap(e);
-        }
+    public void setCurrentUrl(String currentUrl) {
+        browserDelegate.setCurrentUrl(currentUrl);
     }
 }
