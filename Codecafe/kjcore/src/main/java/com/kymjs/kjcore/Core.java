@@ -28,8 +28,8 @@ public final class Core {
     }
 
     private static final class SingletonHolder {
-        private static final KJHttp kjHttp = new KJHttp(null);
-        private static final KJBitmap kjBitmap = new KJBitmap(kjHttp, null);
+        private static KJHttp kjHttp = new KJHttp(null);
+        private static KJBitmap kjBitmap = new KJBitmap(kjHttp, null);
     }
 
     public static KJHttp getKJHttp() {
@@ -40,11 +40,15 @@ public final class Core {
         return SingletonHolder.kjBitmap;
     }
 
-    public static void initialize(){
-        //加载一次内部类
-        getKJHttp();
+    public synchronized static void initialize() {
+        if (SingletonHolder.kjHttp == null) {
+            SingletonHolder.kjHttp = new KJHttp(null);
+        }
+        if (SingletonHolder.kjBitmap == null) {
+            SingletonHolder.kjBitmap = new KJBitmap(SingletonHolder.kjHttp, null);
+        }
     }
-    
+
     /**
      * 发起get请求
      *
@@ -127,7 +131,7 @@ public final class Core {
      * @param useCache 是否缓存本条请求
      */
     public static Request<byte[]> jsonPost(String url, HttpParams params,
-                                    boolean useCache, HttpCallBack callback) {
+                                           boolean useCache, HttpCallBack callback) {
         Request<byte[]> request = new JsonRequest(HttpMethod.POST, url, params,
                 callback);
         request.setShouldCache(useCache);
@@ -144,7 +148,7 @@ public final class Core {
      * @param useCache 是否缓存本条请求
      */
     public static Request<byte[]> jsonGet(String url, HttpParams params,
-                                   boolean useCache, HttpCallBack callback) {
+                                          boolean useCache, HttpCallBack callback) {
         Request<byte[]> request = new JsonRequest(HttpMethod.GET, url, params,
                 callback);
         request.setShouldCache(useCache);
@@ -168,9 +172,11 @@ public final class Core {
         return config.mController;
     }
 
-    public static void destroy() {
+    public synchronized static void destroy() {
         getKJBitmap().destroy();
         getKJHttp().destroy();
+        SingletonHolder.kjBitmap = null;
+        SingletonHolder.kjHttp = null;
     }
 
     public static class Builder {

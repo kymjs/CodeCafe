@@ -53,7 +53,6 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 isOnKeyBacking = false;
                 Core.destroy();
                 finish();
-                System.exit(0);
             } else {
                 isOnKeyBacking = true;
                 viewDelegate.showExitTip();
