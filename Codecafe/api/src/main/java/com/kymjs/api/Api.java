@@ -8,5 +8,8 @@ public class Api {
     public static final String XITU_BLOG_LIST = "http://gold.xitu.io/rss";
     public static final String ZONE_IMAGE = "http://kymjs.com/api/zone_image";
     public static final String OSC_BLOG = "http://www.oschina.net/action/api/userblog_list";
-    public static final String OSC_BLOG_DETAIL = "http://www.oschina.net/action/api/blog_detail?id=";
+    public static final String OSC_BLOG_DETAIL = "http://www.oschina" +
+            ".net/action/api/blog_detail?id=";
+    public static final String OSC_COLLECT_BLOG = "http://www.oschina" +
+            ".net/action/api/favorite_list?uid=2426111&type=3";
 }

@@ -31,7 +31,7 @@ import top.codecafe.utils.XmlUtils;
  *
  * @author kymjs (http://www.kymjs.com/) on 12/10/15.
  */
-public class TopBlogFragment extends MainListFragment<OSCBlog> {
+public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class TopBlogFragment extends MainListFragment<OSCBlog> {
 
     private HttpParams getHttpParams(int index) {
         HttpParams params = new HttpParams();
-        params.put("authoruid", 1428332);
+        params.put("authoruid", 2426111);
         params.put("pageIndex", index);
         params.put("pageSize", 20);
         return params;

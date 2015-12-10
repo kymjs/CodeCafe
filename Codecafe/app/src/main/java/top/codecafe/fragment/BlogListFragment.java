@@ -32,7 +32,7 @@ import top.codecafe.utils.XmlUtils;
  *
  * @author kymjs (http://www.kymjs.com/) on 11/27/15.
  */
-public class BlogFragment extends MainListFragment<Blog> {
+public class BlogListFragment extends MainListFragment<Blog> {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

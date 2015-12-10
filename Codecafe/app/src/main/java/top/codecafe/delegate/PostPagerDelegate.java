@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.codecafe.R;
-import top.codecafe.fragment.BlogFragment;
-import top.codecafe.fragment.TopBlogFragment;
+import top.codecafe.fragment.BlogListFragment;
+import top.codecafe.fragment.OSCBlogListFragment;
 
 /**
  * 帖子栏目的ViewPager视图
@@ -21,9 +21,9 @@ public class PostPagerDelegate extends BasePagerDelegate {
         List<ViewPageInfo> viewPageInfos = new ArrayList<>();
 
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title1),
-                "blog1", BlogFragment.class, null));
+                "blog1", BlogListFragment.class, null));
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title2),
-                "blog2", TopBlogFragment.class, null));
+                "blog2", OSCBlogListFragment.class, null));
         return viewPageInfos;
     }
 }
