@@ -13,7 +13,7 @@
 	<string name="loading">加载中...</string>
 
 	<string name="title1">博客</string>
-	<string name="title2">业界</string>
+	<string name="title2">阅读</string>
 
 	<string name="blog_detail">博客详情</string>
 </resources>

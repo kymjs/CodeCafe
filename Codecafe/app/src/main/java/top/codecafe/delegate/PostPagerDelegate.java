@@ -8,7 +8,7 @@ import java.util.List;
 
 import top.codecafe.R;
 import top.codecafe.fragment.BlogFragment;
-import top.codecafe.fragment.XituFragment;
+import top.codecafe.fragment.TopBlogFragment;
 
 /**
  * 帖子栏目的ViewPager视图
@@ -23,7 +23,7 @@ public class PostPagerDelegate extends BasePagerDelegate {
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title1),
                 "blog1", BlogFragment.class, null));
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title2),
-                "blog2", XituFragment.class, null));
+                "blog2", TopBlogFragment.class, null));
         return viewPageInfos;
     }
 }

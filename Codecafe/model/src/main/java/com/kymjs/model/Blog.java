@@ -163,4 +163,20 @@ public class Blog implements Parcelable {
             return new Blog[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Blog) {
+            Blog data = (Blog) o;
+            if (data.link != null) return data.link.equals(link);
+            else return link == null;
+        } else {
+            return super.equals(o);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return link.hashCode();
+    }
 }

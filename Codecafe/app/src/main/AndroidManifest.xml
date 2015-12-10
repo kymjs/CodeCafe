@@ -20,10 +20,13 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		
+
 		<activity android:name="top.codecafe.activity.MainActivity"/>
 		<activity
 			android:name=".activity.BlogDetailActivity"
+			android:theme="@style/base_KJAppTheme"/>
+		<activity
+			android:name=".activity.OSCBlogDetailActivity"
 			android:theme="@style/base_KJAppTheme"/>
 		<activity
 			android:name=".activity.XituDetailActivity"

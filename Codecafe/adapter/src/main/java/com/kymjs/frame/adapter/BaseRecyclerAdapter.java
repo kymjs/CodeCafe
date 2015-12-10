@@ -94,12 +94,19 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
     public BaseRecyclerAdapter<T> refresh(Collection<T> datas) {
-        if (datas == null) {
-            realDatas = new ArrayList<>();
-        } else if (datas instanceof List) {
-            realDatas = (List<T>) datas;
+        if (realDatas != null && !realDatas.isEmpty()) {
+            //去重
+            for (T data : datas) {
+                if (!realDatas.contains(data)) realDatas.add(data);
+            }
         } else {
-            realDatas = new ArrayList<>(datas);
+            if (datas == null) {
+                realDatas = new ArrayList<>();
+            } else if (datas instanceof List) {
+                realDatas = (List<T>) datas;
+            } else {
+                realDatas = new ArrayList<>(datas);
+            }
         }
         notifyDataSetChanged();
         return this;

@@ -34,7 +34,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
 
     protected BasePullUpRecyclerAdapter<T> adapter;
     protected RecyclerView recyclerView;
-    protected ArrayList<T> datas;
+    protected ArrayList<T> datas = new ArrayList<>();
 
     protected abstract BasePullUpRecyclerAdapter<T> getAdapter();
 

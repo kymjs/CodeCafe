@@ -32,11 +32,11 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
 
     public static final String KEY_BLOG_URL = "blog_url_key";
     public static final String KEY_BLOG_TITLE = "blog_title_key";
-    private String url;
+    protected String url;
 
-    private EmptyLayout emptyLayout;
-    private WebView webView;
-    private String contentHtml = null;
+    protected EmptyLayout emptyLayout;
+    protected WebView webView;
+    protected String contentHtml = null;
 
     @Override
     protected Class<BlogDetailDelegate> getDelegateClass() {
@@ -72,7 +72,8 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
 
         contentHtml = new String(KJHttp.getCache(url));
         if (!StringUtils.isEmpty(contentHtml)) {
-            viewDelegate.setContent(contentHtml);
+            contentHtml = parserHtml(contentHtml);
+            emptyLayout.dismiss();
             viewDelegate.setCurrentUrl(url);
         }
         doRequest();

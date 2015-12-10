@@ -121,4 +121,20 @@ public class XituBlog implements Parcelable {
             return new XituBlog[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof XituBlog) {
+            XituBlog data = (XituBlog) o;
+            if (data.link != null) return data.link.equals(link);
+            else return link == null;
+        } else {
+            return super.equals(o);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return link.hashCode();
+    }
 }
