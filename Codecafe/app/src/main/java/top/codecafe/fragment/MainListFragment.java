@@ -68,8 +68,12 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         public void onFailure(int errorNo, String strMsg) {
             super.onFailure(errorNo, strMsg);
             //有可能界面已经关闭网络请求仍然返回
-            if (viewDelegate.mEmptyLayout != null && (datas == null || datas.isEmpty())) {
-                viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+            if (viewDelegate.mEmptyLayout != null && adapter != null) {
+                if (adapter.getItemCount() > 1) {
+                    viewDelegate.mEmptyLayout.dismiss();
+                } else {
+                    viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                }
             }
         }
 

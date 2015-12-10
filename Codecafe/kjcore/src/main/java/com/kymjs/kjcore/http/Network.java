@@ -65,15 +65,13 @@ public class Network {
                 responseHeaders = httpResponse.getHeaders();
                 if (statusCode == HttpStatus.SC_NOT_MODIFIED) { // 304
                     return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED,
-                            request.getCacheEntry() == null ? null : request
-                                    .getCacheEntry().data,
+                            request.getCacheEntry() == null ? null : request.getCacheEntry().data,
                             responseHeaders, true);
                 }
 
                 if (httpResponse.getContentStream() != null) {
                     if (request instanceof FileRequest) {
-                        responseContents = ((FileRequest) request)
-                                .handleResponse(httpResponse);
+                        responseContents = ((FileRequest) request).handleResponse(httpResponse);
                     } else {
                         responseContents = entityToBytes(httpResponse);
                     }

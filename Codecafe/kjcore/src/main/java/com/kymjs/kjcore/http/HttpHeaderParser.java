@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class HttpHeaderParser {
 
-    public static Cache.Entry parseCacheHeaders(HttpConfig httpconfig,
+    public static Cache.Entry parseCacheHeaders(boolean useServerControl, int cacheTime,
                                                 NetworkResponse response) {
         long now = System.currentTimeMillis();
 
@@ -84,10 +84,10 @@ public class HttpHeaderParser {
         Cache.Entry entry = new Cache.Entry();
         entry.data = response.data;
 
-        if (HttpConfig.useServerControl) {
+        if (useServerControl) {
             entry.ttl = softExpire;
         } else {
-            entry.ttl = now + httpconfig.cacheTime * 60000; // 分钟转毫秒
+            entry.ttl = now + cacheTime * 60000; // 分钟转毫秒
         }
         entry.etag = serverEtag;
         entry.serverDate = serverDate;

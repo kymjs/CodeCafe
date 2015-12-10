@@ -10,9 +10,15 @@ import android.text.TextUtils;
 import com.kymjs.api.Api;
 import com.kymjs.kjcore.Core;
 import com.kymjs.kjcore.http.HttpCallBack;
+import com.kymjs.kjcore.http.KJHttp;
 import com.kymjs.kjcore.utils.StringUtils;
 import com.kymjs.model.osc.OSCBlogEntity;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegateOption;
 import top.codecafe.utils.XmlUtils;
@@ -24,13 +30,45 @@ import top.codecafe.widget.EmptyLayout;
 public class OSCBlogDetailActivity extends BlogDetailActivity {
 
     public static final String KEY_BLOG_ID = "osc_blog_id";
-
     private int blogId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         blogId = getIntent().getIntExtra(KEY_BLOG_ID, 0);
+        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * 读取缓存内容
+     */
+    protected void readCache() {
+        Observable.just(KJHttp.getCache(Api.OSC_BLOG_DETAIL + blogId))
+                .filter(new Func1<byte[], Boolean>() {
+                    @Override
+                    public Boolean call(byte[] cache) {
+                        httpCache = cache;
+                        return cache != null && cache.length != 0;
+                    }
+                })
+                .map(new Func1<byte[], String>() {
+                    @Override
+                    public String call(byte[] bytes) {
+                        contentHtml = XmlUtils.toBean(OSCBlogEntity.class, bytes).getBlog()
+                                .getBody();
+                        return parserHtml(contentHtml);
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String content) {
+                        contentHtml = content;
+                        emptyLayout.dismiss();
+                        viewDelegate.setContent(content);
+                        viewDelegate.setCurrentUrl(url);
+                    }
+                });
     }
 
     @Override
@@ -46,10 +84,12 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
-                if (contentHtml != null) {
-                    viewDelegate.setContent(contentHtml);
-                } else {
-                    viewDelegate.setContent(t);
+                if (!new String(httpCache).equals(t)) {
+                    if (contentHtml != null) {
+                        viewDelegate.setContent(contentHtml);
+                    } else {
+                        viewDelegate.setContent(t);
+                    }
                 }
                 emptyLayout.dismiss();
             }

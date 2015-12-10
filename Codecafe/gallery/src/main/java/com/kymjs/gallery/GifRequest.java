@@ -76,7 +76,8 @@ public class GifRequest extends Request<byte[]> implements Persistence {
             return Response.error(new KJHttpException(response));
         } else {
             return Response.success(response.data, response.headers,
-                    HttpHeaderParser.parseCacheHeaders(mConfig, response));
+                    HttpHeaderParser.parseCacheHeaders(getUseServerControl(), getCacheTime(), 
+                            response));
         }
     }
 

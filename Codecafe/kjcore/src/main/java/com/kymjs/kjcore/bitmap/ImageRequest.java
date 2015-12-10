@@ -55,7 +55,7 @@ public class ImageRequest extends Request<Bitmap> implements Persistence {
 
     @Override
     public Priority getPriority() {
-        return Priority.LOW;
+        return Priority.NORMAL;
     }
 
     @Override
@@ -161,7 +161,8 @@ public class ImageRequest extends Request<Bitmap> implements Persistence {
             return Response.error(new KJHttpException(response));
         } else {
             Response<Bitmap> b = Response.success(bitmap, response.headers,
-                    HttpHeaderParser.parseCacheHeaders(mConfig, response));
+                    HttpHeaderParser.parseCacheHeaders(getUseServerControl(), getCacheTime(),
+                            response));
             return b;
         }
     }

@@ -1,5 +1,7 @@
 package top.codecafe.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,12 +10,18 @@ import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.kjcore.Core;
 import com.kymjs.kjcore.http.HttpParams;
+import com.kymjs.kjcore.http.KJHttp;
 import com.kymjs.kjcore.http.Request;
 import com.kymjs.model.osc.OSCBlog;
 import com.kymjs.model.osc.OSCBlogList;
 
 import java.util.ArrayList;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.OSCBlogDetailActivity;
 import top.codecafe.utils.XmlUtils;
@@ -24,6 +32,34 @@ import top.codecafe.utils.XmlUtils;
  * @author kymjs (http://www.kymjs.com/) on 12/10/15.
  */
 public class TopBlogFragment extends MainListFragment<OSCBlog> {
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Observable.just(KJHttp.getCache(Api.OSC_BLOG + getHttpParams(0).getUrlParams()))
+                .filter(new Func1<byte[], Boolean>() {
+                    @Override
+                    public Boolean call(byte[] cache) {
+                        return cache != null && cache.length != 0;
+                    }
+                })
+                .map(new Func1<byte[], ArrayList<OSCBlog>>() {
+                    @Override
+                    public ArrayList<OSCBlog> call(byte[] bytes) {
+                        return parserInAsync(bytes);
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<OSCBlog>>() {
+                    @Override
+                    public void call(ArrayList<OSCBlog> blogs) {
+                        datas = blogs;
+                        adapter.refresh(datas);
+                        viewDelegate.mEmptyLayout.dismiss();
+                    }
+                });
+    }
 
     @Override
     protected ArrayList<OSCBlog> parserInAsync(byte[] t) {
@@ -60,16 +96,20 @@ public class TopBlogFragment extends MainListFragment<OSCBlog> {
     }
 
     private void doRequest(int index) {
+        new Core.Builder().url(Api.OSC_BLOG)
+                .params(getHttpParams(index))
+                .contentType(Request.HttpMethod.GET)
+                .cacheTime(100)
+                .callback(callBack)
+                .doTask();
+    }
+
+    private HttpParams getHttpParams(int index) {
         HttpParams params = new HttpParams();
         params.put("authoruid", 1428332);
         params.put("pageIndex", index);
         params.put("pageSize", 20);
-        new Core.Builder().url(Api.OSC_BLOG)
-                .contentType(Request.HttpMethod.GET)
-                .cacheTime(60)
-                .params(params)
-                .callback(callBack)
-                .doTask();
+        return params;
     }
 
     @Override

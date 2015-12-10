@@ -81,7 +81,8 @@ public class FormRequest extends Request<byte[]> {
     @Override
     public Response<byte[]> parseNetworkResponse(NetworkResponse response) {
         return Response.success(response.data, response.headers,
-                HttpHeaderParser.parseCacheHeaders(mConfig, response));
+                HttpHeaderParser.parseCacheHeaders(getUseServerControl(), getCacheTime(), 
+                        response));
     }
 
     @Override
@@ -89,5 +90,10 @@ public class FormRequest extends Request<byte[]> {
         if (mCallback != null) {
             mCallback.onSuccess(headers, response);
         }
+    }
+
+    @Override
+    public Priority getPriority() {
+        return Priority.IMMEDIATE;
     }
 }

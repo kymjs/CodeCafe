@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -17,6 +18,11 @@ import com.kymjs.kjcore.http.HttpCallBack;
 import com.kymjs.kjcore.http.KJHttp;
 import com.kymjs.kjcore.utils.StringUtils;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.delegate.BlogDetailDelegate;
 import top.codecafe.delegate.BrowserDelegateOption;
@@ -37,6 +43,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     protected EmptyLayout emptyLayout;
     protected WebView webView;
     protected String contentHtml = null;
+    protected byte[] httpCache = null;
 
     @Override
     protected Class<BlogDetailDelegate> getDelegateClass() {
@@ -70,18 +77,45 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
             collapsingToolbar.setTitle(getString(R.string.kymjs_blog_name));
         }
 
-        contentHtml = new String(KJHttp.getCache(url));
-        if (!StringUtils.isEmpty(contentHtml)) {
-            contentHtml = parserHtml(contentHtml);
-            emptyLayout.dismiss();
-            viewDelegate.setCurrentUrl(url);
-        }
+        readCache();
         doRequest();
+    }
+
+    /**
+     * 读取缓存内容
+     */
+    protected void readCache() {
+        Observable.just(KJHttp.getCache(url))
+                .filter(new Func1<byte[], Boolean>() {
+                    @Override
+                    public Boolean call(byte[] cache) {
+                        httpCache = cache;
+                        return cache != null && cache.length != 0;
+                    }
+                })
+                .map(new Func1<byte[], String>() {
+                    @Override
+                    public String call(byte[] bytes) {
+                        return parserHtml(new String(bytes));
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String content) {
+                        contentHtml = content;
+                        emptyLayout.dismiss();
+                        viewDelegate.setContent(content);
+                        viewDelegate.setCurrentUrl(url);
+                    }
+                });
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        // 不知道为什么点击完webview图片后,再返回,webview内容就没了,只好再设置一次
         viewDelegate.setContent(contentHtml);
     }
 
@@ -127,29 +161,31 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     public void doRequest() {
         if (StringUtils.isEmpty(url)) return;
         Core.get(url, new HttpCallBack() {
-            @Override
-            public void onSuccessInAsync(byte[] t) {
-                super.onSuccessInAsync(t);
-                contentHtml = parserHtml(new String(t));
-            }
+                    @Override
+                    public void onSuccessInAsync(byte[] t) {
+                        super.onSuccessInAsync(t);
+                        contentHtml = parserHtml(new String(t));
+                    }
 
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                if (contentHtml != null) {
-                    viewDelegate.setContent(contentHtml);
-                } else {
-                    viewDelegate.setContent(t);
+                    @Override
+                    public void onSuccess(String t) {
+                        super.onSuccess(t);
+                        if (!new String(httpCache).equals(t) && contentHtml != null) {
+                            viewDelegate.setContent(contentHtml);
+                        }
+                        emptyLayout.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(int errorNo, String strMsg) {
+                        super.onFailure(errorNo, strMsg);
+                        if (httpCache == null && TextUtils.isEmpty(contentHtml)) {
+                            emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                        }
+                    }
                 }
-                emptyLayout.dismiss();
-            }
 
-            @Override
-            public void onFailure(int errorNo, String strMsg) {
-                super.onFailure(errorNo, strMsg);
-                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-            }
-        });
+        );
     }
 
     /**

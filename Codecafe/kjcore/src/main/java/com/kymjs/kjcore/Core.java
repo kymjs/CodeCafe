@@ -188,6 +188,7 @@ public final class Core {
         private int httpMethod;
         private int contentType;
         private int cacheTime = 5;
+        private boolean useServerControl = false;
         private HttpCallBack callback;
 
         public static final int DEF_WIDTH_HEIGHT = -100;
@@ -226,6 +227,11 @@ public final class Core {
 
         public Builder cacheTime(int cacheTime) {
             this.cacheTime = cacheTime;
+            return this;
+        }
+
+        public Builder useServerControl(boolean useServerControl) {
+            this.useServerControl = useServerControl;
             return this;
         }
 
@@ -325,11 +331,8 @@ public final class Core {
             }
             if (httpConfig != null) {
                 getKJHttp().setConfig(httpConfig);
-            } else {
-                httpConfig = new HttpConfig();
-                httpConfig.cacheTime = cacheTime;
-                getKJHttp().setConfig(httpConfig);
             }
+
             if (callback == null) {
                 callback = new HttpCallBack() {
                 };
@@ -342,13 +345,18 @@ public final class Core {
                     url += params.getUrlParams();
             }
 
+            Request request;
             if (contentType == ContentType.FORM) {
-                FormRequest request = new FormRequest(httpMethod, url, params, callback);
+                request = new FormRequest(httpMethod, url, params, callback);
                 request.setShouldCache(useCache);
+                request.setUseServerControl(useServerControl);
+                request.setCacheTime(cacheTime);
                 getKJHttp().doRequest(request);
             } else if (contentType == ContentType.JSON) {
-                JsonRequest request = new JsonRequest(httpMethod, url, params, callback);
+                request = new JsonRequest(httpMethod, url, params, callback);
                 request.setShouldCache(useCache);
+                request.setUseServerControl(useServerControl);
+                request.setCacheTime(cacheTime);
                 getKJHttp().doRequest(request);
             }
         }

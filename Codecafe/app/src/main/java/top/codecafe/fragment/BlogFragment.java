@@ -107,7 +107,7 @@ public class BlogFragment extends MainListFragment<Blog> {
     public void doRequest() {
         new Core.Builder().url(Api.BLOG_LIST)
                 .contentType(Request.HttpMethod.GET)
-                .cacheTime(60)
+                .cacheTime(600)
                 .callback(callBack)
                 .doTask();
     }

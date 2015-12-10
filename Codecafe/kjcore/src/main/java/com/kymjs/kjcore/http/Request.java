@@ -54,6 +54,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         int PATCH = 7;
     }
 
+
     private static final long SLOW_REQUEST_THRESHOLD_MS = 3000; // 请求超时时间
 
     private final String mUrl;
@@ -63,6 +64,8 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     private final int mMethod; // 请求方式
     private final long mRequestBirthTime = 0;// 用于转储慢的请求。
 
+    private int cacheTime = 5;
+    private boolean useServerControl;
     private boolean mShouldCache = true; // 是否缓存本次请求
     private boolean mCanceled = false; // 是否取消本次请求
     private boolean mResponseDelivered = false; // 是否再次分发本次响应
@@ -165,6 +168,22 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
     public String getUrl() {
         return mUrl;
+    }
+
+    public void setCacheTime(int cacheTime) {
+        this.cacheTime = cacheTime;
+    }
+
+    public int getCacheTime() {
+        return cacheTime;
+    }
+
+    public boolean getUseServerControl() {
+        return useServerControl;
+    }
+
+    public void setUseServerControl(boolean useServerControl) {
+        this.useServerControl = useServerControl;
     }
 
     public abstract String getCacheKey();

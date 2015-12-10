@@ -50,15 +50,6 @@ public final class HttpConfig {
      * 磁盘缓存大小
      */
     public static int DISK_CACHE_SIZE = 5 * 1024 * 1024;
-    /**
-     * 缓存有效时间: 默认5分钟
-     */
-    public int cacheTime = 5;
-
-    /**
-     * 在Http请求中，如果服务器也声明了对缓存时间的控制，那么是否优先使用服务器设置: 默认false
-     */
-    public static boolean useServerControl = false;
 
     /**
      * 为了更真实的模拟网络请求。如果启用，在读取完成以后，并不立即返回而是延迟500毫秒再返回

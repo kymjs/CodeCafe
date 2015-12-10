@@ -98,6 +98,10 @@ public class KJHttp {
         this.mConfig = config;
     }
 
+    public void setCacheTime() {
+    }
+
+
     /******************************** core method ****************************************/
 
     /**

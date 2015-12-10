@@ -55,7 +55,8 @@ public class JsonRequest extends Request<byte[]> {
     @Override
     public Response<byte[]> parseNetworkResponse(NetworkResponse response) {
         return Response.success(response.data, response.headers,
-                HttpHeaderParser.parseCacheHeaders(mConfig, response));
+                HttpHeaderParser.parseCacheHeaders(getUseServerControl(), getCacheTime(), 
+                        response));
     }
 
     @Override
@@ -82,5 +83,10 @@ public class JsonRequest extends Request<byte[]> {
                     " using %s", mRequestBody, PROTOCOL_CHARSET));
             return null;
         }
+    }
+
+    @Override
+    public Priority getPriority() {
+        return Priority.IMMEDIATE;
     }
 }
