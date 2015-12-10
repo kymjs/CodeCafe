@@ -52,8 +52,8 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 mMainLoopHandler.removeCallbacks(onBackTimeRunnable);
                 isOnKeyBacking = false;
                 Core.destroy();
-                System.exit(0);
                 finish();
+                System.exit(0);
             } else {
                 isOnKeyBacking = true;
                 viewDelegate.showExitTip();
