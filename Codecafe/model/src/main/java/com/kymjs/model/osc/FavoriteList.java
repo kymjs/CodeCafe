@@ -3,7 +3,6 @@ package com.kymjs.model.osc;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 收藏实体类
@@ -20,7 +19,7 @@ public class FavoriteList {
     @XStreamAlias("pagesize")
     private int pageSize;
     @XStreamAlias("favorites")
-    private List<Favorite> favoritelist = new ArrayList<Favorite>();
+    private ArrayList<Favorite> favoritelist = new ArrayList<Favorite>();
 
     public int getPageSize() {
         return pageSize;
@@ -30,11 +29,11 @@ public class FavoriteList {
         this.pageSize = pagesize;
     }
 
-    public List<Favorite> getFavoritelist() {
+    public ArrayList<Favorite> getFavoritelist() {
         return favoritelist;
     }
 
-    public void setFavoritelist(List<Favorite> favoritelist) {
+    public void setFavoritelist(ArrayList<Favorite> favoritelist) {
         this.favoritelist = favoritelist;
     }
 

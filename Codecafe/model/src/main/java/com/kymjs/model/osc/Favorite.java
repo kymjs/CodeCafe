@@ -53,4 +53,14 @@ public class Favorite {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Favorite) {
+            Favorite data = (Favorite) o;
+            return data.id == id;
+        } else {
+            return super.equals(o);
+        }
+    }
+
 }

@@ -3,7 +3,6 @@ package top.codecafe.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.kymjs.api.Api;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
@@ -82,10 +81,9 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
                 holder.setText(R.id.item_blog_tv_description, item.getBody().trim());
                 holder.setText(R.id.item_blog_tv_author, "推荐阅读");
                 holder.setText(R.id.item_blog_tv_date, item.getPubDate());
+                
                 holder.getView(R.id.item_blog_tip_recommend).setVisibility(View.GONE);
-
-                ImageView imageView = holder.getView(R.id.item_blog_img);
-                imageView.setVisibility(View.GONE);
+                holder.getView(R.id.item_blog_img).setVisibility(View.GONE);
             }
         };
     }

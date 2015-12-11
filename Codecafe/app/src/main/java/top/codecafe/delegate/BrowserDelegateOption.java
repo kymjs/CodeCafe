@@ -108,14 +108,14 @@ public class BrowserDelegateOption {
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
 
-        if (Build.VERSION.SDK_INT >= 19) {
+        int sysVersion = Build.VERSION.SDK_INT;
+        if (sysVersion >= 19) {
             webView.getSettings().setLoadsImagesAutomatically(true);
         } else {
             webView.getSettings().setLoadsImagesAutomatically(false);
         }
 
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        int sysVersion = Build.VERSION.SDK_INT;
         if (sysVersion >= 11) {
             settings.setDisplayZoomControls(false);
         } else {
@@ -156,18 +156,5 @@ public class BrowserDelegateOption {
         body = body.replaceAll("(<img[^>]+src=\")(\\S+)\"",
                 "$1$2\" onClick=\"mWebViewImageListener.showImagePreview('$2')\"");
         return body;
-    }
-
-    /**
-     * 获取webviewClient对象
-     */
-    public static WebViewClient getWebViewClient() {
-        return new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LinkDispatcher.dispatch(view, url);
-                return true;
-            }
-        };
     }
 }

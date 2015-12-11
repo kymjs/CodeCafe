@@ -101,7 +101,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             }
         } else {
             if (datas == null) {
-                realDatas = new ArrayList<>();
+                return this;
             } else if (datas instanceof List) {
                 realDatas = (List<T>) datas;
             } else {

@@ -184,7 +184,6 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                         }
                     }
                 }
-
         );
     }
 

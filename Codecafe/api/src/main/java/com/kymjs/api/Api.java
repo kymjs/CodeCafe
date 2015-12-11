@@ -12,4 +12,8 @@ public class Api {
             ".net/action/api/blog_detail?id=";
     public static final String OSC_COLLECT_BLOG = "http://www.oschina" +
             ".net/action/api/favorite_list?uid=2426111&type=3";
+
+    public static final String OSC_COOKIE = "oscid=ueFRQyc8CLsm0MwbSLC22bH2Qv7BMFuG3u" +
+            "%2BkdVWPBRRUmoAVhqctQz5fG%2Fs5JSB5JGVMZrm4jNl57z9o1biYHKHXZ2%2FG" +
+            "%2Bi1qDPe5f6o1KJkT68PfyJ0pZA%3D%3D;\n";
 }

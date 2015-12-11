@@ -41,12 +41,16 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
     protected abstract ArrayList<T> parserInAsync(byte[] t);
 
     protected HttpCallBack callBack = new HttpCallBack() {
-        private ArrayList<T> netDatas;
+        private ArrayList<T> tempDatas;
 
         @Override
         public void onSuccessInAsync(byte[] t) {
             super.onSuccessInAsync(t);
-            netDatas = parserInAsync(t);
+            try {
+                tempDatas = parserInAsync(t);
+            } catch (Exception e) {
+                tempDatas = null;
+            }
         }
 
         @Override
@@ -54,12 +58,13 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
             super.onSuccess(t);
             KJLoger.debug("===列表网络请求:" + t);
             if (viewDelegate.mEmptyLayout != null) {
-                if (netDatas != null) {
-                    adapter.refresh(netDatas);
-                    viewDelegate.mEmptyLayout.dismiss();
-                    datas = netDatas;
-                } else {
+                if (tempDatas == null || tempDatas.isEmpty() || adapter == null || adapter
+                        .getItemCount() < 1) {
                     viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NODATA);
+                } else {
+                    viewDelegate.mEmptyLayout.dismiss();
+                    adapter.refresh(tempDatas);
+                    datas = tempDatas;
                 }
             }
         }
