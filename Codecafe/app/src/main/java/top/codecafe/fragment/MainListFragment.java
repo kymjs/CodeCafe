@@ -38,6 +38,8 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
 
     protected abstract BasePullUpRecyclerAdapter<T> getAdapter();
 
+    protected abstract String getChangePageTitleAction();
+
     protected abstract ArrayList<T> parserInAsync(byte[] t);
 
     protected HttpCallBack callBack = new HttpCallBack() {
@@ -136,13 +138,13 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
                 //隐藏标题栏事件的启动时机
                 if (upOrDown > FLAG && titleIsShow) {
                     Event event = new Event();
-                    event.setAction(BlogPagerFragment.CHANGE_PAGER_TITLE_EVEN);
+                    event.setAction(getChangePageTitleAction());
                     event.arg = 1;
                     EventBus.getDefault().post(event);
                     titleIsShow = false;
                 } else if (upOrDown < -10 && !titleIsShow) { // 10,防误触
                     Event event = new Event();
-                    event.setAction(BlogPagerFragment.CHANGE_PAGER_TITLE_EVEN);
+                    event.setAction(getChangePageTitleAction());
                     event.arg = -1;
                     EventBus.getDefault().post(event);
                     titleIsShow = true;
@@ -150,7 +152,6 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
                 upOrDown = 0;
             }
         });
-
         recyclerView.setAdapter(adapter);
     }
 

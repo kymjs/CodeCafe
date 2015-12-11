@@ -82,6 +82,12 @@ public class TopListFragment extends MainListFragment<Favorite> {
         return XmlUtils.toBean(FavoriteList.class, t).getFavoritelist();
     }
 
+
+    @Override
+    protected String getChangePageTitleAction() {
+        return BlogPagerFragment.CHANGE_PAGER_BLOG_TITLE_EVEN;
+    }
+
     @Override
     public void doRequest() {
         HttpParams params = new HttpParams();

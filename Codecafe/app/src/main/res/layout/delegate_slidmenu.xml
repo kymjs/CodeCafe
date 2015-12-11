@@ -1,113 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/menu_rootview"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+	android:id="@+id/menu_rootview"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/white"
+	android:orientation="vertical">
 
-    <top.codecafe.widget.RoundImageView
-        android:id="@+id/menu_img_head"
-        android:layout_width="@dimen/splash_head_width"
-        android:layout_height="@dimen/splash_head_height"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/menu_img_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@id/menu_img_head"
-        android:layout_alignTop="@id/menu_img_head"/>
+		<LinearLayout
+			android:id="@+id/menu_item_tag1"
+			style="@style/MenuItemLayoutStyle">
 
-    <TextView
-        android:id="@+id/menu_tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/menu_img_head"
-        android:layout_alignTop="@id/menu_img_head"
-        android:layout_toRightOf="@id/menu_img_head"
-        android:gravity="center_vertical"
-        android:textColor="#333"
-        android:textSize="17sp"/>
+			<ImageView
+				style="@style/MenuItemImageViewStyle"
+				android:background="@mipmap/icon_slid_menu_1"
+				android:contentDescription="@null"/>
 
-    <TextView
-        android:id="@+id/menu_tv_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/menu_img_head"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:maxLines="2"
-        android:textSize="13sp"/>
+			<TextView
+				style="@style/MenuItemTextViewStyle"
+				android:text="@string/menu_item_text1"/>
+		</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/menu_tv_desc"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
+		<LinearLayout
+			android:id="@+id/menu_item_tag2"
+			style="@style/MenuItemLayoutStyle">
 
-        <LinearLayout
-            android:id="@+id/menu_item_tag1"
-            style="@style/MenuItemLayoutStyle">
+			<ImageView
+				style="@style/MenuItemImageViewStyle"
+				android:background="@mipmap/xitu_logo"
+				android:contentDescription="@null"/>
 
-            <ImageView
-                style="@style/MenuItemImageViewStyle"
-                android:background="@mipmap/icon_slid_menu_1"
-                android:contentDescription="@null"/>
+			<TextView
+				style="@style/MenuItemTextViewStyle"
+				android:text="@string/menu_item_text2"/>
+		</LinearLayout>
 
-            <TextView
-                style="@style/MenuItemTextViewStyle"
-                android:text="@string/menu_item_text1"/>
-        </LinearLayout>
+		<LinearLayout
+			android:id="@+id/menu_item_tag3"
+			style="@style/MenuItemLayoutStyle">
 
-        <LinearLayout
-            android:id="@+id/menu_item_tag2"
-            style="@style/MenuItemLayoutStyle">
+			<ImageView
+				style="@style/MenuItemImageViewStyle"
+				android:background="@mipmap/osc_logo"
+				android:contentDescription="@null"/>
 
-            <ImageView
-                style="@style/MenuItemImageViewStyle"
-                android:background="@mipmap/icon_slid_menu_2"
-                android:contentDescription="@null"/>
+			<TextView
+				style="@style/MenuItemTextViewStyle"
+				android:text="@string/menu_item_text3"/>
+		</LinearLayout>
 
-            <TextView
-                style="@style/MenuItemTextViewStyle"
-                android:text="@string/menu_item_text2"/>
-        </LinearLayout>
+		<LinearLayout
+			android:id="@+id/menu_item_tag4"
+			style="@style/MenuItemLayoutStyle">
 
-        <LinearLayout
-            android:id="@+id/menu_item_tag3"
-            style="@style/MenuItemLayoutStyle">
+			<ImageView
+				style="@style/MenuItemImageViewStyle"
+				android:background="@mipmap/icon_slid_menu_4"
+				android:contentDescription="@null"/>
 
-            <ImageView
-                style="@style/MenuItemImageViewStyle"
-                android:background="@mipmap/icon_slid_menu_3"
-                android:contentDescription="@null"/>
+			<TextView
+				style="@style/MenuItemTextViewStyle"
+				android:text="@string/menu_item_text4"/>
+		</LinearLayout>
 
-            <TextView
-                style="@style/MenuItemTextViewStyle"
-                android:text="@string/menu_item_text3"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/menu_item_tag4"
-            style="@style/MenuItemLayoutStyle">
-
-            <ImageView
-                style="@style/MenuItemImageViewStyle"
-                android:background="@mipmap/icon_slid_menu_4"
-                android:contentDescription="@null"/>
-
-            <TextView
-                style="@style/MenuItemTextViewStyle"
-                android:text="@string/menu_item_text4"/>
-        </LinearLayout>
-
-    </LinearLayout>
+	</LinearLayout>
 
 </RelativeLayout>

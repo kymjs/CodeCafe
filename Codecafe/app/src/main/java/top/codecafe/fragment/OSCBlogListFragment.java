@@ -81,11 +81,16 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
                 holder.setText(R.id.item_blog_tv_description, item.getBody().trim());
                 holder.setText(R.id.item_blog_tv_author, "推荐阅读");
                 holder.setText(R.id.item_blog_tv_date, item.getPubDate());
-                
+
                 holder.getView(R.id.item_blog_tip_recommend).setVisibility(View.GONE);
                 holder.getView(R.id.item_blog_img).setVisibility(View.GONE);
             }
         };
+    }
+
+    @Override
+    protected String getChangePageTitleAction() {
+        return BlogPagerFragment.CHANGE_PAGER_BLOG_TITLE_EVEN;
     }
 
     @Override

@@ -85,6 +85,12 @@ public class XituFragment extends MainListFragment<XituBlog> {
         };
     }
 
+
+    @Override
+    protected String getChangePageTitleAction() {
+        return "";
+    }
+
     @Override
     public void doRequest() {
         new Core.Builder().url(Api.XITU_BLOG_LIST)

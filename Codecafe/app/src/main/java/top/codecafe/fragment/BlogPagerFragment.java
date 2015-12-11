@@ -15,7 +15,7 @@ public class BlogPagerFragment extends MainFragment<BlogPagerDelegate> {
 
     private boolean titleIsShow = true;
 
-    public static final String CHANGE_PAGER_TITLE_EVEN = "blog_should_change_pager_title_event";
+    public static final String CHANGE_PAGER_BLOG_TITLE_EVEN = "blog_should_change_pager_title_event";
 
     @Override
     protected Class<BlogPagerDelegate> getDelegateClass() {
@@ -35,7 +35,7 @@ public class BlogPagerFragment extends MainFragment<BlogPagerDelegate> {
     }
 
     public void onEvent(Event event) {
-        if (!CHANGE_PAGER_TITLE_EVEN.equals(event.getAction())) return;
+        if (!CHANGE_PAGER_BLOG_TITLE_EVEN.equals(event.getAction())) return;
         if (event.arg > 0 && titleIsShow) {
             viewDelegate.scrollHideTitle();
             titleIsShow = false;

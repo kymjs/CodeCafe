@@ -8,7 +8,7 @@ import java.util.List;
 
 import top.codecafe.R;
 import top.codecafe.fragment.BlogListFragment;
-import top.codecafe.fragment.TopListFragment;
+import top.codecafe.fragment.OSCBlogListFragment;
 
 /**
  * 帖子栏目的ViewPager视图
@@ -23,7 +23,7 @@ public class BlogPagerDelegate extends BasePagerDelegate {
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title1),
                 "blog1", BlogListFragment.class, null));
         viewPageInfos.add(new ViewPageInfo(getActivity().getString(R.string.title2),
-                "blog2", TopListFragment.class, null));
+                "blog2", OSCBlogListFragment.class, null));
         return viewPageInfos;
     }
 }

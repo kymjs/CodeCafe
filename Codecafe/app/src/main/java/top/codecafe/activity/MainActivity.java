@@ -15,6 +15,8 @@ import top.codecafe.R;
 import top.codecafe.delegate.MainDelegate;
 import top.codecafe.fragment.BlogPagerFragment;
 import top.codecafe.fragment.MainSlidMenu;
+import top.codecafe.fragment.OSCNewsListFragment;
+import top.codecafe.fragment.XituFragment;
 import top.codecafe.model.Event;
 
 /**
@@ -25,7 +27,9 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
     public static final String MENU_CLICK_EVEN = "slid_menu_click_event";
 
     private MainFragment currentFragment; //当前内容所显示的Fragment
-    private MainFragment content1;
+    private MainFragment content1 = new BlogPagerFragment();
+    private MainFragment content2 = new XituFragment();
+    private MainFragment content3 = new OSCNewsListFragment();
 
     private boolean isOnKeyBacking;
     private Handler mMainLoopHandler = new Handler(Looper.getMainLooper());
@@ -99,10 +103,10 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 changeFragment(content1);
                 break;
             case R.id.menu_item_tag2:
-                viewDelegate.toast("切换第二个界面");
+                changeFragment(content2);
                 break;
             case R.id.menu_item_tag3:
-                viewDelegate.toast("切换第三个界面");
+                changeFragment(content3);
                 break;
             case R.id.menu_item_tag4:
                 viewDelegate.toast("切换第四个界面");
@@ -116,8 +120,6 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        content1 = new BlogPagerFragment();
-
         changeFragment(content1);
         EventBus.getDefault().register(this);
     }

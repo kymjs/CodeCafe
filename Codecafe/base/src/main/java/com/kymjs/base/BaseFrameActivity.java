@@ -12,6 +12,8 @@ import com.kymjs.frame.presenter.ActivityPresenter;
 import com.kymjs.frame.view.IDelegate;
 
 /**
+ * Activity基类
+ *
  * @author kymjs (http://www.kymjs.com/) on 11/19/15.
  */
 public abstract class BaseFrameActivity<T extends IDelegate> extends ActivityPresenter<T> {
