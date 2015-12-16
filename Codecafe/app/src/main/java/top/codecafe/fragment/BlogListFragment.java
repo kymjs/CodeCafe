@@ -103,12 +103,6 @@ public class BlogListFragment extends MainListFragment<Blog> {
         };
     }
 
-
-    @Override
-    protected String getChangePageTitleAction() {
-        return BlogPagerFragment.CHANGE_PAGER_BLOG_TITLE_EVEN;
-    }
-
     @Override
     public void doRequest() {
         new Core.Builder().url(Api.BLOG_LIST)

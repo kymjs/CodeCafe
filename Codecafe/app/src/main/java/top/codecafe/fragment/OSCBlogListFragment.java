@@ -89,11 +89,6 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     }
 
     @Override
-    protected String getChangePageTitleAction() {
-        return BlogPagerFragment.CHANGE_PAGER_BLOG_TITLE_EVEN;
-    }
-
-    @Override
     public void doRequest() {
         doRequest(0);
     }

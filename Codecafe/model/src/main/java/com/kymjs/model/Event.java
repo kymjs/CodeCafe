@@ -1,4 +1,4 @@
-package top.codecafe.model;
+package com.kymjs.model;
 
 /**
  * @author kymjs (http://www.kymjs.com/) on 11/27/15.

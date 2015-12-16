@@ -63,5 +63,6 @@ public class ScrollTask extends AsyncTask<Integer, Integer, Integer> {
         contentParams.topMargin = (int) topMargin;
         view.setLayoutParams(contentParams);
         view.invalidate();
+        view.postInvalidate();
     }
 }

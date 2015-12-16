@@ -10,20 +10,6 @@ import com.kymjs.frame.view.IDelegate;
  */
 public abstract class MainFragment<T extends IDelegate> extends FragmentPresenter<T> {
 
-    private boolean isInit = true;
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint() && isInit) {
-            isInit = false;
-            lazyLoad();
-        }
-    }
-
-    protected void lazyLoad() {
-    }
-
     public void onChange() {
     }
 }

@@ -7,17 +7,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.kymjs.api.Api;
 import com.kymjs.base.BaseFrameActivity;
 import com.kymjs.base.MainFragment;
+import com.kymjs.model.Event;
 
 import de.greenrobot.event.EventBus;
 import top.codecafe.R;
 import top.codecafe.delegate.MainDelegate;
-import top.codecafe.fragment.BlogPagerFragment;
+import top.codecafe.fragment.BlogListFragment;
 import top.codecafe.fragment.MainSlidMenu;
-import top.codecafe.fragment.OSCNewsListFragment;
+import top.codecafe.fragment.TopListFragment;
 import top.codecafe.fragment.XituFragment;
-import top.codecafe.model.Event;
 
 /**
  * 主界面
@@ -27,9 +28,9 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
     public static final String MENU_CLICK_EVEN = "slid_menu_click_event";
 
     private MainFragment currentFragment; //当前内容所显示的Fragment
-    private MainFragment content1 = new BlogPagerFragment();
+    private MainFragment content1 = new BlogListFragment();
     private MainFragment content2 = new XituFragment();
-    private MainFragment content3 = new OSCNewsListFragment();
+    private MainFragment content3 = new TopListFragment();
 
     private boolean isOnKeyBacking;
     private Handler mMainLoopHandler = new Handler(Looper.getMainLooper());
@@ -75,8 +76,7 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
         if (targetFragment.equals(currentFragment)) {
             return;
         }
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!targetFragment.isAdded()) {
             transaction.add(R.id.main_content, targetFragment, targetFragment.getClass()
                     .getName());
@@ -109,7 +109,7 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 changeFragment(content3);
                 break;
             case R.id.menu_item_tag4:
-                viewDelegate.toast("切换第四个界面");
+                BlogDetailActivity.goinActivity(this, Api.OSL, null);
                 break;
             default:
                 break;
@@ -120,7 +120,9 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        changeFragment(content1);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_content, content1, content1.getClass().getName())
+                .commit();
         EventBus.getDefault().register(this);
     }
 

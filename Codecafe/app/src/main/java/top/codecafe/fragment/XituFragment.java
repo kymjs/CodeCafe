@@ -57,7 +57,6 @@ public class XituFragment extends MainListFragment<XituBlog> {
                         viewDelegate.mEmptyLayout.dismiss();
                     }
                 });
-
     }
 
 
@@ -83,12 +82,6 @@ public class XituFragment extends MainListFragment<XituBlog> {
                 holder.setText(R.id.item_blog_tv_author, item.getAuthor());
             }
         };
-    }
-
-
-    @Override
-    protected String getChangePageTitleAction() {
-        return "";
     }
 
     @Override

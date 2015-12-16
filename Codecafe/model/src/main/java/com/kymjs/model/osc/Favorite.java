@@ -52,7 +52,6 @@ public class Favorite {
         this.url = url;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (o instanceof Favorite) {

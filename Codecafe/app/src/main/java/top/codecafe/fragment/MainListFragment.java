@@ -13,11 +13,9 @@ import com.kymjs.kjcore.utils.KJLoger;
 
 import java.util.ArrayList;
 
-import de.greenrobot.event.EventBus;
 import top.codecafe.R;
 import top.codecafe.delegate.PullListDelegate;
 import top.codecafe.inter.IRequestVo;
-import top.codecafe.model.Event;
 import top.codecafe.widget.EmptyLayout;
 
 /**
@@ -28,17 +26,11 @@ import top.codecafe.widget.EmptyLayout;
 public abstract class MainListFragment<T> extends MainFragment<PullListDelegate> implements
         SwipeRefreshLayout.OnRefreshListener, IRequestVo, BaseRecyclerAdapter.OnItemClickListener {
 
-    private long upOrDown;
-    private boolean titleIsShow = true;
-    private static int FLAG = 70;
-
     protected BasePullUpRecyclerAdapter<T> adapter;
     protected RecyclerView recyclerView;
     protected ArrayList<T> datas = new ArrayList<>();
 
     protected abstract BasePullUpRecyclerAdapter<T> getAdapter();
-
-    protected abstract String getChangePageTitleAction();
 
     protected abstract ArrayList<T> parserInAsync(byte[] t);
 
@@ -74,6 +66,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         @Override
         public void onFailure(int errorNo, String strMsg) {
             super.onFailure(errorNo, strMsg);
+            KJLoger.debug("====网络请求异常" + strMsg);
             //有可能界面已经关闭网络请求仍然返回
             if (viewDelegate.mEmptyLayout != null && adapter != null) {
                 if (adapter.getItemCount() > 1) {
@@ -104,6 +97,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         bindEven();
         viewDelegate.setOnRefreshListener(this);
         adapter.setOnItemClickListener(this);
+        doRequest();
     }
 
     private void bindEven() {
@@ -133,23 +127,6 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                upOrDown += dy;
-
-                //隐藏标题栏事件的启动时机
-                if (upOrDown > FLAG && titleIsShow) {
-                    Event event = new Event();
-                    event.setAction(getChangePageTitleAction());
-                    event.arg = 1;
-                    EventBus.getDefault().post(event);
-                    titleIsShow = false;
-                } else if (upOrDown < -10 && !titleIsShow) { // 10,防误触
-                    Event event = new Event();
-                    event.setAction(getChangePageTitleAction());
-                    event.arg = -1;
-                    EventBus.getDefault().post(event);
-                    titleIsShow = true;
-                }
-                upOrDown = 0;
             }
         });
         recyclerView.setAdapter(adapter);
@@ -157,12 +134,6 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
 
     public void onBottom() {
         adapter.setState(BasePullUpRecyclerAdapter.STATE_NO_MORE);
-    }
-
-    @Override
-    protected void lazyLoad() {
-        super.lazyLoad();
-        doRequest();
     }
 
     @Override

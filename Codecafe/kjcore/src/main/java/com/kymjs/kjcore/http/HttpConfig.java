@@ -95,7 +95,7 @@ public final class HttpConfig {
         mDelivery = new DeliveryExecutor(new Handler(Looper.getMainLooper()));
         mController = new DownloadTaskQueue(HttpConfig.MAX_DOWNLOAD_TASK_SIZE);
     }
-    
+
     /**
      * 创建HTTP请求端的生产器(将抽象工厂缩减为方法)
      *
@@ -107,15 +107,5 @@ public final class HttpConfig {
 
     public HttpStack httpStackFactory(SSLSocketFactory ssl) {
         return new HttpConnectStack(null, ssl);
-    }
-
-    @Deprecated
-    public void setCookieString(String cookie) {
-        sCookie = cookie;
-    }
-
-    @Deprecated
-    public String getCookieString() {
-        return sCookie;
     }
 }

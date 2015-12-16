@@ -76,11 +76,6 @@ public class OSCNewsListFragment extends MainListFragment<News> {
     }
 
     @Override
-    protected String getChangePageTitleAction() {
-        return "";
-    }
-
-    @Override
     protected ArrayList<News> parserInAsync(byte[] t) {
         return XmlUtils.toBean(NewsList.class, t).getList();
     }

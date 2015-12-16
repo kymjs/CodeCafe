@@ -23,7 +23,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.commit451:PhotoView:1.2.4'
-//    compile 'com.kymjs.kjframe:kjcore:1.2'
+//    compile 'com.kymjs.kjframe:kjcore:1.2.1'
     compile project(':kjcore')
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.10'
 }

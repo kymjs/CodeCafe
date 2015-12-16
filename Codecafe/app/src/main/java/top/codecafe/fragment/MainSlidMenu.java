@@ -3,12 +3,12 @@ package top.codecafe.fragment;
 import android.view.View;
 
 import com.kymjs.frame.presenter.FragmentPresenter;
+import com.kymjs.model.Event;
 
 import de.greenrobot.event.EventBus;
 import top.codecafe.R;
 import top.codecafe.activity.MainActivity;
 import top.codecafe.delegate.MainSlidMenuDelegate;
-import top.codecafe.model.Event;
 
 /**
  * 侧滑界面逻辑代码

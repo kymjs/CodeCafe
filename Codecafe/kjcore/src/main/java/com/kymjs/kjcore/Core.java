@@ -346,19 +346,15 @@ public final class Core {
             }
 
             Request request;
-            if (contentType == ContentType.FORM) {
+            if (contentType == ContentType.JSON) {
                 request = new FormRequest(httpMethod, url, params, callback);
-                request.setShouldCache(useCache);
-                request.setUseServerControl(useServerControl);
-                request.setCacheTime(cacheTime);
-                getKJHttp().doRequest(request);
-            } else if (contentType == ContentType.JSON) {
+            } else {
                 request = new JsonRequest(httpMethod, url, params, callback);
-                request.setShouldCache(useCache);
-                request.setUseServerControl(useServerControl);
-                request.setCacheTime(cacheTime);
-                getKJHttp().doRequest(request);
             }
+            request.setShouldCache(useCache);
+            request.setUseServerControl(useServerControl);
+            request.setCacheTime(cacheTime);
+            getKJHttp().doRequest(request);
         }
     }
 }

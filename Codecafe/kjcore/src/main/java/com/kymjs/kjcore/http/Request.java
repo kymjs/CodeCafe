@@ -62,7 +62,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     private Integer mSequence; // 本次请求的优先级
 
     private final int mMethod; // 请求方式
-    private final long mRequestBirthTime = 0;// 用于转储慢的请求。
 
     private int cacheTime = 5;
     private boolean useServerControl;
@@ -142,7 +141,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         if (mRequestQueue != null) {
             mRequestQueue.finish(this);
         }
-        long requestTime = SystemClock.elapsedRealtime() - mRequestBirthTime;
+        long requestTime = SystemClock.elapsedRealtime();
         if (requestTime >= SLOW_REQUEST_THRESHOLD_MS) {
             KJLoger.debug(String.format("%d ms: %s", requestTime, this.toString()));
         }
@@ -375,8 +374,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
     @Override
     public String toString() {
-        String trafficStatsTag = "0x"
-                + Integer.toHexString(getTrafficStatsTag());
+        String trafficStatsTag = "0x" + Integer.toHexString(getTrafficStatsTag());
         return (mCanceled ? "[X] " : "[ ] ") + getUrl() + " " + trafficStatsTag
                 + " " + getPriority() + " " + mSequence;
     }
