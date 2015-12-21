@@ -8,9 +8,12 @@ import android.view.Gravity;
 import android.widget.RelativeLayout;
 
 import com.kymjs.api.Api;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.utils.KJLoger;
+import com.kymjs.core.Core;
+import com.kymjs.core.bitmap.client.BitmapCore;
+import com.kymjs.core.client.HttpCallback;
+import com.kymjs.core.toolbox.Loger;
+
+import java.util.Map;
 
 import top.codecafe.R;
 
@@ -53,19 +56,19 @@ public class BlogDetailDelegate extends BaseDetailDelegate {
      * 首先访问网络请求最新的图片地址,加载图片,根据图片主题设置actionbar颜色
      */
     public void initActionbarImage() {
-        Core.get(Api.ZONE_IMAGE, new HttpCallBack() {
+        Core.get(Api.ZONE_IMAGE, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
-                KJLoger.debug("===title图片" + t);
-                new Core.Builder().url(t)
+                Loger.debug("===title图片" + t);
+                new BitmapCore.Builder().url(t)
                         .view(get(R.id.actionbar_image))
-                        .errorBitmapRes(R.mipmap.def_zone_image)
-                        .loadBitmapRes(R.mipmap.def_zone_image)
-                        .callback(new HttpCallBack() {
+                        .errorResId(R.mipmap.def_zone_image)
+                        .loadResId(R.mipmap.def_zone_image)
+                        .callback(new HttpCallback() {
                             @Override
-                            public void onSuccess(Bitmap b) {
-                                super.onSuccess(b);
+                            public void onSuccess(Map<String, String> headers, Bitmap b) {
+                                super.onSuccess(headers, b);
                                 Palette.from(b).generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(final Palette palette) {

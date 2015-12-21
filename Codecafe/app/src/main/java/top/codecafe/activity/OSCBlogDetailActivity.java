@@ -8,10 +8,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.kymjs.api.Api;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.utils.StringUtils;
+import com.kymjs.core.Core;
+import com.kymjs.core.client.HttpCallback;
 import com.kymjs.model.osc.OSCBlogEntity;
 
 import rx.Observable;
@@ -42,7 +40,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(KJHttp.getCache(Api.OSC_BLOG_DETAIL + blogId))
+        Observable.just(Core.getCache(Api.OSC_BLOG_DETAIL + blogId))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -73,7 +71,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
 
     @Override
     public void doRequest() {
-        Core.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallBack() {
+        Core.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallback() {
             @Override
             public void onSuccessInAsync(byte[] t) {
                 super.onSuccessInAsync(t);
@@ -112,7 +110,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
             title) {
         Intent intent = new Intent(cxt, OSCBlogDetailActivity.class);
         intent.putExtra(KEY_BLOG_URL, url);
-        if (StringUtils.isEmpty(title))
+        if (TextUtils.isEmpty(title))
             title = cxt.getString(R.string.kymjs_blog_name);
         intent.putExtra(KEY_BLOG_TITLE, title);
         intent.putExtra(KEY_BLOG_ID, id);

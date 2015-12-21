@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kymjs.base.MainFragment;
+import com.kymjs.core.client.HttpCallback;
+import com.kymjs.core.toolbox.Loger;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.BaseRecyclerAdapter;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.utils.KJLoger;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
 
     protected abstract ArrayList<T> parserInAsync(byte[] t);
 
-    protected HttpCallBack callBack = new HttpCallBack() {
+    protected HttpCallback callBack = new HttpCallback() {
         private ArrayList<T> tempDatas;
 
         @Override
@@ -50,7 +50,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         @Override
         public void onSuccess(String t) {
             super.onSuccess(t);
-            KJLoger.debug("===列表网络请求:" + t);
+            Loger.debug("===列表网络请求:" + t);
             if (viewDelegate.mEmptyLayout != null) {
                 if (tempDatas == null || tempDatas.isEmpty() || adapter == null || adapter
                         .getItemCount() < 1) {
@@ -66,7 +66,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         @Override
         public void onFailure(int errorNo, String strMsg) {
             super.onFailure(errorNo, strMsg);
-            KJLoger.debug("====网络请求异常" + strMsg);
+            Loger.debug("====网络请求异常" + strMsg);
             //有可能界面已经关闭网络请求仍然返回
             if (viewDelegate.mEmptyLayout != null && adapter != null) {
                 if (adapter.getItemCount() > 1) {

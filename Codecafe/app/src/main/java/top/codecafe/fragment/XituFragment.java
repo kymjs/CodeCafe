@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
+import com.kymjs.core.Core;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.http.Request;
 import com.kymjs.model.XituBlog;
 import com.kymjs.model.XituBlogList;
 
@@ -34,7 +32,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(KJHttp.getCache(Api.XITU_BLOG_LIST))
+        Observable.just(Core.getCache(Api.XITU_BLOG_LIST))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -87,7 +85,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
     @Override
     public void doRequest() {
         new Core.Builder().url(Api.XITU_BLOG_LIST)
-                .contentType(Request.HttpMethod.GET)
+                .contentType(Core.Method.GET)
                 .cacheTime(10)
                 .callback(callBack)
                 .doTask();

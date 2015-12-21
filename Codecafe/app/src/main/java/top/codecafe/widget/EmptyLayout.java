@@ -1,6 +1,7 @@
 package top.codecafe.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.kymjs.kjcore.utils.StringUtils;
 
 import top.codecafe.R;
 
@@ -112,7 +112,7 @@ public class EmptyLayout extends LinearLayout implements
     }
 
     public void setTvNoDataContent() {
-        if (StringUtils.isEmpty(strNoDataContent)) {
+        if (TextUtils.isEmpty(strNoDataContent)) {
             tv.setText(R.string.load_again);
         } else {
             tv.setText(strNoDataContent);

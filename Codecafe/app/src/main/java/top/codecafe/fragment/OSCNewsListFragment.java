@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
+import com.kymjs.core.Core;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.http.Request;
 import com.kymjs.model.osc.News;
 import com.kymjs.model.osc.NewsList;
 
@@ -33,7 +31,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(KJHttp.getCache(Api.OSC_NEWS))
+        Observable.just(Core.getCache(Api.OSC_NEWS))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -83,7 +81,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
     @Override
     public void doRequest() {
         new Core.Builder().url(Api.OSC_NEWS)
-                .contentType(Request.HttpMethod.GET)
+                .contentType(Core.Method.GET)
                 .cacheTime(100)
                 .callback(callBack)
                 .doTask();

@@ -5,12 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
+import com.kymjs.core.Core;
+import com.kymjs.core.client.HttpParams;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpParams;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.http.Request;
 import com.kymjs.model.osc.Favorite;
 import com.kymjs.model.osc.FavoriteList;
 
@@ -35,7 +33,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(KJHttp.getCache(Api.OSC_COLLECT_BLOG))
+        Observable.just(Core.getCache(Api.OSC_COLLECT_BLOG))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -88,7 +86,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
         params.putHeaders("cookie", Api.OSC_COOKIE);
         new Core.Builder().url(Api.OSC_COLLECT_BLOG)
                 .params(params)
-                .contentType(Request.HttpMethod.GET)
+                .contentType(Core.Method.GET)
                 .cacheTime(60)
                 .callback(callBack)
                 .doTask();

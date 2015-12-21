@@ -1,6 +1,6 @@
 package top.codecafe.utils;
 
-import com.kymjs.kjcore.utils.KJLoger;
+import com.kymjs.core.toolbox.Loger;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.basic.DoubleConverter;
 import com.thoughtworks.xstream.converters.basic.FloatConverter;
@@ -40,13 +40,13 @@ public class XmlUtils {
         try {
             obj = (T) xmStream.fromXML(is);
         } catch (Exception e) {
-            KJLoger.debug("===解析xml发生异常：" + e.getMessage());
+            Loger.debug("===解析xml发生异常：" + e.getMessage());
         } finally {
             if (null != is) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    KJLoger.debug("===关闭流出现异常：" + e.getMessage());
+                    Loger.debug("===关闭流出现异常：" + e.getMessage());
                 }
             }
         }

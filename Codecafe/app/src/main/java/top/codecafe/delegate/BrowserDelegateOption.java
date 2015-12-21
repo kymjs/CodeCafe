@@ -3,6 +3,7 @@ package top.codecafe.delegate;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -14,15 +15,15 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.ZoomButtonsController;
 
+import com.kymjs.core.bitmap.toolbox.DensityUtils;
 import com.kymjs.frame.view.AppDelegate;
 import com.kymjs.gallery.KJGalleryActivity;
-import com.kymjs.kjcore.utils.DensityUtils;
-import com.kymjs.kjcore.utils.StringUtils;
 
 import top.codecafe.R;
 import top.codecafe.inter.OnWebViewImageListener;
 import top.codecafe.utils.LinkDispatcher;
 import top.codecafe.widget.EmptyLayout;
+
 
 /**
  * 浏览器视图的参数设置类
@@ -135,7 +136,7 @@ public class BrowserDelegateOption {
             @Override
             @JavascriptInterface
             public void showImagePreview(String bigImageUrl) {
-                if (!StringUtils.isEmpty(bigImageUrl)) {
+                if (!TextUtils.isEmpty(bigImageUrl)) {
                     KJGalleryActivity.toGallery(cxt, bigImageUrl);
                 }
             }

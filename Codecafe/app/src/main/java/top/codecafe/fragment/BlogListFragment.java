@@ -2,17 +2,16 @@ package top.codecafe.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.kymjs.api.Api;
+import com.kymjs.core.Core;
+import com.kymjs.core.bitmap.client.BitmapCore;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.gallery.KJGalleryActivity;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.http.Request;
-import com.kymjs.kjcore.utils.StringUtils;
 import com.kymjs.model.Blog;
 import com.kymjs.model.BlogList;
 
@@ -37,7 +36,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(KJHttp.getCache(Api.BLOG_LIST))
+        Observable.just(Core.getCache(Api.BLOG_LIST))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -77,19 +76,19 @@ public class BlogListFragment extends MainListFragment<Blog> {
                 holder.setText(R.id.item_blog_tv_description, item.getDescription());
                 holder.setText(R.id.item_blog_tv_author, item.getAuthor());
                 holder.setText(R.id.item_blog_tv_date, item.getPubDate());
-                if (StringUtils.isEmpty(item.getRecommend())) {
+                if (TextUtils.isEmpty(item.getRecommend())) {
                     holder.getView(R.id.item_blog_tip_recommend).setVisibility(View.GONE);
                 } else {
                     holder.getView(R.id.item_blog_tip_recommend).setVisibility(View.VISIBLE);
                 }
 
                 ImageView imageView = holder.getView(R.id.item_blog_img);
-                if (StringUtils.isEmpty(item.getImage())) {
+                if (TextUtils.isEmpty(item.getImage())) {
                     imageView.setVisibility(View.GONE);
                 } else {
                     imageView.setVisibility(View.VISIBLE);
-                    new Core.Builder().url(item.getImage().trim())
-                            .errorBitmapRes(R.mipmap.logo)
+                    new BitmapCore.Builder().url(item.getImage().trim())
+                            .errorResId(R.mipmap.logo)
                             .view(imageView).doTask();
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -106,7 +105,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
     @Override
     public void doRequest() {
         new Core.Builder().url(Api.BLOG_LIST)
-                .contentType(Request.HttpMethod.GET)
+                .contentType(Core.Method.GET)
                 .cacheTime(600)
                 .callback(callBack)
                 .doTask();

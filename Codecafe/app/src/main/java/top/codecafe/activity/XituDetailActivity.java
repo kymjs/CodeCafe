@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.utils.StringUtils;
+import com.kymjs.core.Core;
+import com.kymjs.core.client.HttpCallback;
 import com.kymjs.model.XituBlog;
 
 import top.codecafe.R;
@@ -53,8 +52,8 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
         data = intent.getParcelableExtra(KEY_XITU_DATA);
         if (data != null) {
             doRequest();
-            contentUrl = new String(KJHttp.getCache(data.getLink()));
-            if (!StringUtils.isEmpty(contentUrl)) {
+            contentUrl = new String(Core.getCache(data.getLink()));
+            if (!TextUtils.isEmpty(contentUrl)) {
                 viewDelegate.setContentUrl(contentUrl);
             }
         }
@@ -80,7 +79,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 
     @Override
     public void doRequest() {
-        Core.get(data.getLink(), new HttpCallBack() {
+        Core.get(data.getLink(), new HttpCallback() {
 
             @Override
             public void onSuccessInAsync(byte[] t) {

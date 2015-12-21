@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
-import com.kymjs.kjcore.Core;
-
 import top.codecafe.R;
 
 /**
@@ -41,12 +39,6 @@ public class Splash extends Activity {
             public void onAnimationStart(Animation animation) {
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Core.initialize();
     }
 
     private void redirectTo() {

@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.utils.DensityUtils;
+import com.kymjs.core.Core;
+import com.kymjs.core.bitmap.client.BitmapRequestConfig;
+import com.kymjs.core.bitmap.toolbox.DensityUtils;
+import com.kymjs.core.client.HttpCallback;
 
 import java.io.IOException;
+import java.util.Map;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
@@ -28,7 +29,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class SamplePagerAdapter extends PagerAdapter {
     private Activity aty;
     private String[] imageUrls;
-    private KJHttp kjh;
 
     public static int TYPE_GIF = 0;
     public static int TYPE_JPG = 1;
@@ -37,7 +37,6 @@ public class SamplePagerAdapter extends PagerAdapter {
     public SamplePagerAdapter(Activity aty, String[] imageUrls) {
         this.aty = aty;
         this.imageUrls = imageUrls;
-        kjh = Core.getKJHttp();
     }
 
     @Override
@@ -52,7 +51,9 @@ public class SamplePagerAdapter extends PagerAdapter {
         final GifImageView gifView = (GifImageView) root.findViewById(R.id.gifimage);
         final ProgressBar mProgressBar = (ProgressBar) root.findViewById(R.id.progress);
 
-        GifRequest request = new GifRequest(imageUrls[position], new HttpCallBack() {
+        BitmapRequestConfig config = new BitmapRequestConfig();
+        config.mUrl = imageUrls[position];
+        GifRequest request = new GifRequest(config, new HttpCallback() {
             @Override
             public void onPreStart() {
                 super.onPreStart();
@@ -60,8 +61,8 @@ public class SamplePagerAdapter extends PagerAdapter {
             }
 
             @Override
-            public void onSuccess(byte[] t) {
-                super.onSuccess(t);
+            public void onSuccess(Map<String, String> h, byte[] t) {
+                super.onSuccess(h, t);
                 //根据图片类型的不同选择不同的加载方案
                 if (TYPE_GIF == getType(t)) {
                     displayGif(gifView, t);
@@ -76,7 +77,7 @@ public class SamplePagerAdapter extends PagerAdapter {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
-        kjh.doRequest(request);
+        Core.getRequestQueue().add(request);
 
         container.addView(root, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
                 .MATCH_PARENT);

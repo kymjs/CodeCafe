@@ -13,10 +13,8 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpCallBack;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.utils.StringUtils;
+import com.kymjs.core.Core;
+import com.kymjs.core.client.HttpCallback;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -85,7 +83,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(KJHttp.getCache(url))
+        Observable.just(Core.getCache(url))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -159,8 +157,8 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
 
     @Override
     public void doRequest() {
-        if (StringUtils.isEmpty(url)) return;
-        Core.get(url, new HttpCallBack() {
+        if (TextUtils.isEmpty(url)) return;
+        Core.get(url, new HttpCallback() {
                     @Override
                     public void onSuccessInAsync(byte[] t) {
                         super.onSuccessInAsync(t);
@@ -196,7 +194,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     public static void goinActivity(Context cxt, @NonNull String url, @Nullable String title) {
         Intent intent = new Intent(cxt, BlogDetailActivity.class);
         intent.putExtra(KEY_BLOG_URL, url);
-        if (StringUtils.isEmpty(title))
+        if (TextUtils.isEmpty(title))
             title = cxt.getString(R.string.kymjs_blog_name);
         intent.putExtra(KEY_BLOG_TITLE, title);
         cxt.startActivity(intent);

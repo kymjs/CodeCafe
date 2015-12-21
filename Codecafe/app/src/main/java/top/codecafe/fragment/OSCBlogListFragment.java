@@ -5,12 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
+import com.kymjs.core.Core;
+import com.kymjs.core.client.HttpParams;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
-import com.kymjs.kjcore.Core;
-import com.kymjs.kjcore.http.HttpParams;
-import com.kymjs.kjcore.http.KJHttp;
-import com.kymjs.kjcore.http.Request;
 import com.kymjs.model.osc.OSCBlog;
 import com.kymjs.model.osc.OSCBlogList;
 
@@ -35,7 +33,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(KJHttp.getCache(Api.OSC_BLOG + getHttpParams(0).getUrlParams()))
+        Observable.just(Core.getCache(Api.OSC_BLOG + getHttpParams(0).getUrlParams()))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -96,7 +94,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     private void doRequest(int index) {
         new Core.Builder().url(Api.OSC_BLOG)
                 .params(getHttpParams(index))
-                .contentType(Request.HttpMethod.GET)
+                .contentType(Core.Method.GET)
                 .cacheTime(100)
                 .callback(callBack)
                 .doTask();
