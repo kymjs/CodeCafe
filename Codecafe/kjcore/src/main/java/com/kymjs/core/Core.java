@@ -217,8 +217,17 @@ public class Core {
                 if (params == null) {
                     params = new HttpParams();
                 } else {
-                    if (httpConfig.mMethod == Core.Method.GET)
+                    if (httpConfig.mMethod == Method.GET)
                         httpConfig.mUrl += params.getUrlParams();
+                }
+
+                if (httpConfig.mShouldCache == null) {
+                    //默认情况只对get请求做缓存
+                    if (httpConfig.mMethod == Method.GET) {
+                        httpConfig.mShouldCache = Boolean.TRUE;
+                    } else {
+                        httpConfig.mShouldCache = Boolean.FALSE;
+                    }
                 }
 
                 if (contentType == ContentType.JSON) {
@@ -226,6 +235,9 @@ public class Core {
                 } else {
                     request = new FormRequest(httpConfig, params, callback);
                 }
+            }
+            if (callback != null) {
+                callback.onPreStart();
             }
             getRequestQueue().add(request);
         }
@@ -235,6 +247,23 @@ public class Core {
         new Builder().url(url).callback(callback).doTask();
     }
 
+    public static void get(String url, HttpParams params, HttpCallback callback) {
+        new Builder().url(url).params(params).callback(callback).doTask();
+    }
+
+    public static void post(String url, HttpParams params, HttpCallback callback) {
+        new Builder().url(url).params(params).httpMethod(Method.POST).callback(callback).doTask();
+    }
+
+    public static void jsonGet(String url, HttpParams params, HttpCallback callback) {
+        new Builder().url(url).params(params).contentType(ContentType.JSON)
+                .httpMethod(Method.GET).callback(callback).doTask();
+    }
+
+    public static void jsonPost(String url, HttpParams params, HttpCallback callback) {
+        new Builder().url(url).params(params).contentType(ContentType.JSON)
+                .httpMethod(Method.POST).callback(callback).doTask();
+    }
 
     public static byte[] getCache(String url) {
         ICache cache = getRequestQueue().getCache();

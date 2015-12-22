@@ -168,7 +168,8 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                     @Override
                     public void onSuccess(String t) {
                         super.onSuccess(t);
-                        if (!new String(httpCache).equals(t) && contentHtml != null) {
+                        if (!new String(httpCache).equals(t) && viewDelegate != null
+                                && contentHtml != null) {
                             viewDelegate.setContent(contentHtml);
                         }
                         emptyLayout.dismiss();

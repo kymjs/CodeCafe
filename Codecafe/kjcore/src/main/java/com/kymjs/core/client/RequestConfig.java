@@ -20,8 +20,8 @@ public class RequestConfig {
 
     public int mMethod; // 请求方式
 
-    public boolean mShouldCache = true; // 是否缓存本次请求
-
+    public Boolean mShouldCache = null; // 是否缓存本次请求,默认为智能模式,get缓存post不缓存
+    
     public String mUrl; //请求接口地址
 
     public RetryPolicy mRetryPolicy = new DefaultRetryPolicy(); //重试策略

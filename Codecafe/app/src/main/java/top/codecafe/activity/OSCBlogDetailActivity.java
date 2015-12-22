@@ -82,7 +82,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
-                if (!new String(httpCache).equals(t)) {
+                if (!new String(httpCache).equals(t) && viewDelegate != null) {
                     if (contentHtml != null) {
                         viewDelegate.setContent(contentHtml);
                     } else {

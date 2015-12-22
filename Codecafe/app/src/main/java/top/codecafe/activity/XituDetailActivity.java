@@ -90,7 +90,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
             @Override
             public void onSuccess(String t) {
                 super.onSuccess(t);
-                if (contentUrl != null) {
+                if (contentUrl != null && viewDelegate != null) {
                     viewDelegate.setContentUrl(contentUrl);
                     setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
                 } else {
