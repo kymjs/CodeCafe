@@ -1,1 +1,1 @@
-include ':app',':kjcore', ':adapter', ':nuwa', ':crash', ':base', ':framework', ':api', ':model', ':gallery'
+include ':app', ':adapter', ':nuwa', ':crash', ':base', ':framework', ':api', ':model', ':gallery', ':rxvolley', ':bitmapcore', ':okhttp'

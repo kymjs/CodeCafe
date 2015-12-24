@@ -283,6 +283,13 @@ public class RxVolley {
         return new byte[0];
     }
 
+    /**
+     * 下载
+     *
+     * @param storeFilePath 本地存储绝对路径
+     * @param url           要下载的文件的url
+     * @param callback      回调
+     */
     public static void download(String storeFilePath, String url, HttpCallback callback) {
         RequestConfig config = new RequestConfig();
         config.mUrl = url;
