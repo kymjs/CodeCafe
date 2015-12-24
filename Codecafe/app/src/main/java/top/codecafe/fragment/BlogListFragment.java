@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
 import com.kymjs.core.bitmap.client.BitmapCore;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.gallery.KJGalleryActivity;
 import com.kymjs.model.Blog;
 import com.kymjs.model.BlogList;
+import com.kymjs.rxvolley.RxVolley;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(Core.getCache(Api.BLOG_LIST))
+        Observable.just(RxVolley.getCache(Api.BLOG_LIST))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -49,7 +49,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
                         return parserInAsync(bytes);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<Blog>>() {
                     @Override
@@ -70,8 +70,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
     protected BasePullUpRecyclerAdapter<Blog> getAdapter() {
         return new BasePullUpRecyclerAdapter<Blog>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, final Blog item, int position, boolean
-                    isScrolling) {
+            public void convert(RecyclerHolder holder, final Blog item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, item.getDescription());
                 holder.setText(R.id.item_blog_tv_author, item.getAuthor());
@@ -87,9 +86,8 @@ public class BlogListFragment extends MainListFragment<Blog> {
                     imageView.setVisibility(View.GONE);
                 } else {
                     imageView.setVisibility(View.VISIBLE);
-                    new BitmapCore.Builder().url(item.getImage().trim())
-                            .errorResId(R.mipmap.logo)
-                            .view(imageView).doTask();
+                    String imageUrl = item.getImage().trim();
+                    new BitmapCore.Builder().url(imageUrl).view(imageView).doTask();
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -104,8 +102,8 @@ public class BlogListFragment extends MainListFragment<Blog> {
 
     @Override
     public void doRequest() {
-        new Core.Builder().url(Api.BLOG_LIST)
-                .contentType(Core.Method.GET)
+        new RxVolley.Builder().url(Api.BLOG_LIST)
+                .contentType(RxVolley.Method.GET)
                 .cacheTime(600)
                 .callback(callBack)
                 .doTask();

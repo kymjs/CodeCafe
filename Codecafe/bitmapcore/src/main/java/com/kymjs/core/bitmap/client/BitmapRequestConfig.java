@@ -2,8 +2,8 @@ package com.kymjs.core.bitmap.client;
 
 import android.graphics.drawable.Drawable;
 
-import com.kymjs.core.client.RequestConfig;
-import com.kymjs.core.toolbox.HttpParamsEntry;
+import com.kymjs.rxvolley.client.RequestConfig;
+import com.kymjs.rxvolley.toolbox.HttpParamsEntry;
 
 import java.util.ArrayList;
 

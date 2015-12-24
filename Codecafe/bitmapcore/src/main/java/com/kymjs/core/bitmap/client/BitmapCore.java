@@ -9,24 +9,29 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.kymjs.core.Core;
 import com.kymjs.core.bitmap.BitmapMemoryCache;
 import com.kymjs.core.bitmap.DiskImageDisplayer;
 import com.kymjs.core.bitmap.ImageBale;
 import com.kymjs.core.bitmap.ImageDisplayer;
 import com.kymjs.core.bitmap.interf.IBitmapCache;
+import com.kymjs.core.bitmap.toolbox.CreateBitmap;
 import com.kymjs.core.bitmap.toolbox.DensityUtils;
-import com.kymjs.core.client.HttpCallback;
-import com.kymjs.core.http.Request;
-import com.kymjs.core.http.RequestQueue;
-import com.kymjs.core.http.RetryPolicy;
-import com.kymjs.core.interf.IRespondAdapter;
-import com.kymjs.core.toolbox.Loger;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.Request;
+import com.kymjs.rxvolley.http.RequestQueue;
+import com.kymjs.rxvolley.http.RetryPolicy;
+import com.kymjs.rxvolley.rx.Result;
+import com.kymjs.rxvolley.toolbox.Loger;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import rx.Observable;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * @author kymjs (http://www.kymjs.com/) on 12/21/15.
@@ -71,7 +76,8 @@ public final class BitmapCore {
      */
     public synchronized static boolean createDisplayer(RequestQueue queue, IBitmapCache
             mMemoryCache) {
-        if (queue == null) queue = RequestQueue.newRequestQueue(Core.CACHE_FOLDER);
+        if (queue == null)
+            queue = RxVolley.getRequestQueue();
         if (mMemoryCache == null) mMemoryCache = new BitmapMemoryCache();
         if (sDiskImageDisplayer == null) {
             sDiskImageDisplayer = new DiskImageDisplayer(mMemoryCache);
@@ -85,6 +91,7 @@ public final class BitmapCore {
     }
 
     public static class Builder {
+        private HttpCallback realCallback;
         private HttpCallback callback;
         private Request<?> request;
         private View view;
@@ -213,17 +220,9 @@ public final class BitmapCore {
         }
 
         /**
-         * 网络请求响应结果类型转换适配器
-         */
-        public Builder respondAdapter(IRespondAdapter<?> adapter) {
-            this.config.adapter = adapter;
-            return this;
-        }
-
-        /**
          * 安全校验
          */
-        public void doTask() {
+        private synchronized void build() {
             if (view == null) {
                 Loger.debug("view is null");
                 if (callback != null)
@@ -262,55 +261,76 @@ public final class BitmapCore {
                 config.errorDrawable = new ColorDrawable(0xFFCFCFCF);
             }
 
-            final HttpCallback callback1 = new HttpCallback() {
-                @Override
-                public void onPreStart() {
-                    view.setTag(config.mUrl);
-                    if (callback != null) callback.onPreStart();
-                }
-
-                @Override
-                public void onPreHttp() {
-                    setImageWithResource(view, config.loadDrawable, config.loadRes);
-                    if (callback != null) callback.onPreHttp();
-                }
-
-                @Override
-                public void onSuccessInAsync(byte[] t) {
-                    if (callback != null) callback.onSuccessInAsync(t);
-                }
-
-                @Override
-                public void onFailure(int errorNo, String strMsg) {
-                    if (config.mUrl.equals(view.getTag())) {
-                        setImageWithResource(view, config.errorDrawable, config.errorRes);
+            if (realCallback == null)
+                realCallback = new HttpCallback() {
+                    @Override
+                    public void onPreStart() {
+                        view.setTag(config.mUrl);
+                        if (callback != null) callback.onPreStart();
                     }
-                    if (callback != null) callback.onFailure(errorNo, strMsg);
-                }
 
-                @Override
-                public void onFinish() {
-                    if (callback != null) callback.onFinish();
-                }
-
-                @Override
-                public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
-                    if (config.mUrl.equals(view.getTag())) {
-                        setViewImage(view, bitmap);
+                    @Override
+                    public void onPreHttp() {
+                        setImageWithResource(view, config.loadDrawable, config.loadRes);
+                        if (callback != null) callback.onPreHttp();
                     }
-                    if (callback != null) callback.onSuccess(headers, bitmap);
-                }
-            };
 
-            display(callback1);
+                    @Override
+                    public void onSuccessInAsync(byte[] t) {
+                        if (callback != null) callback.onSuccessInAsync(t);
+                    }
+
+                    @Override
+                    public void onFailure(int errorNo, String strMsg) {
+                        if (config.mUrl.equals(view.getTag())) {
+                            setImageWithResource(view, config.errorDrawable, config.errorRes);
+                        }
+                        if (callback != null) callback.onFailure(errorNo, strMsg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        if (callback != null) callback.onFinish();
+                    }
+
+                    @Override
+                    public void onSuccess(Map<String, String> headers, Bitmap bitmap) {
+                        if (config.mUrl.equals(view.getTag())) {
+                            setViewImage(view, bitmap);
+                        }
+                        if (callback != null) callback.onSuccess(headers, bitmap);
+                    }
+                };
         }
 
-        private void display(HttpCallback callback) {
+        public Observable<Bitmap> getResult() {
+            doTask();
+            return RxVolley.getRequestQueue().getPoster().take(config.mUrl)
+                    .filter(new Func1<Result, Boolean>() {
+                        @Override
+                        public Boolean call(Result result) {
+                            return result != null
+                                    && result.data != null
+                                    && result.data.length != 0;
+                        }
+                    })
+                    .map(new Func1<Result, Bitmap>() {
+                        @Override
+                        public Bitmap call(Result result) {
+                            return CreateBitmap.create(result.data,
+                                    config.maxWidth, config.maxHeight);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io());
+        }
+
+        public void doTask() {
+            build();
             if (config.mUrl.startsWith("http")) {
-                ImageBale bale = getDisplayer().get(config, callback);
+                ImageBale bale = getDisplayer().get(config, realCallback);
                 requestArray.add(bale);
             } else {
-                getDiskDisplayer().load(config, callback);
+                getDiskDisplayer().load(config, realCallback, true);
             }
         }
     }
@@ -332,6 +352,10 @@ public final class BitmapCore {
             }
         }
         return false;
+    }
+
+    public static Bitmap getMemoryBitmap(String url) {
+        return getDisplayer().getMemoryCache().getBitmap(url);
     }
 
     /**

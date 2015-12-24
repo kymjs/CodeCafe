@@ -17,14 +17,14 @@ package com.kymjs.gallery;
 
 
 import com.kymjs.core.bitmap.client.BitmapRequestConfig;
-import com.kymjs.core.client.HttpCallback;
-import com.kymjs.core.http.HttpHeaderParser;
-import com.kymjs.core.http.NetworkResponse;
-import com.kymjs.core.http.Request;
-import com.kymjs.core.http.Response;
-import com.kymjs.core.http.VolleyError;
-import com.kymjs.core.interf.IPersistence;
-import com.kymjs.core.toolbox.HttpParamsEntry;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.HttpHeaderParser;
+import com.kymjs.rxvolley.http.NetworkResponse;
+import com.kymjs.rxvolley.http.Request;
+import com.kymjs.rxvolley.http.Response;
+import com.kymjs.rxvolley.http.VolleyError;
+import com.kymjs.rxvolley.interf.IPersistence;
+import com.kymjs.rxvolley.toolbox.HttpParamsEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;

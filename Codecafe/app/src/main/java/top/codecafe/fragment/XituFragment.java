@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.model.XituBlog;
 import com.kymjs.model.XituBlogList;
+import com.kymjs.rxvolley.RxVolley;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(Core.getCache(Api.XITU_BLOG_LIST))
+        Observable.just(RxVolley.getCache(Api.XITU_BLOG_LIST))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -72,8 +72,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
     protected BasePullUpRecyclerAdapter<XituBlog> getAdapter() {
         return new BasePullUpRecyclerAdapter<XituBlog>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, final XituBlog item, int position, boolean
-                    isScrolling) {
+            public void convert(RecyclerHolder holder, final XituBlog item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, item.getDescription());
                 holder.setText(R.id.item_blog_tv_date, item.getPubDate());
@@ -84,8 +83,8 @@ public class XituFragment extends MainListFragment<XituBlog> {
 
     @Override
     public void doRequest() {
-        new Core.Builder().url(Api.XITU_BLOG_LIST)
-                .contentType(Core.Method.GET)
+        new RxVolley.Builder().url(Api.XITU_BLOG_LIST)
+                .contentType(RxVolley.Method.GET)
                 .cacheTime(10)
                 .callback(callBack)
                 .doTask();

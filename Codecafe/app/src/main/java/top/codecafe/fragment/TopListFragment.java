@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
-import com.kymjs.core.client.HttpParams;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.model.osc.Favorite;
 import com.kymjs.model.osc.FavoriteList;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpParams;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(Core.getCache(Api.OSC_COLLECT_BLOG))
+        Observable.just(RxVolley.getCache(Api.OSC_COLLECT_BLOG))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -62,8 +62,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
     protected BasePullUpRecyclerAdapter<Favorite> getAdapter() {
         return new BasePullUpRecyclerAdapter<Favorite>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, Favorite item, int position, boolean
-                    isScrolling) {
+            public void convert(RecyclerHolder holder, Favorite item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, "推荐播客:" + item.getTitle());
                 holder.setText(R.id.item_blog_tv_author, "推荐阅读");
@@ -84,9 +83,9 @@ public class TopListFragment extends MainListFragment<Favorite> {
     public void doRequest() {
         HttpParams params = new HttpParams();
         params.putHeaders("cookie", Api.OSC_COOKIE);
-        new Core.Builder().url(Api.OSC_COLLECT_BLOG)
+        new RxVolley.Builder().url(Api.OSC_COLLECT_BLOG)
                 .params(params)
-                .contentType(Core.Method.GET)
+                .contentType(RxVolley.Method.GET)
                 .cacheTime(60)
                 .callback(callBack)
                 .doTask();

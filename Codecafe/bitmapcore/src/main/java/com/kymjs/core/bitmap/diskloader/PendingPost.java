@@ -16,7 +16,7 @@
 package com.kymjs.core.bitmap.diskloader;
 
 import com.kymjs.core.bitmap.client.BitmapRequestConfig;
-import com.kymjs.core.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import java.util.ArrayList;
 import java.util.List;

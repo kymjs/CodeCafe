@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kymjs.base.MainFragment;
-import com.kymjs.core.client.HttpCallback;
-import com.kymjs.core.toolbox.Loger;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.BaseRecyclerAdapter;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.toolbox.Loger;
 
 import java.util.ArrayList;
 

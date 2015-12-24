@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
-import com.kymjs.core.client.HttpParams;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.model.osc.OSCBlog;
 import com.kymjs.model.osc.OSCBlogList;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpParams;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(Core.getCache(Api.OSC_BLOG + getHttpParams(0).getUrlParams()))
+        Observable.just(RxVolley.getCache(Api.OSC_BLOG + getHttpParams(0).getUrlParams()))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -73,8 +73,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     protected BasePullUpRecyclerAdapter<OSCBlog> getAdapter() {
         return new BasePullUpRecyclerAdapter<OSCBlog>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, final OSCBlog item, int position, boolean
-                    isScrolling) {
+            public void convert(RecyclerHolder holder, final OSCBlog item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, item.getBody().trim());
                 holder.setText(R.id.item_blog_tv_author, "推荐阅读");
@@ -92,9 +91,9 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
     }
 
     private void doRequest(int index) {
-        new Core.Builder().url(Api.OSC_BLOG)
+        new RxVolley.Builder().url(Api.OSC_BLOG)
                 .params(getHttpParams(index))
-                .contentType(Core.Method.GET)
+                .contentType(RxVolley.Method.GET)
                 .cacheTime(100)
                 .callback(callBack)
                 .doTask();

@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.kymjs.core.Core;
 import com.kymjs.core.bitmap.client.BitmapRequestConfig;
 import com.kymjs.core.bitmap.toolbox.DensityUtils;
-import com.kymjs.core.client.HttpCallback;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import java.io.IOException;
 import java.util.Map;
@@ -53,13 +53,8 @@ public class SamplePagerAdapter extends PagerAdapter {
 
         BitmapRequestConfig config = new BitmapRequestConfig();
         config.mUrl = imageUrls[position];
+        mProgressBar.setVisibility(View.VISIBLE);
         GifRequest request = new GifRequest(config, new HttpCallback() {
-            @Override
-            public void onPreStart() {
-                super.onPreStart();
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-
             @Override
             public void onSuccess(Map<String, String> h, byte[] t) {
                 super.onSuccess(h, t);
@@ -77,7 +72,7 @@ public class SamplePagerAdapter extends PagerAdapter {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
-        Core.getRequestQueue().add(request);
+        RxVolley.getRequestQueue().add(request);
 
         container.addView(root, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
                 .MATCH_PARENT);

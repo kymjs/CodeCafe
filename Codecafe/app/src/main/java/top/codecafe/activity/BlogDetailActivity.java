@@ -13,8 +13,8 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
-import com.kymjs.core.Core;
-import com.kymjs.core.client.HttpCallback;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -83,7 +83,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(Core.getCache(url))
+        Observable.just(RxVolley.getCache(url))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -158,7 +158,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     @Override
     public void doRequest() {
         if (TextUtils.isEmpty(url)) return;
-        Core.get(url, new HttpCallback() {
+        RxVolley.get(url, new HttpCallback() {
                     @Override
                     public void onSuccessInAsync(byte[] t) {
                         super.onSuccessInAsync(t);

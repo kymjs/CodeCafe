@@ -8,9 +8,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
-import com.kymjs.core.client.HttpCallback;
 import com.kymjs.model.osc.OSCBlogEntity;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,7 +40,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(Core.getCache(Api.OSC_BLOG_DETAIL + blogId))
+        Observable.just(RxVolley.getCache(Api.OSC_BLOG_DETAIL + blogId))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -71,7 +71,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
 
     @Override
     public void doRequest() {
-        Core.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallback() {
+        RxVolley.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallback() {
             @Override
             public void onSuccessInAsync(byte[] t) {
                 super.onSuccessInAsync(t);

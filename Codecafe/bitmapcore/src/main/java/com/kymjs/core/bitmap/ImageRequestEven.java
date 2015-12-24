@@ -2,8 +2,8 @@ package com.kymjs.core.bitmap;
 
 import android.graphics.Bitmap;
 
-import com.kymjs.core.http.Request;
-import com.kymjs.core.http.VolleyError;
+import com.kymjs.rxvolley.http.Request;
+import com.kymjs.rxvolley.http.VolleyError;
 
 import java.util.LinkedList;
 

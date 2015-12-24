@@ -3,7 +3,7 @@ package com.kymjs.core.bitmap;
 
 import android.graphics.Bitmap;
 
-import com.kymjs.core.client.HttpCallback;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import java.util.HashMap;
 

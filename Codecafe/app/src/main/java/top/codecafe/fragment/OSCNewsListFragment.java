@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.kymjs.api.Api;
-import com.kymjs.core.Core;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
 import com.kymjs.model.osc.News;
 import com.kymjs.model.osc.NewsList;
+import com.kymjs.rxvolley.RxVolley;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(Core.getCache(Api.OSC_NEWS))
+        Observable.just(RxVolley.getCache(Api.OSC_NEWS))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -60,8 +60,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
     protected BasePullUpRecyclerAdapter<News> getAdapter() {
         return new BasePullUpRecyclerAdapter<News>(recyclerView, datas, R.layout.item_blog) {
             @Override
-            public void convert(RecyclerHolder holder, News item, int position, boolean
-                    isScrolling) {
+            public void convert(RecyclerHolder holder, News item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
                 holder.setText(R.id.item_blog_tv_description, item.getBody().trim());
                 holder.setText(R.id.item_blog_tv_author, item.getAuthor());
@@ -80,8 +79,8 @@ public class OSCNewsListFragment extends MainListFragment<News> {
 
     @Override
     public void doRequest() {
-        new Core.Builder().url(Api.OSC_NEWS)
-                .contentType(Core.Method.GET)
+        new RxVolley.Builder().url(Api.OSC_NEWS)
+                .contentType(RxVolley.Method.GET)
                 .cacheTime(100)
                 .callback(callBack)
                 .doTask();

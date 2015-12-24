@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
-import com.kymjs.core.Core;
-import com.kymjs.core.client.HttpCallback;
 import com.kymjs.model.XituBlog;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegate;
@@ -52,7 +52,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
         data = intent.getParcelableExtra(KEY_XITU_DATA);
         if (data != null) {
             doRequest();
-            contentUrl = new String(Core.getCache(data.getLink()));
+            contentUrl = new String(RxVolley.getCache(data.getLink()));
             if (!TextUtils.isEmpty(contentUrl)) {
                 viewDelegate.setContentUrl(contentUrl);
             }
@@ -79,7 +79,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 
     @Override
     public void doRequest() {
-        Core.get(data.getLink(), new HttpCallback() {
+        RxVolley.get(data.getLink(), new HttpCallback() {
 
             @Override
             public void onSuccessInAsync(byte[] t) {
