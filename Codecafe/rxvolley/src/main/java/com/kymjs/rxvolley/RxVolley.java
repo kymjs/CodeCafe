@@ -3,6 +3,7 @@ package com.kymjs.rxvolley;
 
 import android.text.TextUtils;
 
+import com.kymjs.rxvolley.client.FileRequest;
 import com.kymjs.rxvolley.client.FormRequest;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -39,93 +40,93 @@ public class RxVolley {
             sRequestQueue = RequestQueue.newRequestQueue(CACHE_FOLDER);
         }
         return sRequestQueue;
-         }
+    }
 
-         /**
-         * 设置请求队列,必须在调用Core#getRequestQueue()之前设置
-         *
-         * @return 是否设置成功
+    /**
+     * 设置请求队列,必须在调用Core#getRequestQueue()之前设置
+     *
+     * @return 是否设置成功
+     */
+    public synchronized static boolean setRequestQueue(RequestQueue queue) {
+        if (sRequestQueue == null) {
+            sRequestQueue = queue;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 请求方式:FORM表单,或 JSON内容传递
+     */
+    public interface ContentType {
+        int FORM = 0;
+        int JSON = 1;
+    }
+
+    /**
+     * 支持的请求方式
+     */
+    public interface Method {
+        int GET = 0;
+        int POST = 1;
+        int PUT = 2;
+        int DELETE = 3;
+        int HEAD = 4;
+        int OPTIONS = 5;
+        int TRACE = 6;
+        int PATCH = 7;
+    }
+
+    public static class Builder {
+        private HttpParams params;
+        private int contentType;
+        private HttpCallback callback;
+        private Request<?> request;
+        private RequestConfig httpConfig = new RequestConfig();
+
+        /**
+         * Http请求参数
          */
-        public synchronized static boolean setRequestQueue(RequestQueue queue) {
-            if (sRequestQueue == null) {
-                sRequestQueue = queue;
-                return true;
-            } else {
-                return false;
-            }
+        public Builder params(HttpParams params) {
+            this.params = params;
+            return this;
         }
 
         /**
-         * 请求方式:FORM表单,或 JSON内容传递
+         * 参数的类型:FORM表单,或 JSON内容传递
          */
-        public interface ContentType {
-            int FORM = 0;
-            int JSON = 1;
+        public Builder contentType(int contentType) {
+            this.contentType = contentType;
+            return this;
         }
 
         /**
-         * 支持的请求方式
+         * 请求回调,不需要可以为空
          */
-        public interface Method {
-            int GET = 0;
-            int POST = 1;
-            int PUT = 2;
-            int DELETE = 3;
-            int HEAD = 4;
-            int OPTIONS = 5;
-            int TRACE = 6;
-            int PATCH = 7;
+        public Builder callback(HttpCallback callback) {
+            this.callback = callback;
+            return this;
         }
 
-        public static class Builder {
-            private HttpParams params;
-            private int contentType;
-            private HttpCallback callback;
-            private Request<?> request;
-            private RequestConfig httpConfig = new RequestConfig();
+        /**
+         * HttpRequest
+         */
+        public Builder setRequest(Request<?> request) {
+            this.request = request;
+            return this;
+        }
 
-            /**
-             * Http请求参数
-             */
-            public Builder params(HttpParams params) {
-                this.params = params;
-                return this;
-            }
+        /**
+         * HttpRequest的配置器
+         */
+        public Builder httpConfig(RequestConfig httpConfig) {
+            this.httpConfig = httpConfig;
+            return this;
+        }
 
-            /**
-             * 参数的类型:FORM表单,或 JSON内容传递
-             */
-            public Builder contentType(int contentType) {
-                this.contentType = contentType;
-                return this;
-            }
-
-            /**
-             * 请求回调,不需要可以为空
-             */
-            public Builder callback(HttpCallback callback) {
-                this.callback = callback;
-                return this;
-            }
-
-            /**
-             * HttpRequest
-             */
-            public Builder setRequest(Request<?> request) {
-                this.request = request;
-                return this;
-            }
-
-            /**
-             * HttpRequest的配置器
-             */
-            public Builder httpConfig(RequestConfig httpConfig) {
-                this.httpConfig = httpConfig;
-                return this;
-            }
-
-            /**
-             * 请求超时时间,如果不设置则使用重连策略的超时时间,默认3000ms
+        /**
+         * 请求超时时间,如果不设置则使用重连策略的超时时间,默认3000ms
          */
         public Builder timeout(int timeout) {
             this.httpConfig.mTimeout = timeout;
@@ -280,5 +281,11 @@ public class RxVolley {
             }
         }
         return new byte[0];
+    }
+
+    public static void download(String storeFilePath, String url, HttpCallback callback) {
+        RequestConfig config = new RequestConfig();
+        config.mUrl = url;
+        new Builder().setRequest(new FileRequest(storeFilePath, config, callback)).doTask();
     }
 }
