@@ -8,14 +8,9 @@ import java.util.Map;
 public class Result {
     public Map<String, String> header;
     public byte[] data;
-    public Throwable throwable;
 
     public Result(Map<String, String> header, byte[] data) {
         this.header = header;
         this.data = data;
-    }
-
-    public Result(Throwable throwable) {
-        this.throwable = throwable;
     }
 }

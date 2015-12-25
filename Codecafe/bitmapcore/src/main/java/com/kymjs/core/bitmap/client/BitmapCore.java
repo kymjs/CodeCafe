@@ -94,7 +94,6 @@ public final class BitmapCore {
         private HttpCallback realCallback;
         private HttpCallback callback;
         private Request<?> request;
-        private Drawable defaultDrawable;
         private View view;
         private BitmapRequestConfig config = new BitmapRequestConfig();
 
@@ -220,35 +219,22 @@ public final class BitmapCore {
             return this;
         }
 
-        private Drawable getDefaultDrawable() {
-            if (defaultDrawable == null) {
-                defaultDrawable = new ColorDrawable(0xFFCFCFCF);
-            }
-            return defaultDrawable;
-        }
-
         /**
          * 安全校验
          */
         private synchronized void build() {
             if (view == null) {
-                final String warn = "view is null";
-                Loger.debug(warn);
+                Loger.debug("view is null");
                 if (callback != null)
-                    callback.onFailure(-1, warn);
-                RxVolley.getRequestQueue().getPoster().put(config.mUrl,
-                        new RuntimeException(warn));
+                    callback.onFailure(-1, "view is null");
                 return;
             }
 
             if (TextUtils.isEmpty(config.mUrl)) {
-                final String warn = "image url is empty";
-                Loger.debug(warn);
+                Loger.debug("image url is empty");
                 doFailure(view, config.errorDrawable, config.errorRes);
                 if (callback != null)
-                    callback.onFailure(-1, warn);
-                RxVolley.getRequestQueue().getPoster().put(config.mUrl,
-                        new RuntimeException(warn));
+                    callback.onFailure(-1, "image url is empty");
                 return;
             }
 
@@ -269,10 +255,10 @@ public final class BitmapCore {
             }
 
             if (config.loadRes == 0 && config.loadDrawable == null) {
-                config.loadDrawable = getDefaultDrawable();
+                config.loadDrawable = new ColorDrawable(0xFFCFCFCF);
             }
             if (config.errorRes == 0 && config.errorDrawable == null) {
-                config.errorDrawable = getDefaultDrawable();
+                config.errorDrawable = new ColorDrawable(0xFFCFCFCF);
             }
 
             if (realCallback == null)

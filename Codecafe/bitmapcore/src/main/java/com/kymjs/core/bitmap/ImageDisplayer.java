@@ -22,13 +22,11 @@ import android.os.Looper;
 import com.kymjs.core.bitmap.client.BitmapRequestConfig;
 import com.kymjs.core.bitmap.client.ImageRequest;
 import com.kymjs.core.bitmap.interf.IBitmapCache;
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.Request;
 import com.kymjs.rxvolley.http.RequestQueue;
 import com.kymjs.rxvolley.http.VolleyError;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,55 +67,49 @@ public class ImageDisplayer {
      * @param callback 回调
      * @return 加载的图片封装
      */
-    public ImageBale get(final BitmapRequestConfig config, final HttpCallback callback) {
-        final ImageBale[] imageBale = new ImageBale[1];
-        //检查内存缓存
-        if (isMainThread()) {
-            imageBale[0] = returnIfMemoryCache(config.mUrl, callback);
+    public ImageBale get(BitmapRequestConfig config, final HttpCallback callback) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onPreStart();
+            }
+        });
+
+        final Bitmap cachedBitmap = mMemoryCache.getBitmap(config.mUrl);
+        if (cachedBitmap != null) {
+            ImageBale container = new ImageBale(cachedBitmap, config.mUrl, callback,
+                    mRequestsMap, mResponsesMap);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onSuccess(Collections.<String, String>emptyMap(), cachedBitmap);
+                    callback.onFinish();
+                }
+            });
+            return container;
         } else {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    imageBale[0] = returnIfMemoryCache(config.mUrl, callback);
+                    // 开始加载网络图片的标志
+                    callback.onPreHttp();
                 }
             });
         }
 
-        //如果内存缓存中没有
-        if (imageBale[0] == null) {
-            imageBale[0] = new ImageBale(null, config.mUrl, callback, mRequestsMap, mResponsesMap);
-            //如果有正在请求的,则修改
-            ImageRequestEven request = mRequestsMap.get(config.mUrl);
-            if (request != null) {
-                request.addImageBale(imageBale[0]);
-                return imageBale[0];
-            }
-            Request<Bitmap> newRequest = makeImageRequest(config);
-            requestQueue.add(newRequest);
-            mRequestsMap.put(config.mUrl, new ImageRequestEven(newRequest, imageBale[0]));
+        ImageBale imageBale = new ImageBale(null, config.mUrl, callback, mRequestsMap,
+                mResponsesMap);
+        //如果有正在请求的,则修改
+        ImageRequestEven request = mRequestsMap.get(config.mUrl);
+        if (request != null) {
+            request.addImageBale(imageBale);
+            return imageBale;
         }
-        return imageBale[0];
-    }
 
-    /**
-     * 必须运行在UI线程
-     */
-    private ImageBale returnIfMemoryCache(String url, HttpCallback callback) {
-        callback.onPreStart();
-        final Bitmap cachedBitmap = mMemoryCache.getBitmap(url);
-        if (cachedBitmap != null) {
-            ImageBale container = new ImageBale(cachedBitmap, url, callback,
-                    mRequestsMap, mResponsesMap);
-            callback.onSuccess(Collections.<String, String>emptyMap(), cachedBitmap);
-            callback.onFinish();
-            RxVolley.getRequestQueue().getPoster().put(url,
-                    Collections.<String, String>emptyMap(), bitmap2Bytes(cachedBitmap));
-            return container;
-        } else {
-            // 开始加载网络图片的标志
-            callback.onPreHttp();
-        }
-        return null;
+        Request<Bitmap> newRequest = makeImageRequest(config);
+        requestQueue.add(newRequest);
+        mRequestsMap.put(config.mUrl, new ImageRequestEven(newRequest, imageBale));
+        return imageBale;
     }
 
     /**
@@ -173,7 +165,7 @@ public class ImageDisplayer {
     /**
      * 分发这次ImageRequest事件的结果
      */
-    private void batchResponse(final String url, final ImageRequestEven request) {
+    private void batchResponse(String url, final ImageRequestEven request) {
         mResponsesMap.put(url, request);
         if (mRunnable == null) {
             mRunnable = new Runnable() {
@@ -190,7 +182,6 @@ public class ImageDisplayer {
                                         Collections.<String, String>emptyMap(), imageBale.mBitmap);
                             } else {
                                 imageBale.mCallback.onFailure(-1, even.getError().getMessage());
-                                RxVolley.getRequestQueue().getPoster().put(url, even.getError());
                             }
                             imageBale.mCallback.onFinish();
                         }
@@ -204,13 +195,7 @@ public class ImageDisplayer {
         }
     }
 
-    private static byte[] bitmap2Bytes(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        return baos.toByteArray();
-    }
-
-    private static boolean isMainThread() {
+    private boolean isMainThread() {
         return Looper.myLooper() == Looper.getMainLooper();
     }
 }
