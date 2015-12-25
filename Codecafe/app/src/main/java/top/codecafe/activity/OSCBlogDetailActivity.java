@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.webkit.WebView;
 
 import com.kymjs.api.Api;
 import com.kymjs.model.osc.OSCBlogEntity;
 import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.rx.Result;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -76,33 +75,63 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
 
     @Override
     public void doRequest() {
-        RxVolley.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallback() {
-            @Override
-            public void onSuccessInAsync(byte[] t) {
-                super.onSuccessInAsync(t);
-                contentHtml = XmlUtils.toBean(OSCBlogEntity.class, t).getBlog().getBody();
-                contentHtml = parserHtml(contentHtml);
-            }
-
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                if (!new String(httpCache).equals(t) && viewDelegate != null) {
-                    if (contentHtml != null) {
-                        viewDelegate.setContent(contentHtml);
-                    } else {
-                        viewDelegate.setContent(t);
+        new RxVolley.Builder().url(Api.OSC_BLOG_DETAIL + blogId).getResult()
+                .map(new Func1<Result, String>() {
+                    @Override
+                    public String call(Result result) {
+                        contentHtml = XmlUtils.toBean(OSCBlogEntity.class, result.data)
+                                .getBlog().getBody();
+                        return contentHtml = parserHtml(contentHtml);
                     }
-                }
-                emptyLayout.dismiss();
-            }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        if (!new String(httpCache).equals(s) && viewDelegate != null) {
+                            if (contentHtml != null) {
+                                viewDelegate.setContent(contentHtml);
+                            } else {
+                                viewDelegate.setContent(s);
+                            }
+                        }
+                        emptyLayout.dismiss();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                    }
+                });
 
-            @Override
-            public void onFailure(int errorNo, String strMsg) {
-                super.onFailure(errorNo, strMsg);
-                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-            }
-        });
+//        RxVolley.get(Api.OSC_BLOG_DETAIL + blogId, new HttpCallback() {
+//            @Override
+//            public void onSuccessInAsync(byte[] t) {
+//                super.onSuccessInAsync(t);
+//                contentHtml = XmlUtils.toBean(OSCBlogEntity.class, t).getBlog().getBody();
+//                contentHtml = parserHtml(contentHtml);
+//            }
+//
+//            @Override
+//            public void onSuccess(String t) {
+//                super.onSuccess(t);
+//                if (!new String(httpCache).equals(t) && viewDelegate != null) {
+//                    if (contentHtml != null) {
+//                        viewDelegate.setContent(contentHtml);
+//                    } else {
+//                        viewDelegate.setContent(t);
+//                    }
+//                }
+//                emptyLayout.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(int errorNo, String strMsg) {
+//                super.onFailure(errorNo, strMsg);
+//                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+//            }
+//        });
     }
 
     /**
@@ -135,24 +164,9 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
         return html;
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ((WebView) viewDelegate.get(R.id.webview)).onResume();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ((WebView) viewDelegate.get(R.id.webview)).onPause();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((WebView) viewDelegate.get(R.id.webview)).destroy();
         System.gc();
     }
 }

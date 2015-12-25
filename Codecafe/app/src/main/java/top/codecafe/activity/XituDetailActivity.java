@@ -11,8 +11,14 @@ import android.view.View;
 import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.model.XituBlog;
 import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.rx.Result;
+import com.kymjs.rxvolley.toolbox.Loger;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegate;
 import top.codecafe.inter.IRequestVo;
@@ -50,12 +56,41 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 
         Intent intent = getIntent();
         data = intent.getParcelableExtra(KEY_XITU_DATA);
+        Loger.debug("=======" + data.getLink());
         if (data != null) {
+            Observable.just(RxVolley.getCache(data.getLink()))
+                    .map(new Func1<byte[], String>() {
+                        @Override
+                        public String call(byte[] bytes) {
+                            return new String(bytes);
+                        }
+                    })
+                    .filter(new Func1<String, Boolean>() {
+                        @Override
+                        public Boolean call(String s) {
+                            return !TextUtils.isEmpty(s);
+                        }
+                    })
+                    .map(new Func1<String, String>() {
+                        @Override
+                        public String call(String s) {
+                            return contentUrl = parserHtml(s);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>() {
+                        @Override
+                        public void call(String s) {
+                            viewDelegate.setContentUrl(contentUrl);
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            contentUrl = "";
+                        }
+                    });
             doRequest();
-            contentUrl = new String(RxVolley.getCache(data.getLink()));
-            if (!TextUtils.isEmpty(contentUrl)) {
-                viewDelegate.setContentUrl(contentUrl);
-            }
         }
     }
 
@@ -79,31 +114,62 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 
     @Override
     public void doRequest() {
-        RxVolley.get(data.getLink(), new HttpCallback() {
+        new RxVolley.Builder().url(data.getLink()).getResult()
+                .map(new Func1<Result, String>() {
+                    @Override
+                    public String call(Result result) {
+                        return parserHtml(new String(result.data));
+                    }
+                })
+                .filter(new Func1<String, Boolean>() {
+                    @Override
+                    public Boolean call(String s) {
+                        return contentUrl != null && contentUrl.equals(s);
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        if (contentUrl != null && viewDelegate != null) {
+                            viewDelegate.setContentUrl(s);
+                            setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
+                        } else {
+                            emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                    }
+                });
 
-            @Override
-            public void onSuccessInAsync(byte[] t) {
-                super.onSuccessInAsync(t);
-                contentUrl = parserHtml(new String(t));
-            }
-
-            @Override
-            public void onSuccess(String t) {
-                super.onSuccess(t);
-                if (contentUrl != null && viewDelegate != null) {
-                    viewDelegate.setContentUrl(contentUrl);
-                    setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
-                } else {
-                    emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-                }
-            }
-
-            @Override
-            public void onFailure(int errorNo, String strMsg) {
-                super.onFailure(errorNo, strMsg);
-                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-            }
-        });
+//        RxVolley.get(data.getLink(), new HttpCallback() {
+//            @Override
+//            public void onSuccessInAsync(byte[] t) {
+//                super.onSuccessInAsync(t);
+//                contentUrl = parserHtml(new String(t));
+//            }
+//
+//            @Override
+//            public void onSuccess(String t) {
+//                super.onSuccess(t);
+//                if (contentUrl != null && viewDelegate != null) {
+//                    viewDelegate.setContentUrl(contentUrl);
+//                    setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
+//                } else {
+//                    emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(int errorNo, String strMsg) {
+//                super.onFailure(errorNo, strMsg);
+//                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+//            }
+//        });
     }
 
     /**

@@ -14,7 +14,7 @@ import android.webkit.WebView;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.rxvolley.RxVolley;
-import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.rx.Result;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -163,32 +163,56 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     @Override
     public void doRequest() {
         if (TextUtils.isEmpty(url)) return;
-        RxVolley.get(url, new HttpCallback() {
+        new RxVolley.Builder().url(url).getResult()
+                .map(new Func1<Result, String>() {
                     @Override
-                    public void onSuccessInAsync(byte[] t) {
-                        super.onSuccessInAsync(t);
-                        contentHtml = parserHtml(new String(t));
+                    public String call(Result result) {
+                        return contentHtml = parserHtml(new String(result.data));
                     }
-
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
                     @Override
-                    public void onSuccess(String t) {
-                        super.onSuccess(t);
-                        if (!new String(httpCache).equals(t) && viewDelegate != null
+                    public void call(String s) {
+                        if (!new String(httpCache).equals(s)
+                                && viewDelegate != null
                                 && contentHtml != null) {
                             viewDelegate.setContent(contentHtml);
                         }
                         emptyLayout.dismiss();
                     }
-
+                }, new Action1<Throwable>() {
                     @Override
-                    public void onFailure(int errorNo, String strMsg) {
-                        super.onFailure(errorNo, strMsg);
-                        if (httpCache == null && TextUtils.isEmpty(contentHtml)) {
-                            emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-                        }
+                    public void call(Throwable throwable) {
+                        emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                     }
-                }
-        );
+                });
+
+//        RxVolley.get(url, new HttpCallback() {
+//                    @Override
+//                    public void onSuccessInAsync(byte[] t) {
+//                        super.onSuccessInAsync(t);
+//                        contentHtml = parserHtml(new String(t));
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String t) {
+//                        super.onSuccess(t);
+//                        if (!new String(httpCache).equals(t) && viewDelegate != null
+//                                && contentHtml != null) {
+//                            viewDelegate.setContent(contentHtml);
+//                        }
+//                        emptyLayout.dismiss();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int errorNo, String strMsg) {
+//                        super.onFailure(errorNo, strMsg);
+//
+//                    }
+//                }
+//        );
     }
 
     /**
