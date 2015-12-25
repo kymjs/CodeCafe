@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
 
@@ -43,7 +44,7 @@ public class MobelBrowserActivity extends BaseBackActivity<BlogDetailDelegate> {
         } else {
             collapsingToolbar.setTitle(getString(R.string.app_name));
         }
-        
+
         viewDelegate.setContentUrl(url);
     }
 
@@ -76,5 +77,25 @@ public class MobelBrowserActivity extends BaseBackActivity<BlogDetailDelegate> {
         intent.putExtra(KEY_BLOG_URL, url);
         intent.putExtra(KEY_BLOG_TITLE, title);
         cxt.startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((WebView) viewDelegate.get(R.id.webview)).onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((WebView) viewDelegate.get(R.id.webview)).onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ((WebView) viewDelegate.get(R.id.webview)).destroy();
+        System.gc();
     }
 }

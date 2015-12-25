@@ -94,6 +94,7 @@ public final class BitmapCore {
         private HttpCallback realCallback;
         private HttpCallback callback;
         private Request<?> request;
+        private Drawable defaultDrawable;
         private View view;
         private BitmapRequestConfig config = new BitmapRequestConfig();
 
@@ -219,6 +220,13 @@ public final class BitmapCore {
             return this;
         }
 
+        private Drawable getDefaultDrawable() {
+            if (defaultDrawable == null) {
+                defaultDrawable = new ColorDrawable(0xFFCFCFCF);
+            }
+            return defaultDrawable;
+        }
+
         /**
          * 安全校验
          */
@@ -255,10 +263,10 @@ public final class BitmapCore {
             }
 
             if (config.loadRes == 0 && config.loadDrawable == null) {
-                config.loadDrawable = new ColorDrawable(0xFFCFCFCF);
+                config.loadDrawable = getDefaultDrawable();
             }
             if (config.errorRes == 0 && config.errorDrawable == null) {
-                config.errorDrawable = new ColorDrawable(0xFFCFCFCF);
+                config.errorDrawable = getDefaultDrawable();
             }
 
             if (realCallback == null)

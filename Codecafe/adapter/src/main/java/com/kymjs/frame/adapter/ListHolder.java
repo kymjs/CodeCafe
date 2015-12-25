@@ -86,7 +86,6 @@ public class ListHolder {
     public ListHolder setImageResource(int viewId, int drawableId) {
         ImageView view = getView(viewId);
         view.setImageResource(drawableId);
-
         return this;
     }
 

@@ -58,6 +58,10 @@ public class BlogListFragment extends MainListFragment<Blog> {
                         adapter.refresh(datas);
                         viewDelegate.mEmptyLayout.dismiss();
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 
@@ -69,6 +73,13 @@ public class BlogListFragment extends MainListFragment<Blog> {
     @Override
     protected BasePullUpRecyclerAdapter<Blog> getAdapter() {
         return new BasePullUpRecyclerAdapter<Blog>(recyclerView, datas, R.layout.item_blog) {
+            final View.OnClickListener imageClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KJGalleryActivity.toGallery(getActivity(), (String) v.getTag());
+                }
+            };
+
             @Override
             public void convert(RecyclerHolder holder, final Blog item, int position) {
                 holder.setText(R.id.item_blog_tv_title, item.getTitle());
@@ -82,19 +93,13 @@ public class BlogListFragment extends MainListFragment<Blog> {
                 }
 
                 ImageView imageView = holder.getView(R.id.item_blog_img);
-                if (TextUtils.isEmpty(item.getImage())) {
+                String imageUrl = item.getImage().trim();
+                if (TextUtils.isEmpty(imageUrl)) {
                     imageView.setVisibility(View.GONE);
                 } else {
                     imageView.setVisibility(View.VISIBLE);
-                    String imageUrl = item.getImage().trim();
                     new BitmapCore.Builder().url(imageUrl).view(imageView).doTask();
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            KJGalleryActivity.toGallery(viewDelegate.getRootView().getContext(),
-                                    item.getImage());
-                        }
-                    });
+                    imageView.setOnClickListener(imageClickListener);
                 }
             }
         };

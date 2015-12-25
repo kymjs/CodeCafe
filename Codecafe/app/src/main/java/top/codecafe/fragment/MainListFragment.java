@@ -51,7 +51,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         public void onSuccess(String t) {
             super.onSuccess(t);
             Loger.debug("===列表网络请求:" + t);
-            if (viewDelegate.mEmptyLayout != null) {
+            if (viewDelegate != null && viewDelegate.mEmptyLayout != null) {
                 if (tempDatas == null || tempDatas.isEmpty() || adapter == null || adapter
                         .getItemCount() < 1) {
                     viewDelegate.mEmptyLayout.setErrorType(EmptyLayout.NODATA);
@@ -68,7 +68,7 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
             super.onFailure(errorNo, strMsg);
             Loger.debug("====网络请求异常" + strMsg);
             //有可能界面已经关闭网络请求仍然返回
-            if (viewDelegate.mEmptyLayout != null && adapter != null) {
+            if (viewDelegate != null && viewDelegate.mEmptyLayout != null && adapter != null) {
                 if (adapter.getItemCount() > 1) {
                     viewDelegate.mEmptyLayout.dismiss();
                 } else {
@@ -80,7 +80,9 @@ public abstract class MainListFragment<T> extends MainFragment<PullListDelegate>
         @Override
         public void onFinish() {
             super.onFinish();
-            viewDelegate.setSwipeRefreshLoadedState();
+            if (viewDelegate != null) {
+                viewDelegate.setSwipeRefreshLoadedState();
+            }
         }
     };
 

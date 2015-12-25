@@ -107,6 +107,10 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                         viewDelegate.setContent(content);
                         viewDelegate.setCurrentUrl(url);
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 
@@ -134,6 +138,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     protected void onDestroy() {
         super.onDestroy();
         webView.destroy();
+        System.gc();
     }
 
 

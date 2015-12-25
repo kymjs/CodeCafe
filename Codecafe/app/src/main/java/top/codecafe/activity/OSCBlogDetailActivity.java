@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.webkit.WebView;
 
 import com.kymjs.api.Api;
 import com.kymjs.model.osc.OSCBlogEntity;
@@ -65,6 +66,10 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                         emptyLayout.dismiss();
                         viewDelegate.setContent(content);
                         viewDelegate.setCurrentUrl(url);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
                     }
                 });
     }
@@ -128,5 +133,26 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                 "href=\"file:///android_asset/template/common.css\">";
         html = commonStyle + html;
         return html;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((WebView) viewDelegate.get(R.id.webview)).onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((WebView) viewDelegate.get(R.id.webview)).onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ((WebView) viewDelegate.get(R.id.webview)).destroy();
+        System.gc();
     }
 }

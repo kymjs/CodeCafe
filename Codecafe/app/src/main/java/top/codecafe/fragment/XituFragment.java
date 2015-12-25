@@ -54,6 +54,10 @@ public class XituFragment extends MainListFragment<XituBlog> {
                         adapter.refresh(datas);
                         viewDelegate.mEmptyLayout.dismiss();
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 

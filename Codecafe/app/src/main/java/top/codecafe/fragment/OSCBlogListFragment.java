@@ -55,6 +55,10 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
                         adapter.refresh(datas);
                         viewDelegate.mEmptyLayout.dismiss();
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 

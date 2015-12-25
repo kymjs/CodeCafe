@@ -53,6 +53,10 @@ public class OSCNewsListFragment extends MainListFragment<News> {
                         adapter.refresh(datas);
                         viewDelegate.mEmptyLayout.dismiss();
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 

@@ -271,7 +271,6 @@ public class RxVolley {
                 .httpMethod(Method.POST).callback(callback).doTask();
     }
 
-
     public static byte[] getCache(String url) {
         ICache cache = getRequestQueue().getCache();
         if (cache != null) {
