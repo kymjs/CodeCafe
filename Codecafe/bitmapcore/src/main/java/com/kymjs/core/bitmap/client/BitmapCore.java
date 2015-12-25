@@ -232,17 +232,23 @@ public final class BitmapCore {
          */
         private synchronized void build() {
             if (view == null) {
-                Loger.debug("view is null");
+                final String warn = "view is null";
+                Loger.debug(warn);
                 if (callback != null)
-                    callback.onFailure(-1, "view is null");
+                    callback.onFailure(-1, warn);
+                RxVolley.getRequestQueue().getPoster().put(config.mUrl,
+                        new RuntimeException(warn));
                 return;
             }
 
             if (TextUtils.isEmpty(config.mUrl)) {
-                Loger.debug("image url is empty");
+                final String warn = "image url is empty";
+                Loger.debug(warn);
                 doFailure(view, config.errorDrawable, config.errorRes);
                 if (callback != null)
-                    callback.onFailure(-1, "image url is empty");
+                    callback.onFailure(-1, warn);
+                RxVolley.getRequestQueue().getPoster().put(config.mUrl,
+                        new RuntimeException(warn));
                 return;
             }
 

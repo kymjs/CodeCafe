@@ -45,7 +45,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
                         return parserInAsync(bytes);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<XituBlog>>() {
                     @Override

@@ -19,6 +19,7 @@ import android.net.TrafficStats;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.RequestConfig;
 import com.kymjs.rxvolley.interf.ICache;
@@ -286,6 +287,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
                 strMsg = "unknow";
             }
             mCallback.onFailure(errorNo, strMsg);
+            RxVolley.getRequestQueue().getPoster().put(getUrl(), error);
         }
     }
 

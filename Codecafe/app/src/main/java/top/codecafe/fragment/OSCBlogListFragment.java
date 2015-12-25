@@ -46,7 +46,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
                         return parserInAsync(bytes);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<OSCBlog>>() {
                     @Override

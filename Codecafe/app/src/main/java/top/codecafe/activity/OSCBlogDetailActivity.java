@@ -56,7 +56,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                         return parserHtml(contentHtml);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
@@ -84,7 +84,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                         return contentHtml = parserHtml(contentHtml);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override

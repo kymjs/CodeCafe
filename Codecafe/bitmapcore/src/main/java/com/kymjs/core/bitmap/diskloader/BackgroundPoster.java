@@ -3,11 +3,8 @@ package com.kymjs.core.bitmap.diskloader;
 import com.kymjs.core.bitmap.DiskImageDisplayer;
 import com.kymjs.core.bitmap.client.BitmapCore;
 import com.kymjs.core.bitmap.client.BitmapRequestConfig;
-import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.toolbox.Loger;
-
-import java.util.Collections;
 
 /**
  * @author kymjs (http://www.kymjs.com/) on 12/21/15.
@@ -48,10 +45,8 @@ public class BackgroundPoster extends AsyncPoster {
                             }
                         }
                     }
-                    byte[] bytes = loadFromFile(pendingPost.config.mUrl, pendingPost.config
+                    loadFromFile(pendingPost.config.mUrl, pendingPost.config
                             .maxWidth, pendingPost.config.maxHeight, pendingPost.callback);
-                    RxVolley.getRequestQueue().getPoster().put(pendingPost.config.mUrl,
-                            Collections.<String, String>emptyMap(), bytes);
                     PendingPost.releasePendingPost(pendingPost);
                 }
             } catch (InterruptedException e) {

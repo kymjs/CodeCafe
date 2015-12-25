@@ -17,6 +17,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.rx.Result;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -97,7 +98,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                         return parserHtml(new String(bytes));
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
@@ -170,22 +171,26 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                         return contentHtml = parserHtml(new String(result.data));
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
                         if (!new String(httpCache).equals(s)
                                 && viewDelegate != null
                                 && contentHtml != null) {
                             viewDelegate.setContent(contentHtml);
                         }
                         emptyLayout.dismiss();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                     }
                 });
 

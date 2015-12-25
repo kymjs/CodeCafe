@@ -44,7 +44,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
                         return parserInAsync(bytes);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<News>>() {
                     @Override

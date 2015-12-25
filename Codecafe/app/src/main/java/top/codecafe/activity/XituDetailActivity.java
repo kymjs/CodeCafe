@@ -127,7 +127,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
                         return contentUrl != null && contentUrl.equals(s);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override

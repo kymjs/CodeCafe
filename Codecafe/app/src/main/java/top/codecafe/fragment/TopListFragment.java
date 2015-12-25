@@ -46,7 +46,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
                         return parserInAsync(bytes);
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<Favorite>>() {
                     @Override
