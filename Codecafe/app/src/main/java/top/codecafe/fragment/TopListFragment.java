@@ -89,8 +89,8 @@ public class TopListFragment extends MainListFragment<Favorite> {
         params.putHeaders("cookie", Api.OSC_COOKIE);
         new RxVolley.Builder().url(Api.OSC_COLLECT_BLOG)
                 .params(params)
-                .contentType(RxVolley.Method.GET)
                 .cacheTime(60)
+                .httpMethod(RxVolley.Method.GET)
                 .callback(callBack)
                 .doTask();
     }

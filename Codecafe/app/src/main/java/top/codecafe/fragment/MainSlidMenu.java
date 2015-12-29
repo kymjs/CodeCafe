@@ -4,8 +4,8 @@ import android.view.View;
 
 import com.kymjs.frame.presenter.FragmentPresenter;
 import com.kymjs.model.Event;
+import com.kymjs.rxvolley.rx.RxBus;
 
-import de.greenrobot.event.EventBus;
 import top.codecafe.R;
 import top.codecafe.activity.MainActivity;
 import top.codecafe.delegate.MainSlidMenuDelegate;
@@ -15,7 +15,8 @@ import top.codecafe.delegate.MainSlidMenuDelegate;
  *
  * @author kymjs (http://www.kymjs.com/) on 11/27/15.
  */
-public class MainSlidMenu extends FragmentPresenter<MainSlidMenuDelegate> implements View.OnClickListener {
+public class MainSlidMenu extends FragmentPresenter<MainSlidMenuDelegate> implements View
+        .OnClickListener {
 
     @Override
     protected Class<MainSlidMenuDelegate> getDelegateClass() {
@@ -37,6 +38,6 @@ public class MainSlidMenu extends FragmentPresenter<MainSlidMenuDelegate> implem
         Event event = new Event();
         event.setAction(MainActivity.MENU_CLICK_EVEN);
         event.setObject(v);
-        EventBus.getDefault().post(event);
+        RxBus.getDefault().post(event);
     }
 }

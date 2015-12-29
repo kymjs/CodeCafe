@@ -11,12 +11,12 @@ import com.kymjs.api.Api;
 import com.kymjs.base.BaseFrameActivity;
 import com.kymjs.base.MainFragment;
 import com.kymjs.model.Event;
+import com.kymjs.rxvolley.rx.RxBus;
 
-import de.greenrobot.event.EventBus;
+import rx.functions.Action1;
 import top.codecafe.R;
 import top.codecafe.delegate.MainDelegate;
 import top.codecafe.fragment.BlogListFragment;
-import top.codecafe.fragment.MainSlidMenu;
 import top.codecafe.fragment.TopListFragment;
 import top.codecafe.fragment.XituFragment;
 
@@ -92,10 +92,28 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
         transaction.commit();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_content, content1, content1.getClass().getName())
+                .commit();
+
+        RxBus.getDefault().take(Event.class)
+                .subscribe(new Action1<Event>() {
+                    @Override
+                    public void call(Event event) {
+                        changeContent(event);
+                    }
+                });
+    }
+
     /**
-     * @see MainSlidMenu#onClick(View v)
+     * 根据MainSlidMenu点击选择不同的响应
+     *
+     * @param event
      */
-    public void onEvent(Event event) {
+    private void changeContent(Event event) {
         if (!MENU_CLICK_EVEN.equals(event.getAction())) return;
         View view = event.getObject();
         switch (view.getId()) {
@@ -115,20 +133,5 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 break;
         }
         viewDelegate.changeMenuState();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_content, content1, content1.getClass().getName())
-                .commit();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }
