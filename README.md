@@ -7,7 +7,7 @@ MVP架构开发Android-TheMVP[https://github.com/kymjs/TheMVP](https://github.co
 APP崩溃后显示一个友善的Activity [https://github.com/crashub/crash](https://github.com/crashub/crash)   
 仿微信侧滑finish()当前Activity [https://github.com/kymjs/SlipBack/tree/swiple](https://github.com/kymjs/SlipBack/tree/swiple)    
 RxJava [https://github.com/ReactiveX/RxJava](https://github.com/ReactiveX/RxJava)  
-RxVolley 还在开发中的网络请求库，集合了RxJava+Volley+okhttp
+RxVolley 集合了RxJava+Volley+okhttp [https://github.com/kymjs/RxVolley](https://github.com/kymjs/RxVolley)
 
 ## 关于
 自我介绍：[张涛就是我](http://blog.kymjs.com/about)    
