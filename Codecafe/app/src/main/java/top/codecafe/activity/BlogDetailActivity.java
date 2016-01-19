@@ -18,6 +18,7 @@ import com.kymjs.rxvolley.rx.Result;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -43,6 +44,9 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     protected WebView webView;
     protected String contentHtml = null;
     protected byte[] httpCache = null;
+
+    private Subscription cacheSubscript;
+    private Subscription requestSubscript;
 
     @Override
     protected Class<BlogDetailDelegate> getDelegateClass() {
@@ -84,7 +88,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(RxVolley.getCache(url))
+        cacheSubscript = Observable.just(RxVolley.getCache(url))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -139,6 +143,10 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     protected void onDestroy() {
         super.onDestroy();
         webView.destroy();
+        if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
+            cacheSubscript.unsubscribe();
+        if (requestSubscript != null && requestSubscript.isUnsubscribed())
+            requestSubscript.unsubscribe();
         System.gc();
     }
 
@@ -164,7 +172,7 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     @Override
     public void doRequest() {
         if (TextUtils.isEmpty(url)) return;
-        new RxVolley.Builder().url(url).getResult()
+        requestSubscript = new RxVolley.Builder().url(url).getResult()
                 .map(new Func1<Result, String>() {
                     @Override
                     public String call(Result result) {

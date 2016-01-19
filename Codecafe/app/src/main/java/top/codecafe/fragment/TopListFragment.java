@@ -15,6 +15,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -30,10 +31,12 @@ import top.codecafe.utils.XmlUtils;
  */
 public class TopListFragment extends MainListFragment<Favorite> {
 
+    private Subscription cacheSubscript;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(RxVolley.getCache(Api.OSC_COLLECT_BLOG))
+        cacheSubscript = Observable.just(RxVolley.getCache(Api.OSC_COLLECT_BLOG))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -100,5 +103,12 @@ public class TopListFragment extends MainListFragment<Favorite> {
         Favorite blog = (Favorite) data;
         OSCBlogDetailActivity.goinActivity(getActivity(), blog.getId(), blog.getUrl(), blog
                 .getTitle());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
+            cacheSubscript.unsubscribe();
     }
 }

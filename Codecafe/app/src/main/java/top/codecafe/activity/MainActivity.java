@@ -13,6 +13,7 @@ import com.kymjs.base.MainFragment;
 import com.kymjs.model.Event;
 import com.kymjs.rxvolley.rx.RxBus;
 
+import rx.Subscription;
 import rx.functions.Action1;
 import top.codecafe.R;
 import top.codecafe.delegate.MainDelegate;
@@ -32,6 +33,8 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
     private MainFragment content2 = new XituFragment();
     private MainFragment content3 = new TopListFragment();
 
+    private Subscription rxBusSubscript;
+
     private boolean isOnKeyBacking;
     private Handler mMainLoopHandler = new Handler(Looper.getMainLooper());
     private Runnable onBackTimeRunnable = new Runnable() {
@@ -41,6 +44,7 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
             viewDelegate.cancleExit();
         }
     };
+
 
     @Override
     protected Class<MainDelegate> getDelegateClass() {
@@ -99,7 +103,7 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                 .replace(R.id.main_content, content1, content1.getClass().getName())
                 .commit();
 
-        RxBus.getDefault().take(Event.class)
+        rxBusSubscript = RxBus.getDefault().take(Event.class)
                 .subscribe(new Action1<Event>() {
                     @Override
                     public void call(Event event) {
@@ -110,6 +114,13 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                     public void call(Throwable throwable) {
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (rxBusSubscript != null && rxBusSubscript.isUnsubscribed())
+            rxBusSubscript.unsubscribe();
     }
 
     /**

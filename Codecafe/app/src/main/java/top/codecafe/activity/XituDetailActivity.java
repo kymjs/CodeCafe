@@ -15,6 +15,7 @@ import com.kymjs.rxvolley.rx.Result;
 import com.kymjs.rxvolley.toolbox.Loger;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -37,6 +38,9 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
     private EmptyLayout emptyLayout;
     private String contentUrl;
 
+    private Subscription cacheSubscript;
+    private Subscription requestSubscript;
+
     @Override
     protected Class<BrowserDelegate> getDelegateClass() {
         return BrowserDelegate.class;
@@ -58,7 +62,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
         data = intent.getParcelableExtra(KEY_XITU_DATA);
         Loger.debug("=======" + data.getLink());
         if (data != null) {
-            Observable.just(RxVolley.getCache(data.getLink()))
+            cacheSubscript = Observable.just(RxVolley.getCache(data.getLink()))
                     .map(new Func1<byte[], String>() {
                         @Override
                         public String call(byte[] bytes) {
@@ -114,7 +118,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 
     @Override
     public void doRequest() {
-        new RxVolley.Builder().url(data.getLink()).getResult()
+        requestSubscript = new RxVolley.Builder().url(data.getLink()).getResult()
                 .map(new Func1<Result, String>() {
                     @Override
                     public String call(Result result) {
@@ -170,6 +174,15 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
 //                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
 //            }
 //        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
+            cacheSubscript.unsubscribe();
+        if (requestSubscript != null && requestSubscript.isUnsubscribed())
+            requestSubscript.unsubscribe();
     }
 
     /**

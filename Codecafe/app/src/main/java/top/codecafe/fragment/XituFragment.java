@@ -14,6 +14,7 @@ import com.kymjs.rxvolley.RxVolley;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -29,10 +30,12 @@ import top.codecafe.utils.XmlUtils;
  */
 public class XituFragment extends MainListFragment<XituBlog> {
 
+    private Subscription cacheSubscript;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Observable.just(RxVolley.getCache(Api.XITU_BLOG_LIST))
+        cacheSubscript = Observable.just(RxVolley.getCache(Api.XITU_BLOG_LIST))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -97,5 +100,12 @@ public class XituFragment extends MainListFragment<XituBlog> {
     @Override
     public void onItemClick(View view, Object data, int position) {
         XituDetailActivity.goinActivity(getActivity(), (XituBlog) data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
+            cacheSubscript.unsubscribe();
     }
 }

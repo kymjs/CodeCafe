@@ -13,6 +13,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.rx.Result;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -30,6 +31,9 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
     public static final String KEY_BLOG_ID = "osc_blog_id";
     private int blogId;
 
+    private Subscription cacheSubscript;
+    private Subscription requestSubscript;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         blogId = getIntent().getIntExtra(KEY_BLOG_ID, 0);
@@ -40,7 +44,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
      * 读取缓存内容
      */
     protected void readCache() {
-        Observable.just(RxVolley.getCache(Api.OSC_BLOG_DETAIL + blogId))
+        cacheSubscript = Observable.just(RxVolley.getCache(Api.OSC_BLOG_DETAIL + blogId))
                 .filter(new Func1<byte[], Boolean>() {
                     @Override
                     public Boolean call(byte[] cache) {
@@ -75,7 +79,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
 
     @Override
     public void doRequest() {
-        new RxVolley.Builder().url(Api.OSC_BLOG_DETAIL + blogId).getResult()
+        requestSubscript = new RxVolley.Builder().url(Api.OSC_BLOG_DETAIL + blogId).getResult()
                 .map(new Func1<Result, String>() {
                     @Override
                     public String call(Result result) {
@@ -167,6 +171,9 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.gc();
+        if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
+            cacheSubscript.unsubscribe();
+        if (requestSubscript != null && requestSubscript.isUnsubscribed())
+            requestSubscript.unsubscribe();
     }
 }
