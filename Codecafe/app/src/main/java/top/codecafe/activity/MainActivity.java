@@ -105,6 +105,10 @@ public class MainActivity extends BaseFrameActivity<MainDelegate> {
                     public void call(Event event) {
                         changeContent(event);
                     }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                    }
                 });
     }
 

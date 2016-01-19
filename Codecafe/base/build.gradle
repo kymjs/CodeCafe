@@ -6,7 +6,7 @@ android {
     resourcePrefix 'base_'
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 12
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -23,5 +23,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile project(':framework')
+    compile 'com.kymjs.frame:framework:1.0.4'
 }
