@@ -1,5 +1,5 @@
 #[![OSL](http://www.kymjs.com/image/logo_s.png)](http://www.kymjs.com/works/)   
-*CodeCafe* 目前仅仅是开源实验室的手机客户端，也是我的第二个练手项目。相关技术包括：沉浸式、WebView定制、RxJava、TheMVP、RecyclerView，也就算是通过这个项目，好好练习一下算是了解。
+*CodeCafe* 目前仅仅是开源实验室的手机客户端，我的练手项目。相关技术包括：沉浸式、WebView定制、RxJava、TheMVP、RecyclerView，也就算是通过这个项目，好好练习一下算是了解。
 
 ## 一大堆无聊的东西 
 MVP架构开发Android-TheMVP[https://github.com/kymjs/TheMVP](https://github.com/kymjs/TheMVP)  
