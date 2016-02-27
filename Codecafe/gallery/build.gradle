@@ -24,5 +24,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.10'
-    compile 'com.kymjs.rxvolley:bitmapcore:1.0.1'
+    compile 'com.kymjs.rxvolley:bitmapcore:1.0.5'
+    compile 'com.kymjs.rxvolley:rxvolley:1.0.5'
+    compile 'com.kymjs.rxvolley:okhttp:1.0.5'
 }

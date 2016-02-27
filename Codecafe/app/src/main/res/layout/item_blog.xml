@@ -51,7 +51,7 @@
 
     <ImageView
         android:id="@+id/item_blog_img"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/space_140"
         android:layout_below="@id/item_blog_tv_description"
         android:layout_marginBottom="5dp"

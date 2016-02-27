@@ -1,15 +1,17 @@
 package top.codecafe.widget;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
 
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 import top.codecafe.R;
 
 
@@ -20,6 +22,8 @@ import top.codecafe.R;
  */
 public class EmptyLayout extends LinearLayout implements
         View.OnClickListener {
+
+    public static final String LOADING_IMAGE_FOLDER_NAME = "loading_image";
 
     public static final int NETWORK_ERROR = 1; // 网络错误
     public static final int NETWORK_LOADING = 2; // 加载中
@@ -32,8 +36,8 @@ public class EmptyLayout extends LinearLayout implements
     private String strNoDataContent = "";
 
     private TextView tv;
-    public ImageView img;
-    private ProgressBar animProgress;
+    public GifImageView img;
+    private GifDrawable loadingDrawable;
 
     public EmptyLayout(Context context) {
         super(context);
@@ -48,9 +52,8 @@ public class EmptyLayout extends LinearLayout implements
     private void init() {
         View view = View
                 .inflate(getContext(), R.layout.view_empty_layout, null);
-        img = (ImageView) view.findViewById(R.id.img_error_layout);
+        img = (GifImageView) view.findViewById(R.id.img_error_layout);
         tv = (TextView) view.findViewById(R.id.tv_error_layout);
-        animProgress = (ProgressBar) view.findViewById(R.id.animProgress);
 
         setBackgroundColor(-1);
         setOnClickListener(this);
@@ -68,6 +71,7 @@ public class EmptyLayout extends LinearLayout implements
                 }
             }
         });
+
         this.addView(view);
     }
 
@@ -126,15 +130,20 @@ public class EmptyLayout extends LinearLayout implements
                 mErrorState = NETWORK_ERROR;
                 tv.setText(R.string.load_again);
                 img.setImageResource(R.mipmap.page_icon_network);
-                img.setVisibility(View.VISIBLE);
-                animProgress.setVisibility(View.GONE);
                 setVisibility(View.VISIBLE);
                 clickEnable = true;
                 break;
             case NETWORK_LOADING:
                 mErrorState = NETWORK_LOADING;
-                animProgress.setVisibility(View.VISIBLE);
-                img.setVisibility(View.GONE);
+                try {
+                    AssetManager assetManager = getResources().getAssets();
+                    String[] loadingList = assetManager.list(LOADING_IMAGE_FOLDER_NAME);
+                    String imageName = loadingList[((int) (loadingList.length * Math.random()))];
+                    String absoluteImageName = LOADING_IMAGE_FOLDER_NAME + File.separator + imageName;
+                    loadingDrawable = new GifDrawable(assetManager, absoluteImageName);
+                    img.setImageDrawable(loadingDrawable);
+                } catch (Exception e) {
+                }
                 tv.setText(R.string.loading);
                 clickEnable = false;
                 setVisibility(View.VISIBLE);
@@ -142,8 +151,6 @@ public class EmptyLayout extends LinearLayout implements
             case NODATA:
                 mErrorState = NODATA;
                 img.setImageResource(R.mipmap.page_icon_empty);
-                img.setVisibility(View.VISIBLE);
-                animProgress.setVisibility(View.GONE);
                 setTvNoDataContent();
                 clickEnable = true;
                 setVisibility(View.VISIBLE);

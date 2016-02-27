@@ -22,7 +22,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.android.support:palette-v7:23.2.0'
     compile project(':adapter')
     compile project(':nuwa')
     compile project(':crash')
@@ -31,6 +31,7 @@ dependencies {
     compile project(':model')
     compile project(':gallery')
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
-    compile 'com.kymjs.rxvolley:okhttp:1.0.1'
-    compile 'com.kymjs.rxvolley:bitmapcore:1.0.2'
+    compile 'com.kymjs.rxvolley:okhttp:1.0.5'
+    compile 'com.kymjs.rxvolley:bitmapcore:1.0.5'
+    compile 'com.kymjs.rxvolley:rxvolley:1.0.5'
 }
