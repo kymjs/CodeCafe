@@ -17,8 +17,8 @@
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/img_error_layout"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
                 android:src="@mipmap/page_icon_failed" />

@@ -14,6 +14,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -22,7 +23,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:palette-v7:23.2.0'
+    compile 'com.android.support:palette-v7:23.1.1'
     compile project(':adapter')
     compile project(':nuwa')
     compile project(':crash')
