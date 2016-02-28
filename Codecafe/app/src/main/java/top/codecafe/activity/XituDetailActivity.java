@@ -2,6 +2,7 @@ package top.codecafe.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -12,7 +13,6 @@ import com.kymjs.base.backactivity.BaseBackActivity;
 import com.kymjs.model.XituBlog;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.rx.Result;
-import com.kymjs.rxvolley.toolbox.Loger;
 
 import rx.Observable;
 import rx.Subscription;
@@ -57,10 +57,13 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
                 emptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
             }
         });
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         data = intent.getParcelableExtra(KEY_XITU_DATA);
-        Loger.debug("=======" + data.getLink());
         if (data != null) {
             cacheSubscript = Observable.just(RxVolley.getCache(data.getLink()))
                     .map(new Func1<byte[], String>() {
@@ -122,13 +125,7 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
                 .map(new Func1<Result, String>() {
                     @Override
                     public String call(Result result) {
-                        return parserHtml(new String(result.data));
-                    }
-                })
-                .filter(new Func1<String, Boolean>() {
-                    @Override
-                    public Boolean call(String s) {
-                        return contentUrl != null && contentUrl.equals(s);
+                        return contentUrl = parserHtml(new String(result.data));
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -136,9 +133,9 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        if (contentUrl != null && viewDelegate != null) {
+                        if (s != null && viewDelegate != null) {
                             viewDelegate.setContentUrl(s);
-                            setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
+                            setTitle(LinkDispatcher.getActionTitle(s, data.getTitle()));
                         } else {
                             emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                         }
