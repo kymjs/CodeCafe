@@ -34,5 +34,5 @@ dependencies {
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
     compile 'com.kymjs.rxvolley:okhttp:1.0.5'
     compile 'com.kymjs.rxvolley:bitmapcore:1.0.5'
-    compile 'com.kymjs.rxvolley:rxvolley:1.0.5'
+    compile 'com.kymjs.rxvolley:rxvolley:1.0.5.2'
 }

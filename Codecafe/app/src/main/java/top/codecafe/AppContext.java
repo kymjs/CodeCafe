@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import com.kymjs.crash.CustomActivityOnCrash;
 import com.kymjs.nuwa.Nuwa;
+import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.toolbox.Loger;
 
 /**

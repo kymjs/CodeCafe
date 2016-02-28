@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/item_blog_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_blog_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white">
@@ -21,7 +21,7 @@
             android:layout_height="25dp"
             android:contentDescription="@null"
             android:src="@mipmap/blog_item_recommend_icon"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/item_blog_tv_title"
@@ -34,7 +34,7 @@
             android:singleLine="true"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="normal"/>
+            android:textStyle="normal" />
     </RelativeLayout>
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_marginRight="15dp"
         android:ellipsize="end"
         android:maxLines="3"
-        android:textColor="#9a9a9a"/>
+        android:textColor="#9a9a9a" />
 
     <ImageView
         android:id="@+id/item_blog_img"
@@ -59,11 +59,12 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="4dp"
         android:background="@color/default_image_bg"
-        android:clickable="true"
+        android:clickable="false"
         android:contentDescription="@null"
+        android:focusable="false"
         android:minWidth="@dimen/space_180"
         android:scaleType="centerCrop"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/item_blog_tv_author"
@@ -74,7 +75,7 @@
         android:layout_marginBottom="6dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/item_blog_tv_date"
@@ -88,7 +89,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
         android:drawableLeft="@mipmap/ic_time"
-        android:drawablePadding="2dp"/>
+        android:drawablePadding="2dp" />
 
     <ImageView
         android:id="@+id/item_blog_line"
@@ -100,6 +101,6 @@
         android:layout_marginTop="3dp"
         android:contentDescription="@null"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_axis_top_line"/>
+        android:src="@mipmap/ic_axis_top_line" />
 
 </RelativeLayout>

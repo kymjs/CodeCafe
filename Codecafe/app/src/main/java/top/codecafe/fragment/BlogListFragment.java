@@ -102,7 +102,8 @@ public class BlogListFragment extends MainListFragment<Blog> {
                 } else {
                     imageView.setVisibility(View.VISIBLE);
                     new BitmapCore.Builder().url(imageUrl).view(imageView).doTask();
-                    imageView.setOnClickListener(imageClickListener);
+                    //在列表点击图片就直接进详情了,没必要进图片预览(布局文件中已取消焦点)
+//                    imageView.setOnClickListener(imageClickListener);
                 }
             }
         };

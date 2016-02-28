@@ -48,7 +48,3 @@
 
 ##xstream
 -libraryjars libs/xstream-1.4.7.jar
--dontwarn com.thoughtworks.xstream.**
--keep class **$$XStreamAlias { *; }
--keep class **$$XStreamImplicit { *; }
--keepnames class * { @com.thoughtworks.xstream.annotations.XStreamImplicit *;}
