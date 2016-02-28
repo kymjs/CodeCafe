@@ -142,12 +142,12 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        webView.removeAllViews();
         webView.destroy();
         if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
             cacheSubscript.unsubscribe();
         if (requestSubscript != null && requestSubscript.isUnsubscribed())
             requestSubscript.unsubscribe();
-        System.gc();
     }
 
 
@@ -201,31 +201,6 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
                         emptyLayout.dismiss();
                     }
                 });
-
-//        RxVolley.get(url, new HttpCallback() {
-//                    @Override
-//                    public void onSuccessInAsync(byte[] t) {
-//                        super.onSuccessInAsync(t);
-//                        contentHtml = parserHtml(new String(t));
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(String t) {
-//                        super.onSuccess(t);
-//                        if (!new String(httpCache).equals(t) && viewDelegate != null
-//                                && contentHtml != null) {
-//                            viewDelegate.setContent(contentHtml);
-//                        }
-//                        emptyLayout.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int errorNo, String strMsg) {
-//                        super.onFailure(errorNo, strMsg);
-//
-//                    }
-//                }
-//        );
     }
 
     /**

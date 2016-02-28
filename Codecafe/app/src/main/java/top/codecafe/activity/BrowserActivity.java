@@ -67,6 +67,7 @@ public class BrowserActivity extends BaseBackActivity<BrowserDelegate> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        viewDelegate.webView.removeAllViews();
         viewDelegate.webView.destroy();
     }
     

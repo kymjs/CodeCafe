@@ -146,36 +146,15 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
                         emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
                     }
                 });
-
-//        RxVolley.get(data.getLink(), new HttpCallback() {
-//            @Override
-//            public void onSuccessInAsync(byte[] t) {
-//                super.onSuccessInAsync(t);
-//                contentUrl = parserHtml(new String(t));
-//            }
-//
-//            @Override
-//            public void onSuccess(String t) {
-//                super.onSuccess(t);
-//                if (contentUrl != null && viewDelegate != null) {
-//                    viewDelegate.setContentUrl(contentUrl);
-//                    setTitle(LinkDispatcher.getActionTitle(contentUrl, data.getTitle()));
-//                } else {
-//                    emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int errorNo, String strMsg) {
-//                super.onFailure(errorNo, strMsg);
-//                emptyLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
-//            }
-//        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (viewDelegate != null && viewDelegate.webView != null) {
+            viewDelegate.webView.removeAllViews();
+            viewDelegate.webView.destroy();
+        }
         if (cacheSubscript != null && cacheSubscript.isUnsubscribed())
             cacheSubscript.unsubscribe();
         if (requestSubscript != null && requestSubscript.isUnsubscribed())

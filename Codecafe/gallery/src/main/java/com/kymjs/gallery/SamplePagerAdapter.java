@@ -72,7 +72,7 @@ public class SamplePagerAdapter extends PagerAdapter {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
-        RxVolley.getRequestQueue().add(request);
+        new RxVolley.Builder().setRequest(request).doTask();
 
         container.addView(root, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
                 .MATCH_PARENT);
