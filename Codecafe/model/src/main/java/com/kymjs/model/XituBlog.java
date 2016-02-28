@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 @XStreamAlias("item")
 public class XituBlog implements Parcelable {
-    public static final String XITU_GUANGGAO = "<p><a href=\"http://gold.xitu.io/app\">下载掘金应用，挖掘最优质的互联网技术</a></p>";
+    public static final String XITU_GUANGGAO = "下载掘金应用，挖掘最优质的互联网技术";
 
     @XStreamAlias("title")
     private String title;
