@@ -11,9 +11,9 @@ import java.io.InputStream;
 /**
  * xml解析工具类
  */
-public class XmlUtils {
+public class XmlUtil {
 
-    private final static String TAG = XmlUtils.class.getSimpleName();
+    private final static String TAG = XmlUtil.class.getSimpleName();
 
     /**
      * 将一个xml流转换为bean实体类

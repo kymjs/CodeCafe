@@ -25,7 +25,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.BlogDetailActivity;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 
 /**
  * 博客列表界面
@@ -70,7 +70,7 @@ public class BlogListFragment extends MainListFragment<Blog> {
 
     @Override
     protected ArrayList<Blog> parserInAsync(byte[] t) {
-        return XmlUtils.toBean(BlogList.class, t).getChannel().getItemArray();
+        return XmlUtil.toBean(BlogList.class, t).getChannel().getItemArray();
     }
 
     @Override

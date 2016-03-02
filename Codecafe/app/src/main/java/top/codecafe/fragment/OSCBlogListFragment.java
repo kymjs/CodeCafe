@@ -22,7 +22,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.OSCBlogDetailActivity;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 
 /**
  * OSC博客列表
@@ -68,7 +68,7 @@ public class OSCBlogListFragment extends MainListFragment<OSCBlog> {
 
     @Override
     protected ArrayList<OSCBlog> parserInAsync(byte[] t) {
-        OSCBlogList list = XmlUtils.toBean(OSCBlogList.class, t);
+        OSCBlogList list = XmlUtil.toBean(OSCBlogList.class, t);
         ArrayList<OSCBlog> datas = null;
         if (list != null) {
             datas = list.getBloglist();

@@ -22,7 +22,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.OSCBlogDetailActivity;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 
 /**
  * 推荐阅读列表界面
@@ -83,7 +83,7 @@ public class TopListFragment extends MainListFragment<Favorite> {
 
     @Override
     protected ArrayList<Favorite> parserInAsync(byte[] t) {
-        return XmlUtils.toBean(FavoriteList.class, t).getFavoritelist();
+        return XmlUtil.toBean(FavoriteList.class, t).getFavoritelist();
     }
 
     @Override

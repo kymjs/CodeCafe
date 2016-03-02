@@ -20,7 +20,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 
 /**
  * OSC新闻资讯
@@ -81,7 +81,7 @@ public class OSCNewsListFragment extends MainListFragment<News> {
 
     @Override
     protected ArrayList<News> parserInAsync(byte[] t) {
-        return XmlUtils.toBean(NewsList.class, t).getList();
+        return XmlUtil.toBean(NewsList.class, t).getList();
     }
 
     @Override

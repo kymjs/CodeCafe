@@ -21,7 +21,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.activity.XituDetailActivity;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 
 /**
  * 稀土的数据rss
@@ -67,7 +67,7 @@ public class XituFragment extends MainListFragment<XituBlog> {
 
     @Override
     protected ArrayList<XituBlog> parserInAsync(byte[] t) {
-        ArrayList<XituBlog> datas = XmlUtils.toBean(XituBlogList.class, t).getChannel()
+        ArrayList<XituBlog> datas = XmlUtil.toBean(XituBlogList.class, t).getChannel()
                 .getItemArray();
         for (XituBlog data : datas) {
             data.format();

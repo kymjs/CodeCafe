@@ -20,7 +20,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegateOption;
-import top.codecafe.utils.XmlUtils;
+import top.codecafe.utils.XmlUtil;
 import top.codecafe.widget.EmptyLayout;
 
 /**
@@ -55,7 +55,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                 .map(new Func1<byte[], String>() {
                     @Override
                     public String call(byte[] bytes) {
-                        contentHtml = XmlUtils.toBean(OSCBlogEntity.class, bytes).getBlog()
+                        contentHtml = XmlUtil.toBean(OSCBlogEntity.class, bytes).getBlog()
                                 .getBody();
                         return parserHtml(contentHtml);
                     }
@@ -83,7 +83,7 @@ public class OSCBlogDetailActivity extends BlogDetailActivity {
                 .map(new Func1<Result, String>() {
                     @Override
                     public String call(Result result) {
-                        contentHtml = XmlUtils.toBean(OSCBlogEntity.class, result.data)
+                        contentHtml = XmlUtil.toBean(OSCBlogEntity.class, result.data)
                                 .getBlog().getBody();
                         return contentHtml = parserHtml(contentHtml);
                     }
