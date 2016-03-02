@@ -23,10 +23,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import top.codecafe.AppConfig;
 import top.codecafe.R;
 import top.codecafe.delegate.BlogDetailDelegate;
 import top.codecafe.delegate.BrowserDelegateOption;
 import top.codecafe.inter.IRequestVo;
+import top.codecafe.utils.SystemTool;
 import top.codecafe.widget.EmptyLayout;
 
 /**
@@ -210,12 +212,18 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
      * @param title 传递要显示的博客的标题
      */
     public static void goinActivity(Context cxt, @NonNull String url, @Nullable String title) {
-        Intent intent = new Intent(cxt, BlogDetailActivity.class);
-        intent.putExtra(KEY_BLOG_URL, url);
-        if (TextUtils.isEmpty(title))
-            title = cxt.getString(R.string.kymjs_blog_name);
-        intent.putExtra(KEY_BLOG_TITLE, title);
-        cxt.startActivity(intent);
+        if (url.toLowerCase().contains(AppConfig.DONATE_STR)
+                && SystemTool.checkApkExist(cxt, AppConfig.ALIPAY_PKGNAME)) {
+            SystemTool.copy(cxt, AppConfig.ALIPAY_ID);
+            SystemTool.openOtherApp(cxt, AppConfig.ALIPAY_PKGNAME, AppConfig.ALIPAY_MAIN_NAME);
+        } else {
+            Intent intent = new Intent(cxt, BlogDetailActivity.class);
+            intent.putExtra(KEY_BLOG_URL, url);
+            if (TextUtils.isEmpty(title))
+                title = cxt.getString(R.string.kymjs_blog_name);
+            intent.putExtra(KEY_BLOG_TITLE, title);
+            cxt.startActivity(intent);
+        }
     }
 
     public static final String regEx_script =
