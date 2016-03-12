@@ -15,6 +15,9 @@ public class DexUtils {
         Object newDexElements = getDexElements(getPathList(dexClassLoader));
         Object allDexElements = combineArray(newDexElements, baseDexElements);
         Object pathList = getPathList(getPathClassLoader());
+        
+        //将pathlist的dexElements设置为allDexElements
+        //即把当前应用的classloader中的pathlist属性的dexElements设置为拼接后的dexElements
         ReflectionUtils.setField(pathList, pathList.getClass(), "dexElements", allDexElements);
     }
 
@@ -22,16 +25,25 @@ public class DexUtils {
         return DexUtils.class.getClassLoader();
     }
 
+    /**
+     * 返回 paramObject 对象中名为dexElements的字段
+     */
     private static Object getDexElements(Object paramObject)
             throws IllegalArgumentException, NoSuchFieldException, IllegalAccessException {
         return ReflectionUtils.getField(paramObject, paramObject.getClass(), "dexElements");
     }
 
+    /**
+     * 返回 baseDexClassLoader 对象中名为pathList的字段
+     */
     private static Object getPathList(Object baseDexClassLoader)
             throws IllegalArgumentException, NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
         return ReflectionUtils.getField(baseDexClassLoader, Class.forName("dalvik.system.BaseDexClassLoader"), "pathList");
     }
 
+    /**
+     * 将两个DexElements数组拼接成一个DexElement数组,后一个直接拼接到前一个上
+     */
     private static Object combineArray(Object firstArray, Object secondArray) {
         Class<?> localClass = firstArray.getClass().getComponentType();
         int firstArrayLength = Array.getLength(firstArray);
