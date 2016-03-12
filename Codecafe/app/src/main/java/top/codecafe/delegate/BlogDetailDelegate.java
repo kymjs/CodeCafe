@@ -5,6 +5,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.graphics.Palette;
 import android.view.Gravity;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.kymjs.api.Api;
@@ -125,6 +127,11 @@ public class BlogDetailDelegate extends BaseDetailDelegate {
         });
     }
 
+    @Override
+    public int getOptionsMenuId() {
+        return R.menu.menu_share;
+    }
+
     public void setContent(String text) {
         browserDelegate.webView.loadDataWithBaseURL(null, text, "text/html", "UTF-8", null);
     }
@@ -135,5 +142,18 @@ public class BlogDetailDelegate extends BaseDetailDelegate {
 
     public void setCurrentUrl(String currentUrl) {
         browserDelegate.setCurrentUrl(currentUrl);
+    }
+
+    public WebView getWebView() {
+        return browserDelegate.webView;
+    }
+
+    @Override
+    public <T extends View> T get(int id) {
+        T t = super.get(id);
+        if (t == null) {
+            t = browserDelegate.get(id);
+        }
+        return t;
     }
 }

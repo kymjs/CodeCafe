@@ -44,4 +44,9 @@ public abstract class BaseDetailDelegate extends AppDelegate {
         collapsingToolbar.setExpandedTitleColor(titleColor);
         return toolbar;
     }
+
+    @Override
+    public int getOptionsMenuId() {
+        return R.menu.menu_share;
+    }
 }

@@ -14,6 +14,7 @@ import com.kymjs.base.backactivity.BaseBackActivity;
 import top.codecafe.R;
 import top.codecafe.delegate.BlogDetailDelegate;
 import top.codecafe.utils.LinkDispatcher;
+import top.codecafe.utils.Tools;
 
 /**
  * 对手机页面做了适配的网站
@@ -60,6 +61,11 @@ public class MobelBrowserActivity extends BaseBackActivity<BlogDetailDelegate> {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_share
+                && viewDelegate != null && viewDelegate.getWebView() != null) {
+            Tools.shareUrl(this, viewDelegate.getWebView().getUrl());
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -24,6 +24,7 @@ import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegate;
 import top.codecafe.inter.IRequestVo;
 import top.codecafe.utils.LinkDispatcher;
+import top.codecafe.utils.Tools;
 import top.codecafe.widget.EmptyLayout;
 
 /**
@@ -114,6 +115,10 @@ public class XituDetailActivity extends BaseBackActivity<BrowserDelegate> implem
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_share && !TextUtils.isEmpty(contentUrl)) {
+            Tools.shareUrl(this, contentUrl);
             return true;
         }
         return super.onOptionsItemSelected(item);

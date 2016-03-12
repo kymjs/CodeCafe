@@ -9,7 +9,9 @@ import android.view.MenuItem;
 
 import com.kymjs.base.backactivity.BaseBackActivity;
 
+import top.codecafe.R;
 import top.codecafe.delegate.BrowserDelegate;
+import top.codecafe.utils.Tools;
 
 /**
  * 全局浏览器界面
@@ -47,6 +49,11 @@ public class BrowserActivity extends BaseBackActivity<BrowserDelegate> {
             finish();
             return true;
         }
+        if (item.getItemId() == R.id.action_share
+                && viewDelegate != null && viewDelegate.webView != null) {
+            Tools.shareUrl(this, viewDelegate.webView.getUrl());
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -70,7 +77,7 @@ public class BrowserActivity extends BaseBackActivity<BrowserDelegate> {
         viewDelegate.webView.removeAllViews();
         viewDelegate.webView.destroy();
     }
-    
+
     /**
      * 跳转到博客详情界面
      *

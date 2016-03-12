@@ -29,6 +29,7 @@ import top.codecafe.delegate.BlogDetailDelegate;
 import top.codecafe.delegate.BrowserDelegateOption;
 import top.codecafe.inter.IRequestVo;
 import top.codecafe.utils.SystemTool;
+import top.codecafe.utils.Tools;
 import top.codecafe.widget.EmptyLayout;
 
 /**
@@ -166,6 +167,10 @@ public class BlogDetailActivity extends BaseBackActivity<BlogDetailDelegate> imp
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_share && !TextUtils.isEmpty(url)) {
+            Tools.shareUrl(this, url);
             return true;
         }
         return super.onOptionsItemSelected(item);

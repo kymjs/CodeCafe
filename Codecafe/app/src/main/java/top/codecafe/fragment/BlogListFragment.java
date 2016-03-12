@@ -10,7 +10,6 @@ import com.kymjs.api.Api;
 import com.kymjs.core.bitmap.client.BitmapCore;
 import com.kymjs.frame.adapter.BasePullUpRecyclerAdapter;
 import com.kymjs.frame.adapter.RecyclerHolder;
-import com.kymjs.gallery.KJGalleryActivity;
 import com.kymjs.model.Blog;
 import com.kymjs.model.BlogList;
 import com.kymjs.rxvolley.RxVolley;
@@ -76,12 +75,12 @@ public class BlogListFragment extends MainListFragment<Blog> {
     @Override
     protected BasePullUpRecyclerAdapter<Blog> getAdapter() {
         return new BasePullUpRecyclerAdapter<Blog>(recyclerView, datas, R.layout.item_blog) {
-            final View.OnClickListener imageClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    KJGalleryActivity.toGallery(getActivity(), (String) v.getTag());
-                }
-            };
+//            final View.OnClickListener imageClickListener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    KJGalleryActivity.toGallery(getActivity(), (String) v.getTag());
+//                }
+//            };
 
             @Override
             public void convert(RecyclerHolder holder, final Blog item, int position) {
