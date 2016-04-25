@@ -44,7 +44,7 @@ public class Nuwa {
             Log.e(TAG, "context is null");
             return;
         }
-        if (!new File(dexPath).exists()) {
+        if (dexPath!=null&&!new File(dexPath).exists()) {      // dexPathsh==null
             Log.e(TAG, dexPath + " is null");
             return;
         }
