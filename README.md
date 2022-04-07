@@ -3,8 +3,8 @@
 *CodeCafe* 目前仅仅是开源实验室的手机客户端，我的练手项目。相关技术包括：沉浸式、WebView定制、RxJava、TheMVP、RecyclerView，也就算是通过这个项目，好好练习一下算是了解。
 
 ## 一大堆无聊的东西 
-MVP架构开发Android-TheMVP[https://github.com/kymjs/TheMVP](https://github.com/kymjs/TheMVP)  
-万能RecyclerView适配器 [http://kymjs.com/code/2015/10/11/01/](http://kymjs.com/code/2015/10/11/01/)  
+被支付宝使用的MVP架构 开发Android-TheMVP[https://github.com/kymjs/TheMVP](https://github.com/kymjs/TheMVP)  
+万能 RecyclerView 适配器 [https://kymjs.com/code/2015/10/11/01/](https://kymjs.com/code/2015/10/11/01/)  
 APP崩溃后显示一个友善的Activity [https://github.com/crashub/crash](https://github.com/crashub/crash)   
 仿微信侧滑finish()当前Activity [https://github.com/kymjs/SlipBack/tree/swiple](https://github.com/kymjs/SlipBack/tree/swiple)    
 RxJava [https://github.com/ReactiveX/RxJava](https://github.com/ReactiveX/RxJava)  
