@@ -1,1 +1,0 @@
-include ':app', ':adapter', ':nuwa', ':crash', ':base', ':api', ':model', ':gallery'

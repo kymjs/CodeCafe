@@ -1,0 +1,1 @@
+include ':app', ':adapter', ':crash', ':base', ':api', ':model', ':gallery'

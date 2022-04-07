@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+version = "1.0.0"
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.commit451:PhotoView:1.2.4'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.10'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.github.kymjs.rxvolley:rxvolley:3.0.0'
+    implementation 'com.github.kymjs.rxvolley:okhttp3:3.0.0'
+    implementation 'com.github.kymjs.rxvolley:image:3.0.0'
+    implementation 'com.github.kymjs:common:2.0.0'
+}
