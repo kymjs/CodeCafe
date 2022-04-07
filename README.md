@@ -1,4 +1,5 @@
-#[![OSL](https://kymjs.com/image/logo_s.png)](https://kymjs.com/works/)
+[![OSL](https://kymjs.com/qiniu/image/logo3.png)](https://kymjs.com/)
+
 *CodeCafe* 目前仅仅是开源实验室的手机客户端，我的练手项目。相关技术包括：沉浸式、WebView定制、RxJava、TheMVP、RecyclerView，也就算是通过这个项目，好好练习一下算是了解。
 
 ## 一大堆无聊的东西 
@@ -20,7 +21,7 @@ RxVolley 集合了RxJava+Volley+okhttp [https://github.com/kymjs/RxVolley](https
 我们会将捐助者信息公布在[开源实验室·捐赠](https://kymjs.com/donate)捐赠页，如果你有什么想说的话也可以[留言](https://kymjs.com/tweet)给我。
 
 
-##开源协议
+## 开源协议
 ```
  Copyright (C) 2015, 张涛
  
